@@ -1,6 +1,78 @@
 @startuml
 !pragma layout smetana
-
-	class Test{}
+	
+	class Empresa{
+		{static} int cantSedeProvincia = 2
+		sedes: List<Sede>
+	}
+	
+	class Sede{
+		empleados: List<Empleado>
+		laboratorios: List<Laboratorio>
+		provincia: Provincia
+	}
+	
+	enum Provincia{
+	}
+	
+	class ProductoQuimico implements Builder{ 
+		'patron builder podria ser una via, ya que el producto quimico se construye en partes
+		'el tecnico rellena los datos menos lote
+		'el generete rellena el dato de lote
+		id: int
+		formula: Map<ElementoQuimico, Integer>
+		nombreComercial: String
+		fechaFabricacion: LocalDate
+		lote: int
+		fechaVencimiento: LocalDate
+	}
+	
+	class ElementoQuimico{
+		nroAtomico: int
+		simbolo: String
+		nombre: String
+	}
+	
+	abstract class Empleado{
+		sueldo: double
+	}
+	
+	abstract class EmpleadoTecnico extends Empleado implements RolTecnico{
+		cupoReservas: int
+		
+	}
+	
+	interface RolTecnico{
+		iniciarPrueba()
+	}
+	
+	interface RolGerente{
+	}
+	
+	
+	class EmpleadoFarmaceutico extends EmpleadoTecnico{
+	}
+	class EmpleadoQuimico extends EmpleadoTecnico{
+	}
+	class EmpleadoAsistente extends EmpleadoTecnico{
+	}
+	
+	'Identifico roles como posible uso de patron strategy
+	
+	abstract class EmpleadoGerente extends Empleado implements RolGerente{
+	
+	}
+	
+	class Laboratorio{
+		capacidadPersonas: int
+		peligrosPermitidos: List<TipoPeligro>
+		aprobarProducto()
+	}
+	
+	enum TipoPeligro{
+		INFLAMABLES
+		TOXICOS
+		CORROSIVOS
+	}
 
 @enduml
