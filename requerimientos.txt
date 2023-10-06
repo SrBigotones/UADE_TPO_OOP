@@ -1,0 +1,39 @@
+Lista de requerimientos funcionales:
+    RF01: Un producto quimico tiene id numerico, formula, nombre comercial, fecha de fabricacion, lote y fecha de vencimiento
+    RF02: Los quimicos disponibles que puede contener una formula son los siguientes:
+        Hierro(Fe/26) - Sodio(Na/11) - Calcio(Ca/20) - Azufre(S/16)
+    RF03: Tecnico da de alta el producto completando todos sus datos menos el lote
+    RF04: Los lotes son dados de alta por los gerentes
+    RF05: Un lote puede contener 1 o muchos productos
+    RF06: Todos los productos dentro de un lote tienen la misma fecha de fabricacion y vencimiento
+    RF07: La empresa tiene 1 o muchas sedes distrubuidas por provincia
+    RF08: No puede existir mas de 1 sede por provincia
+    RF09: Antes de ofrecer al mercado un prodocuto, debe de ser aprobado por un laboratorio de la empresa
+    
+    RF10: Se realizan pruebas en laboratorios
+    RF11: Un tecnico reserva un laboratorio para realizar pruebas
+    RF12: Una sede puede tener varios laboratorios de ensayos
+    RF13: Los productos tienen una propiedad de peligro
+    RF14: Los peligros pueden ser Inflamables, Toxicos o Corrosivos
+    RF15: Un laboratorio puede soportar una, varias o ninguna de las condiciones de peligro
+    RF16: Laboratorios tienen una cantidad determina de personas asignadas a cada prueba
+    RF17: La configuracion de peligros permitidos y costo de los mismos puede ser modificado para cada laboratorio
+    RF18: Un tecnico puede ser de las siguientes categorias (Nombre, Cupo Reservas, Sueldo) 
+        Farmaceutico  // 4 // $100_000.00
+        Quimico  // 32 // $80_000.00
+        Asistente // 0 // $50_000.00
+    RF19: La lista de categorias disponibles para los tecnicos puede ser modificada en tiempo de ejecucion para agregar, eliminar y modificar categorias.
+    RF20: Un tecnico puede asignar auxiliares a un ensayo, no debe superar la capacidad del laboratorio
+    RF21: Por medio de una solicitud del tecnico, los auxiliares deben inscribirse al ensayo
+    RF22: Una reserva necesita saber el producto con el que se va a probar, y debe ser identificado al momento de crear la reserva
+    RF23: En un mismo turno puede probarse hasta dos productos siempre y cuando sean del mismo tipo, los productos a probar
+    RF24: Los productos tienen una categoria(Medicamentos, perfumes y productos de limpieza)
+    RF25: Entre pruebas tiene que pasar un minimo de 2 horas
+
+
+    RF26: El vencimiento debera seguir unos pasos especificos para calcular el mismo
+        a. Criterio peligrosidad: Fecha de vencimiento = Fecha de fabricación + días particulares según peligrosidad 
+        b. Criterio producto: Fecha de vencimiento = Fecha de fabricación + días según tipo de producto 
+        c. Criterio molecular: Fecha de vencimiento = Fecha de fabricación + promedio número atómico
+
+    ***************** FALTA APROBACION Y COMERCIALIZACION Y GESTION DEL SISTEMA SEGUN PDF*************************
