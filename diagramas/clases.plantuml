@@ -1,10 +1,14 @@
 @startuml
 
 class Empresa {
-  { static } int cantSedeProvincia = 1
+  {static} - cantSedeProvincia: int
+  {static} - instance: Empresa
+  - Empresa()
   - sedes: List<Sede>
   - empleados: List<Empleado>
   - tiposPeligro: List<TipoPeligro>
+  - perfiles: List<PerfilTecnico>
+  {static} + getInstance(): Empresa
   + agregarTipoPeligro(string, double): int
   + modificarTipoPeligro(int, double): void
   + reservar(PruebaLote, LocalDate, Turno): void
@@ -35,16 +39,17 @@ class PruebaLote {
   - idProductoQuimico: int
   - fechaFabricacion: LocalDate
   - estrategiaVencimiento: EstrategiaVencimiento
+  - estado: EstadoLote
   + calcularFechaVencimiento(): LocalDate
 }
 
 interface EstrategiaVencimiento {
-  + calcularVencimiento()
+  + calcularVencimiento(PruebaLote)
 }
 
-class CriterioPeligrosidad implements EstrategiaVencimiento{}
-class CriterioProducto implements EstrategiaVencimiento{}
-class CriterioMolecular implements EstrategiaVencimiento{}
+class CriterioPeligrosidad implements EstrategiaVencimiento {}
+class CriterioProducto implements EstrategiaVencimiento {}
+class CriterioMolecular implements EstrategiaVencimiento {}
 
 
 enum TipoProducto {
@@ -62,11 +67,11 @@ enum EstadoLote {
 
 enum Turno {
   '0 a 6hs'
-  MADRUGADA 
+  MADRUGADA
   '8 a 14hs'
   MAÑANA
   '16 a 22hs'
-  TARDE 
+  TARDE
 }
 
 class ElementoQuimico {
@@ -82,7 +87,7 @@ abstract class Empleado {
 }
 
 'Edita todo lo relacionado con los puestos y gesetion del sistema (SysAdmin)
-interface RolSoporte{
+interface RolSoporte {
   crearUsuario()
   crearPerfil()
   modificarPerfil()
@@ -92,39 +97,39 @@ interface RolSoporte{
 }
 
 'Encargado de habilitar los empleados y laboratorios para las sedes
-interface RolAdministrativo{
-  darAltaEmpleado()
+interface RolAdministrativo {
+  darAltaEmpleado(int)
   darAltaLaboratorio()
 }
 
 'Encargado de habilitar lotes y cambiar criterios de vencimiento
-interface RolGerente{
- crearLote()
- editarLote()
- cambiarCriterioVencimiento(Lote)
+interface RolGerente {
+  crearLote()
+  editarLote()
+  cambiarCriterioVencimiento(Lote)
 }
 
 'Encargado de realizar pruebas/reservas
-interface RolTecnico{
+interface RolTecnico {
   realizarPrueba()
   reservarLaboratorio()
   diagnosticarPrueba()
 }
 
-class EmpleadoSoporte extends Empleado implements RolSoporte{}
-class EmpleadoAdministrativo extends Empleado implements RolAdministrativo{}
-class EmpleadoGerente extends Empleado implements RolGerente{}
-class EmpleadoTecnico extends Empleado implements RolTecnico{
+class EmpleadoSoporte extends Empleado implements RolSoporte {}
+class EmpleadoAdministrativo extends Empleado implements RolAdministrativo {}
+class EmpleadoGerente extends Empleado implements RolGerente {}
+class EmpleadoTecnico extends Empleado implements RolTecnico {
   - perfil: PerfilTenico
   - contadorReservasMesActual: int
 }
 
 
-class PerfilTecnico{
- - id: int
- - nombre: String
- - cantReservasMaxMes: int
- - sueldo: double
+class PerfilTecnico {
+  - id: int
+  - nombre: String
+  - cantReservasMaxMes: int
+  - sueldo: double
 }
 
 ' Se puede reservar si: '
@@ -136,8 +141,8 @@ class Laboratorio {
   - pruebas: Map<FechaTurno, PruebaLote[]>
   - capacidadPersonas: int
   - peligrosPermitidos: Set<TipoPeligro>
-'disponible devuelve true si hay una lugar disponible para una nueva prueba y,
-'en caso de haber otra prueba en curso, si el producto es compatible con mi prueba'
+  'disponible devuelve true si hay una lugar disponible para una nueva prueba y,
+  'en caso de haber otra prueba en curso, si el producto es compatible con mi prueba'
   + disponible(PruebaLote, LocalDate, Turno): boolean
   + reservar(PruebaLote, LocalDate, Turno): void
 }
@@ -154,8 +159,6 @@ class TipoPeligro {
   + <<constructor>> TipoPeligro()
 }
 
-
-
 Empresa "1" *--	"∞" Sede
 Sede "1" *-- "∞" Laboratorio
 Sede --- Provincia
@@ -171,6 +174,7 @@ Laboratorio "1" *-- "∞" PruebaLote
 ProductoQuimico "1" o-- "∞" ElementoQuimico
 Empresa "1" *-- "∞" Empleado
 PruebaLote "1" *-- "1" EstrategiaVencimiento
-EmpleadoTecnico "1" *-- "1" PerfilTecnico
+EmpleadoTecnico "1" o-- "1" PerfilTecnico
+Empresa "1" *-- "∞" PerfilTecnico
 
 @enduml
