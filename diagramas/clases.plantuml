@@ -5,10 +5,15 @@ class Empresa {
   {static} - instance: Empresa
   - Empresa()
   - sedes: List<Sede>
+  - productosQuimicos: List<ProductoQuimico>
   - empleados: List<Empleado>
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
   {static} + getInstance(): Empresa
+  + agregarProductoQuimico()
+  + agregarUsuario(string) /'nombre '/
+  + agregarRol(string, double) /'nombrePuesto, sueldo'/
+  + modificarRol(int, double) /'idPuesto, sueldo'/
   + agregarTipoPeligro(string, double): int
   + modificarTipoPeligro(int, double): void
   + reservar(PruebaLote, LocalDate, Turno): void
@@ -18,6 +23,9 @@ class Sede {
   - administrativo: EmpleadoAdministrativo
   - laboratorios: List<Laboratorio>
   - provincia: Provincia
+
+  + agregarLaboratorio()
+  + modificarLaboratorio()
 }
 
 enum Provincia {
@@ -32,15 +40,22 @@ class ProductoQuimico {
   - nombreComercial: String
   - tipoProducto: TipoProducto
   - peligro: Set<TipoPeligro>
+
   + esMismoTipo(ProductoQuimico): boolean
 }
 
 class PruebaLote {
   - idProductoQuimico: int
   - fechaFabricacion: LocalDate
+  - responsable: Usuario
+  - ayudantes: Set<Usuario>
   - estrategiaVencimiento: EstrategiaVencimiento
   - estado: EstadoLote
   + calcularFechaVencimiento(): LocalDate
+  + calcularCostoPrueba(): double
+  + registrarAyudante(Usuario): void
+  + establecerEstrategiaVencimiento(EstragiaVencimiento): void
+  + habilitar(): void
 }
 
 interface EstrategiaVencimiento {
@@ -84,6 +99,11 @@ class ElementoQuimico {
 abstract class Empleado {
   - id: int
   - nombre: String
+
+  + soyTecnico(): boolean
+  + soyAdministrativo(): boolean
+  + soySoporte(): boolean
+  + soyGerente(): boolean
 }
 
 'Edita todo lo relacionado con los puestos y gesetion del sistema (SysAdmin)
@@ -124,8 +144,8 @@ class EmpleadoTecnico extends Empleado implements RolTecnico {
   - contadorReservasMesActual: int
 }
 
-
-class PerfilTecnico {
+/'No entiendo que verga es esto'/
+class PerfilTecnico { 
   - id: int
   - nombre: String
   - cantReservasMaxMes: int
@@ -145,6 +165,8 @@ class Laboratorio {
   'en caso de haber otra prueba en curso, si el producto es compatible con mi prueba'
   + disponible(PruebaLote, LocalDate, Turno): boolean
   + reservar(PruebaLote, LocalDate, Turno): void
+  + calcularCostoPruebaTotal(PruebaLote)
+  + establecerPeligrosPermitidos(Set<TipoPeligros>)
 }
 
 class FechaTurno {
@@ -176,5 +198,6 @@ Empresa "1" *-- "∞" Empleado
 PruebaLote "1" *-- "1" EstrategiaVencimiento
 EmpleadoTecnico "1" o-- "1" PerfilTecnico
 Empresa "1" *-- "∞" PerfilTecnico
+Sede "1" *-- "1" EmpleadoAdministrativo
 
 @enduml
