@@ -9,27 +9,36 @@ class Empresa {
   - empleados: List<Empleado>
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
-  {static} + getInstance(): Empresa
-  - existeUsuario(int):boolean
+  - buscarEmpleado(int): Empleado
   - sedePorProvincia(Provincia): int
-  + agregarEmpleado(string): Empleado
+  {static} + getInstance(): Empresa
+  /' Empleado administrativo '/
   + asociarPerfilEmpleado(int, int) /'id de perfil, id de empleado'/
+  + agregarEmpleado(string): Empleado
   + agregarPerfil(string, double, int) /'nombrePuesto, sueldo, maxReservas'/
   + modificarPerfil(int, double, int) /'idPuesto, sueldo, maxReservas'/
   + agregarTipoPeligro(string, double): int
   + modificarTipoPeligro(int, double): void
+  + crearLaboratorio(int, Set<TipoPeligro>): Laboratorio /'capacidadPersonas'/
+  + modificarLaboratorio(int, Set<TipoPeligro>): int /'capacidadPersonas'/
+
+  /' Empleado tecnico '/
   + reservar(PruebaLote, FechaTurno, Sede): void
-  + habilitarLote(int) : void
+  + diagnosticarPrueba(int, boolean): void /'idLote, aprobacion'/
   + crearProductoQuimico(Map<ElementoQuimico, Integer>, String, TipoProducto, Set<TipoPeligro>): ProductoQuimico
-  + crearLaboratorio(Sede, int, Set<TipoPeligro>): Laboratorio
-  + modificarLaboratorio(int, int, Set<TipoPeligro>): int /'id, capacidad'/
+  
   + registrarEmpleadoPrueba(EmpleadoTecnico, int): boolean /'id de prueba'/
   + agregarSede(Provincia): void
-  + asignarEmpleadoAdministrivoASede(Sede, int): void
+  + asignarEmpleadoAdministrivoASede(int, int): void /'idSede, idEmpleado'/
   + establecerEstrategiaVencimiento(int, EstrategiaVencimiento): void /'id de prueba'/
+  
+  /' Gerente '/
+  + cambiarCriterioVencimiento(int , EstrategiaVencimiento): void /'idLote'/
+  + confirmarLote(int) : void /'idLote'/
 }
 
 class Sede {
+  - id: int
   - administrativo: EmpleadoAdministrativo
   - laboratorios: List<Laboratorio>
   - provincia: Provincia
@@ -123,29 +132,20 @@ abstract class Empleado {
 }
 
 'Edita todo lo relacionado con los puestos y gesetion del sistema (SysAdmin)
-interface RolSoporte {}
+class EmpleadoSoporte extends Empleado {}
 
 'Encargado de habilitar los empleados y laboratorios para las sedes
-interface RolAdministrativo {}
+class EmpleadoAdministrativo extends Empleado {}
 
 'Encargado de habilitar lotes y cambiar criterios de vencimiento
-interface RolGerente {
-  crearLote()
-  editarLote()
-  cambiarCriterioVencimiento(Lote)
-}
+class EmpleadoGerente extends Empleado {}
 
 'Encargado de realizar pruebas/reservas
-interface RolTecnico {
-  diagnosticarPrueba(PruebaLote)
-}
-
-class EmpleadoSoporte extends Empleado implements RolSoporte {}
-class EmpleadoAdministrativo extends Empleado implements RolAdministrativo {}
-class EmpleadoGerente extends Empleado implements RolGerente {}
-class EmpleadoTecnico extends Empleado implements RolTecnico {
+class EmpleadoTecnico extends Empleado {
   - perfil: PerfilTecnico
   - contadorReservasMesActual: int
+  + diagnosticarPrueba(PruebaLote): void
+  
 }
 
 class PerfilTecnico {
@@ -203,6 +203,6 @@ Empresa "1" *-- "∞" Empleado
 PruebaLote "1" *-- "1" EstrategiaVencimiento
 EmpleadoTecnico "1" o-- "1" PerfilTecnico
 Empresa "1" *-- "∞" PerfilTecnico
-Sede "1" *-- "1" EmpleadoAdministrativo
+Sede "1" o-- "1" EmpleadoAdministrativo
 
 @enduml
