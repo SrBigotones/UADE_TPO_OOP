@@ -12,6 +12,10 @@
     Empleado --> Empresa
     Deactivate Empleado
     alt "Usuario es Soporte"
+        Empresa -> Empresa: sedePorProvincia(Provincia)
+        alt "Supera numero de sede por provincia"
+            Empresa -> Usuario: Lanzar exepcion
+        end "Supera numero de sede por provincia"
         Empresa -> Empresa: agregarSede(Provincia)
         Empresa --> Usuario
     else "Usuario no es Soporte"

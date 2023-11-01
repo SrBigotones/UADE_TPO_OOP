@@ -10,6 +10,8 @@ class Empresa {
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
   {static} + getInstance(): Empresa
+  - existeUsuario(int):boolean
+  - sedePorProvincia(Provincia): int
   + agregarEmpleado(string): Empleado
   + asociarPerfilEmpleado(int, int) /'id de perfil, id de empleado'/
   + agregarPerfil(string, double, int) /'nombrePuesto, sueldo, maxReservas'/
