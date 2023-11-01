@@ -10,19 +10,21 @@ class Empresa {
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
   {static} + getInstance(): Empresa
-  + agregarUsuario(string): Usuario
-  + asociarRolUsuario(Rol, Usuario)
-  + agregarRol(string, double) /'nombrePuesto, sueldo'/
-  + modificarRol(int, double) /'idPuesto, sueldo'/
+  + agregarEmpleado(string): Empleado
+  + asociarPerfilEmpleado(int, int) /'id de perfil, id de empleado'/
+  + agregarPerfil(string, double, int) /'nombrePuesto, sueldo, maxReservas'/
+  + modificarPerfil(int, double, int) /'idPuesto, sueldo, maxReservas'/
   + agregarTipoPeligro(string, double): int
   + modificarTipoPeligro(int, double): void
-  + reservar(PruebaLote, LocalDate, Turno): void
-  + habilitarLote(PruebaLote) : void
+  + reservar(PruebaLote, FechaTurno, Sede): void
+  + habilitarLote(int) : void
   + crearProductoQuimico(Map<ElementoQuimico, Integer>, String, TipoProducto, Set<TipoPeligro>): ProductoQuimico
   + crearLaboratorio(Sede, int, Set<TipoPeligro>): Laboratorio
-  + modificarLaboratorio(int, Set<TipoPeligro>): Laboratorio
-  + agendarPrueba(Laboratorio, PruebaLote): PruebaLote
-  + registrarUsuarioPrueba(Usuario, PruebaLote): boolean
+  + modificarLaboratorio(int, int, Set<TipoPeligro>): int /'id, capacidad'/
+  + registrarEmpleadoPrueba(EmpleadoTecnico, int): boolean /'id de prueba'/
+  + agregarSede(Provincia): void
+  + asignarEmpleadoAdministrivoASede(Sede, int): void
+  + establecerEstrategiaVencimiento(int, EstrategiaVencimiento): void /'id de prueba'/
 }
 
 class Sede {
@@ -31,10 +33,11 @@ class Sede {
   - provincia: Provincia
 
   + agregarLaboratorio(): Laboratorio
-  + modificarLaboratorio(): Laboratorio
-  + agendarPrueba(Laboratorio, PruebaLote): PruebaLote
+  + modificarLaboratorio(Laboratorio, ): void
+  + agendarPrueba(PruebaLote, FechaTurno): void
+  + asignarEmpleadoAdministrativo(EmpleadoAdministrativo)
   + listarLaboratorios(): List<Laboratorio>
-  # buscarLaboratorio(int): Laboratorio
+  + buscarLaboratorio(int): Laboratorio
 }
 
 enum Provincia {
@@ -54,17 +57,19 @@ class ProductoQuimico {
 }
 
 class PruebaLote {
+  - id: int
   - idProductoQuimico: int
   - fechaFabricacion: LocalDate
-  - responsable: Usuario
-  - ayudantes: Set<Usuario>
+  - responsable: EmpleadoTecnico
+  - ayudantes: Set<EmpleadoTecnico>
   - estrategiaVencimiento: EstrategiaVencimiento
   - estado: EstadoLote
   + calcularFechaVencimiento(): LocalDate
   + calcularCostoPrueba(): double
-  + registrarAyudante(Usuario): void
+  + registrarAyudante(EmpleadoTecnico): void
   + establecerEstrategiaVencimiento(EstragiaVencimiento): void
   + habilitar(): void
+  + <<constructor>> PruebaLote(int, EmpleadoTecnico)
 }
 
 interface EstrategiaVencimiento {
@@ -116,20 +121,10 @@ abstract class Empleado {
 }
 
 'Edita todo lo relacionado con los puestos y gesetion del sistema (SysAdmin)
-interface RolSoporte {
-  crearUsuario()
-  crearPerfil()
-  modificarPerfil()
-  crearLaboratorio()
-  modificarLaboratorio()
-  crearSede()
-}
+interface RolSoporte {}
 
 'Encargado de habilitar los empleados y laboratorios para las sedes
-interface RolAdministrativo {
-  darAltaEmpleado(int)
-  darAltaLaboratorio()
-}
+interface RolAdministrativo {}
 
 'Encargado de habilitar lotes y cambiar criterios de vencimiento
 interface RolGerente {
@@ -140,16 +135,14 @@ interface RolGerente {
 
 'Encargado de realizar pruebas/reservas
 interface RolTecnico {
-  realizarPrueba()
-  reservarLaboratorio()
-  diagnosticarPrueba()
+  diagnosticarPrueba(PruebaLote)
 }
 
 class EmpleadoSoporte extends Empleado implements RolSoporte {}
 class EmpleadoAdministrativo extends Empleado implements RolAdministrativo {}
 class EmpleadoGerente extends Empleado implements RolGerente {}
 class EmpleadoTecnico extends Empleado implements RolTecnico {
-  - categoria: PerfilTecnico
+  - perfil: PerfilTecnico
   - contadorReservasMesActual: int
 }
 
@@ -166,15 +159,14 @@ class PerfilTecnico {
 ' - Toxicidades sean compatibles entre producto y laboratorio '
 ' - Tipo de producto compatible entre pruebas '
 class Laboratorio {
+  - id: int
   - pruebas: Map<FechaTurno, PruebaLote[]>
-  - jefePrueba: EmpleadoTecnico
-  - ayudantes: List<EmpleadoTecnico>
   - capacidadPersonas: int
   - peligrosPermitidos: Set<TipoPeligro>
   'disponible devuelve true si hay una lugar disponible para una nueva prueba y,
   'en caso de haber otra prueba en curso, si el producto es compatible con mi prueba'
-  + disponible(PruebaLote, LocalDate, Turno): boolean
-  + reservar(PruebaLote, LocalDate, Turno): void
+  + disponible(PruebaLote, FechaTurno): boolean
+  + reservar(PruebaLote, FechaTurno): void
   + calcularCostoPruebaTotal(PruebaLote)
   + establecerPeligrosPermitidos(Set<TipoPeligros>)
 }
