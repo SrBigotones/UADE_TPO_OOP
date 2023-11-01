@@ -1,0 +1,21 @@
+@startuml
+    Actor Usuario
+    Usuario -> Empresa: modificarPerfil(idPerfil, sueldo, maxReservas): void
+    
+    loop Perfil
+    Activate Empresa
+    Empresa -> PerfilTecnico: esPerfil(idPerfil): boolean
+    PerfilTecnico --> Empresa
+    end
+    alt Perfil encontrado
+        Empresa -> PerfilTecnico: setSueldo(sueldo): void
+        PerfilTecnico --> Empresa
+        Empresa -> PerfilTecnico: setMaxReservas(maxReservas): void 
+        PerfilTecnico --> Empresa
+    else Perfil inexistente
+        Empresa --> Usuario: Lanzar excepcion
+    end
+    Empresa --> Usuario
+    Deactivate Empresa
+
+@enduml
