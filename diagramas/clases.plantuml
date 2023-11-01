@@ -10,13 +10,19 @@ class Empresa {
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
   {static} + getInstance(): Empresa
-  + agregarProductoQuimico()
-  + agregarUsuario(string) /'nombre '/
+  + agregarUsuario(string): Usuario
+  + asociarRolUsuario(Rol, Usuario)
   + agregarRol(string, double) /'nombrePuesto, sueldo'/
   + modificarRol(int, double) /'idPuesto, sueldo'/
   + agregarTipoPeligro(string, double): int
   + modificarTipoPeligro(int, double): void
   + reservar(PruebaLote, LocalDate, Turno): void
+  + habilitarLote(PruebaLote) : void
+  + crearProductoQuimico(Map<ElementoQuimico, Integer>, String, TipoProducto, Set<TipoPeligro>): ProductoQuimico
+  + crearLaboratorio(Sede, int, Set<TipoPeligro>): Laboratorio
+  + modificarLaboratorio(int, Set<TipoPeligro>): Laboratorio
+  + agendarPrueba(Laboratorio, PruebaLote): PruebaLote
+  + registrarUsuarioPrueba(Usuario, PruebaLote): boolean
 }
 
 class Sede {
@@ -24,8 +30,11 @@ class Sede {
   - laboratorios: List<Laboratorio>
   - provincia: Provincia
 
-  + agregarLaboratorio()
-  + modificarLaboratorio()
+  + agregarLaboratorio(): Laboratorio
+  + modificarLaboratorio(): Laboratorio
+  + agendarPrueba(Laboratorio, PruebaLote): PruebaLote
+  + listarLaboratorios(): List<Laboratorio>
+  # buscarLaboratorio(int): Laboratorio
 }
 
 enum Provincia {
@@ -140,16 +149,15 @@ class EmpleadoSoporte extends Empleado implements RolSoporte {}
 class EmpleadoAdministrativo extends Empleado implements RolAdministrativo {}
 class EmpleadoGerente extends Empleado implements RolGerente {}
 class EmpleadoTecnico extends Empleado implements RolTecnico {
-  - perfil: PerfilTenico
+  - categoria: PerfilTecnico
   - contadorReservasMesActual: int
 }
 
-/'No entiendo que verga es esto'/
-class PerfilTecnico { 
+class PerfilTecnico {
   - id: int
-  - nombre: String
-  - cantReservasMaxMes: int
   - sueldo: double
+  - nombre: string
+  - maxReservas: int
 }
 
 ' Se puede reservar si: '
@@ -159,6 +167,8 @@ class PerfilTecnico {
 ' - Tipo de producto compatible entre pruebas '
 class Laboratorio {
   - pruebas: Map<FechaTurno, PruebaLote[]>
+  - jefePrueba: EmpleadoTecnico
+  - ayudantes: List<EmpleadoTecnico>
   - capacidadPersonas: int
   - peligrosPermitidos: Set<TipoPeligro>
   'disponible devuelve true si hay una lugar disponible para una nueva prueba y,
