@@ -1,0 +1,23 @@
+@startuml
+    Actor Usuario
+    Usuario -> Empresa: agregarSede(idSolicitante, Provincia)
+    Activate Usuario
+    
+    loop BuscarUsuario
+    Empresa -> Empresa: existeUsuario(idSolicitante)
+    Activate Empresa
+    end BuscarUsuario
+    Empresa -> Empleado: soySoporte()
+    Activate Empleado
+    Empleado --> Empresa
+    Deactivate Empleado
+    alt "Usuario es Soporte"
+        Empresa -> Empresa: agregarSede(Provincia)
+        Empresa --> Usuario
+    else "Usuario no es Soporte"
+        Empresa --> Usuario: Lanzar execepcion
+    Deactivate Empresa
+    end "Usuario Existe"
+    Deactivate Usuario
+
+@enduml
