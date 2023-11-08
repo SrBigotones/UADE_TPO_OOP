@@ -9,7 +9,7 @@ class Empresa {
   - empleados: List<Empleado>
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
-  
+  - estrategiasVencimiento: List<EstrategiaVencimiento>
   
   - buscarEmpleado(int): Empleado
   - sedePorProvincia(Provincia): int
@@ -37,6 +37,7 @@ class Empresa {
   /' Gerente '/
   + cambiarCriterioVencimiento(int , EstrategiaVencimiento): void /'idLote'/
   + confirmarLote(int) : void /'idLote'/
+  + listarEstrategiasVencimiento(): List<EstrategiasVencimiento>
 }
 
 class Sede {
@@ -84,13 +85,17 @@ class PruebaLote {
   + <<constructor>> PruebaLote(int, EmpleadoTecnico)
 }
 
-interface EstrategiaVencimiento {
-  + calcularVencimiento(PruebaLote)
+abstract class EstrategiaVencimiento {
+  - id: int
+  - descripcion: String
+  - <<constructor>> EstrategiaVencimiento(String) /'descripcion'/
+  + esPorId(int): boolean
+  + {abstract} calcularVencimiento(PruebaLote)
 }
 
-class CriterioPeligrosidad implements EstrategiaVencimiento {}
-class CriterioProducto implements EstrategiaVencimiento {}
-class CriterioMolecular implements EstrategiaVencimiento {}
+class CriterioPeligrosidad extends EstrategiaVencimiento {}
+class CriterioProducto extends EstrategiaVencimiento {}
+class CriterioMolecular extends EstrategiaVencimiento {}
 
 
 enum TipoProducto {
@@ -171,7 +176,7 @@ class Laboratorio {
   'en caso de haber otra prueba en curso, si el producto es compatible con mi prueba'
   + disponible(PruebaLote, FechaTurno): boolean
   + reservar(PruebaLote, FechaTurno): void
-  + calcularCostoPruebaTotal(PruebaLote)
+  + calcularCostoPruebaTotal(int)
   + establecerPeligrosPermitidos(Set<TipoPeligros>)
 }
 
@@ -201,9 +206,11 @@ FechaTurno --- Turno
 Laboratorio "1" *-- "∞" PruebaLote
 ProductoQuimico "1" o-- "∞" ElementoQuimico
 Empresa "1" *-- "∞" Empleado
-PruebaLote "1" *-- "1" EstrategiaVencimiento
+PruebaLote "1" o-- "1" EstrategiaVencimiento
 EmpleadoTecnico "1" o-- "1" PerfilTecnico
 Empresa "1" *-- "∞" PerfilTecnico
 Sede "1" o-- "1" EmpleadoAdministrativo
+PruebaLote "1" --o "∞" EmpleadoTecnico
+Empresa "1" *-- "∞" EstrategiaVencimiento
 
 @enduml
