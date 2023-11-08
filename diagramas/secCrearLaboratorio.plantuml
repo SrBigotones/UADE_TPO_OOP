@@ -1,0 +1,31 @@
+@startuml
+ Actor Usuario
+    Activate Usuario
+    Usuario -> Empresa: crearLaboratorio(int, Set<TipoPeligro>)
+
+    loop BuscarUsuario
+    Activate Empresa    
+    Empresa -> Empresa: existeUsuario(idSolicitante)
+    end BuscarUsuario
+
+    Empresa -> Empleado: soyAdministrativo()
+    Activate Empleado
+    Empleado --> Empresa
+    Deactivate Empleado
+
+    alt "Usuario es Administrativo"
+         Empresa -> Sede: agregarLaboratorio(int, Set<TipoPeligro>)
+         Activate Sede
+    
+         Sede-> Laboratorio: establecerPeligrosPermitidos(Set<TipoPeligros>)
+         Sede --> Empresa: Laboratorio creado
+         Deactivate Sede
+         Empresa --> Usuario: Laboratorio creado
+
+    else "Usuario no es Administrativo"
+         Empresa --> Usuario: Lanzar execepcion
+         Deactivate Empresa         
+    end
+
+
+@enduml
