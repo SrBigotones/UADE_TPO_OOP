@@ -21,7 +21,7 @@ class Empresa {
   + modificarPerfil(int, double, int) /'idPuesto, sueldo, maxReservas'/
   + agregarTipoPeligro(string, double): int
   + modificarTipoPeligro(int, double): void
-  + crearLaboratorio(int, Set<TipoPeligro>): Laboratorio /'capacidadPersonas'/
+  + crearLaboratorio(int, int, Set<TipoPeligro>): Laboratorio /'idSede, capacidadPersonas'/
   + modificarLaboratorio(int, Set<TipoPeligro>): int /'capacidadPersonas'/
 
   /' Empleado tecnico '/
@@ -45,8 +45,7 @@ class Sede {
   - laboratorios: List<Laboratorio>
   - provincia: Provincia
 
-  + agregarLaboratorio(): Laboratorio
-  + modificarLaboratorio(Laboratorio, ): void
+  + agregarLaboratorio(Laboratorio): void
   + agendarPrueba(PruebaLote, FechaTurno): void
   + asignarEmpleadoAdministrativo(EmpleadoAdministrativo)
   + listarLaboratorios(): List<Laboratorio>
