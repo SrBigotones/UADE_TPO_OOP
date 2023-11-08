@@ -9,6 +9,8 @@ class Empresa {
   - empleados: List<Empleado>
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
+  
+  
   - buscarEmpleado(int): Empleado
   - sedePorProvincia(Provincia): int
   {static} + getInstance(): Empresa
