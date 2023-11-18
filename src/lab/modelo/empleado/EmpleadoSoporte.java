@@ -1,4 +1,4 @@
-package laboratorio.empleado;
+package lab.modelo.empleado;
 
 public class EmpleadoSoporte {
 

@@ -1,4 +1,4 @@
-package laboratorio.excepciones;
+package lab.excepciones;
 
 public class SedeNoEncontrada {
 

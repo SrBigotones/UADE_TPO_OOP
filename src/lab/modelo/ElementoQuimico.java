@@ -1,4 +1,4 @@
-package laboratorio.empleado;
+package lab.modelo;
 
 public class ElementoQuimico {
 

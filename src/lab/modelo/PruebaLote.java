@@ -1,4 +1,4 @@
-package laboratorio;
+package lab.modelo;
 
 public class PruebaLote {
 

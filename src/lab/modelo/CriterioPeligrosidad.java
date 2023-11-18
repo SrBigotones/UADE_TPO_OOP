@@ -1,6 +1,6 @@
-package laboratorio;
+package lab.modelo;
 
-public class CriterioProducto implements EstrategiaVencimiento{
+public class CriterioPeligrosidad implements EstrategiaVencimiento{
 
 	@Override
 	public void calcularVencimiento(PruebaLote lote) {

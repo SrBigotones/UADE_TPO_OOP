@@ -1,4 +1,4 @@
-package laboratorio.enums;
+package lab.modelo.enums;
 
 public enum TipoProducto {
 	LIMPIEZA, PERFUMERIA, MEDICAMENTO

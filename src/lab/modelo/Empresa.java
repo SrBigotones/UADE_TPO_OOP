@@ -1,14 +1,13 @@
-package laboratorio;
+package lab.modelo;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import laboratorio.empleado.ElementoQuimico;
-import laboratorio.empleado.Empleado;
-import laboratorio.empleado.EmpleadoTecnico;
-import laboratorio.enums.Provincia;
-import laboratorio.enums.TipoProducto;
+import lab.modelo.empleado.Empleado;
+import lab.modelo.empleado.EmpleadoTecnico;
+import lab.modelo.enums.Provincia;
+import lab.modelo.enums.TipoProducto;
 
 public class Empresa {
 	private static int CANT_SEDE_PROVINCIA = 1;
