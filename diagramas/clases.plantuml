@@ -16,7 +16,7 @@ class Empresa {
   {static} + getInstance(): Empresa
   /' Empleado administrativo '/
   + asociarPerfilEmpleado(int, int) /'id de perfil, id de empleado'/
-  + agregarEmpleado(string): Empleado
+  + agregarEmpleado(string, PerfilTecnico): Empleado
   + agregarPerfil(string, double, int) /'nombrePuesto, sueldo, maxReservas'/
   + modificarPerfil(int, double, int) /'idPuesto, sueldo, maxReservas'/
   + agregarTipoPeligro(string, double): int
@@ -64,7 +64,7 @@ class ProductoQuimico {
   - formula: Map<ElementoQuimico, Integer>
   - nombreComercial: String
   - tipoProducto: TipoProducto
-  - peligro: Set<TipoPeligro>
+  - peligros: Set<TipoPeligro>
 
   + esMismoTipo(ProductoQuimico): boolean
 }
@@ -177,7 +177,7 @@ class Laboratorio {
   + disponible(PruebaLote, FechaTurno): boolean
   + reservar(PruebaLote, FechaTurno): void
   + calcularCostoPruebaTotal(int)
-  + establecerPeligrosPermitidos(Set<TipoPeligros>)
+  + establecerPeligrosPermitidos(Set<TipoPeligros>): void
 }
 
 class FechaTurno {

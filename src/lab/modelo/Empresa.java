@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import inicializacion.Inicializador;
 import lab.modelo.empleado.Empleado;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.Provincia;
@@ -11,22 +12,26 @@ import lab.modelo.enums.TipoProducto;
 
 public class Empresa {
 	private static int CANT_SEDE_PROVINCIA = 1;
-	private static Empresa empresa;
+	
 	private List<Sede> sedes;
 	private List<ProductoQuimico> productosQuimicos;
 	private List<Empleado> empleados;
 	private List<TipoPeligro> tipoPeligro;
 	private List<PerfilTecnico> perfiles;
 	
+	private static Empresa empresa;
+	
 	private Empresa() {}
 	
-	public Empresa getInstance() {
+	public static synchronized Empresa getInstance() {
 		if(empresa == null) {
 			empresa = new Empresa();
+			empresa.sedes = Inicializador.inicializarSedes();
+			empresa.tipoPeligro = Inicializador.inicializarTiposPeligro();
+			empresa.perfiles = Inicializador.inicializarPerfilesTecnicos();
 		}
 		return empresa;
 	}
-	
 	
 	/*
 	 ****************************METODOS DE BUSQUEDA PARA USO INTERNO***************************
@@ -204,7 +209,10 @@ public class Empresa {
 		return false;
 	}
 	 
-	
+	public void agregarSede(Provincia provincia) {
+		Sede sede = new Sede(provincia);
+		sedes.add(sede);
+	}
 	
 	 
 	/**

@@ -1,11 +1,16 @@
 package lab.modelo;
 
-public class CriterioProducto implements EstrategiaVencimiento{
+import java.time.LocalDate;
 
-	@Override
-	public void calcularVencimiento(PruebaLote lote) {
-		// TODO Auto-generated method stub
-		
+public class CriterioProducto extends EstrategiaVencimiento {
+
+	public CriterioProducto(String descripcion) {
+		super(descripcion);
 	}
 
+	@Override
+	public LocalDate calcularVencimiento(PruebaLote lote) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
