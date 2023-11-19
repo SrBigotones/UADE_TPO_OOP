@@ -1,8 +1,10 @@
 package lab.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import inicializacion.Inicializador;
 import lab.excepciones.EmpleadoNoEncontrado;
@@ -21,19 +23,23 @@ public class Empresa {
 	private List<Sede> sedes;
 	private List<ProductoQuimico> productosQuimicos;
 	private List<Empleado> empleados;
-	private List<TipoPeligro> tipoPeligros;
+	private List<TipoPeligro> tiposPeligro;
 	private List<PerfilTecnico> perfiles;
 	
 	private static Empresa empresa;
 	
-	private Empresa() {}
+	private Empresa() {
+		sedes = new ArrayList<>();
+		productosQuimicos = new ArrayList<>();
+		empleados = new ArrayList<>();
+		tiposPeligro = new ArrayList<>();
+		perfiles = new ArrayList<>();
+	}
 	
 	public static synchronized Empresa getInstance() {
 		if(empresa == null) {
 			empresa = new Empresa();
-			empresa.sedes = Inicializador.inicializarSedes();
-			empresa.tipoPeligros = Inicializador.inicializarTiposPeligro();
-			empresa.perfiles = Inicializador.inicializarPerfilesTecnicos();
+			Inicializador.ejecutar(empresa);
 		}
 		return empresa;
 	}
@@ -91,7 +97,7 @@ public class Empresa {
 	private TipoPeligro buscarTipoPeligro(int idTipoPeligro) throws TipoPeligroNoEncontrado {
 		
 		
-		TipoPeligro tipoPeligro = Utilidades.buscarEnListaPorId(idTipoPeligro, tipoPeligros);
+		TipoPeligro tipoPeligro = Utilidades.buscarEnListaPorId(idTipoPeligro, tiposPeligro);
 		if(tipoPeligro != null)
 			return tipoPeligro;
 		
@@ -206,17 +212,20 @@ public class Empresa {
 	
 	/**
 	 * Crear un nuevo laboratorio en una sede
+	 * 
 	 * @param capacidadPersonas
-	 * @param tipoPeligros
+	 * @param hashSet
 	 * @return Laboratorio creado
-	 * @throws SedeNoEncontrada 
+	 * @throws SedeNoEncontrada
 	 */
-	public Laboratorio crearLaboratorio(int capacidadPersonas, Set<TipoPeligro> tipoPeligros, int idSede) throws SedeNoEncontrada { ///'capacidadPersonas'/
+	public Laboratorio crearLaboratorio(int capacidadPersonas, List<Integer> list, int idSede)
+			throws SedeNoEncontrada { /// 'capacidadPersonas'/
 		Sede sede = this.buscarSede(idSede);
-		Laboratorio lab = sede.agregarLaboratorio(capacidadPersonas, tipoPeligros);
+		
+		Laboratorio lab = sede.agregarLaboratorio(capacidadPersonas, mapIdsToTipoPeligro(list));
 		return lab;
 	}
-	
+
 	/**
 	 * Modificar un laboratorio
 	 * @param capacidadPersonas
@@ -240,7 +249,6 @@ public class Empresa {
 	 * @return Sede creada
 	 */
 	public Sede crearSede(Provincia provincia) {
-		
 		Sede sede = new Sede(provincia);
 		this.sedes.add(sede);
 		return sede;
@@ -278,8 +286,10 @@ public class Empresa {
 	 * @param peligro
 	 * @return ProductoQuimico creado
 	 */
-	public ProductoQuimico crearProductoQuimico(Map<ElementoQuimico, Integer> conjuntoQuimico, String nombre, TipoProducto tipoProducto, Set<TipoPeligro> peligro) {
-		return null;
+	public ProductoQuimico crearProductoQuimico(Map<ElementoQuimico, Integer> conjuntoQuimico, String nombre, TipoProducto tipoProducto, List<Integer> peligro) {
+		ProductoQuimico prod = new ProductoQuimico(conjuntoQuimico, nombre, tipoProducto, mapIdsToTipoPeligro(peligro));
+		productosQuimicos.add(prod);
+		return prod;
 	}
 	  
 	/**
@@ -292,12 +302,6 @@ public class Empresa {
 	public boolean registrarEmpleadoPrueba(int idEmpleado, int idPrueba, int idSede) { //'id de prueba'/
 		return false;
 	}
-	 
-	public void agregarSede(Provincia provincia) {
-		Sede sede = new Sede(provincia);
-		sedes.add(sede);
-	}
-	
 	 
 	/**
 	 * Asigna un empleado administrativo a una sede
@@ -336,5 +340,30 @@ public class Empresa {
 	}
 	  
 	public void confirmarLote(int idLote) {//'idLote'/	  
+	}
+
+	public List<Sede> getSedes() {
+		return sedes;
+	}
+
+	public List<ProductoQuimico> getProductosQuimicos() {
+		return productosQuimicos;
+	}
+
+	public List<Empleado> getEmpleados() {
+		return empleados;
+	}
+
+	public List<TipoPeligro> getTiposPeligro() {
+		return tiposPeligro;
+	}
+
+	public List<PerfilTecnico> getPerfiles() {
+		return perfiles;
+	}
+	
+	private Set<TipoPeligro> mapIdsToTipoPeligro(List<Integer> ids) {
+		return tiposPeligro.stream().filter((tp) -> ids.contains(tp.getId()))
+				.collect(Collectors.toSet());
 	}
 }

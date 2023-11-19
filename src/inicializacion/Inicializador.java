@@ -1,59 +1,81 @@
 package inicializacion;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
-import lab.modelo.Laboratorio;
-import lab.modelo.PerfilTecnico;
-import lab.modelo.Sede;
-import lab.modelo.TipoPeligro;
+import lab.excepciones.SedeNoEncontrada;
+import lab.modelo.ElementoQuimico;
+import lab.modelo.Empresa;
 import lab.modelo.enums.Provincia;
+import lab.modelo.enums.TipoProducto;
 
 public class Inicializador {
 
-	public static List<TipoPeligro> inicializarTiposPeligro() {
-		TipoPeligro tipo1 = new TipoPeligro("Inflamable", 0);
-		TipoPeligro tipo2 = new TipoPeligro("Toxico", 0);
-		TipoPeligro tipo3 = new TipoPeligro("Corrosivo", 0);
-		
-		return Arrays.asList(tipo1, tipo2, tipo3);
+	public static void ejecutar(Empresa empresa) {
+		inicializarTiposPeligro(empresa);
+		inicializarSedes(empresa);
+		inicializarLaboratorios(empresa);
+		inicializarPerfilesTecnicos(empresa);
+		inicializarEmpleados(empresa);
+		inicializarProductosQuimicos(empresa);
 	}
-	
-	public static List<Sede> inicializarSedes() {
-		return Arrays.asList(crearSedeBuenosAires(), crearSedeCordoba());
+
+	private static void inicializarTiposPeligro(Empresa empresa) {
+		empresa.crearTipoPeligro("Inflamable", 0);
+		empresa.crearTipoPeligro("Toxico", 0);
+		empresa.crearTipoPeligro("Corrosivo", 0);
 	}
-	
-	private static Sede crearSedeBuenosAires() {
-		Sede sede = new Sede(Provincia.BUENOS_AIRES);
-		
-		Set<Integer> peligros1 = new HashSet<>();
-		peligros1.add(1);
-		peligros1.add(2);
-		Laboratorio lab1 = new Laboratorio(10, peligros1);
-		sede.agregarLaboratorio(lab1);
-		
-		Set<Integer> peligros2 = new HashSet<>();
-		peligros2.add(2);
-		peligros2.add(3);
-		Laboratorio lab2 = new Laboratorio(15, peligros2);
-		sede.agregarLaboratorio(lab2);
-		
-		return sede;
+
+	private static void inicializarSedes(Empresa empresa) {
+		empresa.crearSede(Provincia.BUENOS_AIRES);
+		empresa.crearSede(Provincia.CORDOBA);
 	}
-	
-	private static Sede crearSedeCordoba() {
-		Sede sede = new Sede(Provincia.CORDOBA);
-		
-		return sede;
+
+	private static void inicializarLaboratorios(Empresa empresa) {
+		try {
+			empresa.crearLaboratorio(10, Arrays.asList(1, 2), 1);
+			empresa.crearLaboratorio(15, Arrays.asList(1), 1);
+			empresa.crearLaboratorio(8, Arrays.asList(3), 1);
+		} catch (SedeNoEncontrada e) {
+			e.printStackTrace();
+		}
 	}
-	
-	public static List<PerfilTecnico> inicializarPerfilesTecnicos() {
-		PerfilTecnico p1 = new PerfilTecnico("Farmaceutico", 100000, 4);
-		PerfilTecnico p2 = new PerfilTecnico("Quimico", 80000, 3);
-		PerfilTecnico p3 = new PerfilTecnico("Asistente", 50000, 0);
-		
-		return Arrays.asList(p1, p2, p3);
-	} 
+
+	private static void inicializarPerfilesTecnicos(Empresa empresa) {
+		empresa.crearPerfil("Farmaceutico", 100000, 4);
+		empresa.crearPerfil("Quimico", 80000, 3);
+		empresa.crearPerfil("Asistente", 50000, 0);
+	}
+
+	private static void inicializarEmpleados(Empresa empresa) {
+		empresa.crearEmpleado("Gaston");
+		empresa.crearEmpleado("Augusto");
+	}
+
+	private static void inicializarProductosQuimicos(Empresa empresa) {
+		Map<ElementoQuimico, Integer> elementos = new HashMap<>();
+		elementos.put(ElementoQuimico.AZUFRE, 1);
+		elementos.put(ElementoQuimico.CALCIO, 2);
+
+		empresa.crearProductoQuimico(elementos, "Producto 1", TipoProducto.LIMPIEZA, Arrays.asList(1));
+
+		elementos = new HashMap<>();
+		elementos.put(ElementoQuimico.AZUFRE, 1);
+		elementos.put(ElementoQuimico.HIERRO, 3);
+		elementos.put(ElementoQuimico.CALCIO, 5);
+
+		empresa.crearProductoQuimico(elementos, "Producto 2", TipoProducto.LIMPIEZA, Arrays.asList(1, 2));
+
+		elementos = new HashMap<>();
+		elementos.put(ElementoQuimico.SODIO, 4);
+
+		empresa.crearProductoQuimico(elementos, "Producto 3", TipoProducto.MEDICAMENTO, Arrays.asList(3));
+
+		elementos = new HashMap<>();
+		elementos.put(ElementoQuimico.CALCIO, 2);
+
+		empresa.crearProductoQuimico(elementos, "Producto 4", TipoProducto.PERFUMERIA, Arrays.asList(1, 3));
+	}
 }

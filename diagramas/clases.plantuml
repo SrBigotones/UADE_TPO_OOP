@@ -120,11 +120,15 @@ enum Turno {
   TARDE
 }
 
-class ElementoQuimico {
+enum ElementoQuimico {
+  HIERRO
+  SODIO
+  CALCIO
+  AZUFRE
   + nroAtomico: int
   + simbolo: String
   + nombre: String
-  << constructor >> ElementoQuimico(int, String, String)
+  - << constructor >> ElementoQuimico(int, String, String)
 }
 
 abstract class Empleado {

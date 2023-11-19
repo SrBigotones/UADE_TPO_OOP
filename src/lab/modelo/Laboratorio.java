@@ -6,6 +6,7 @@ import java.util.Set;
 
 import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.PruebaLoteNoEncontrado;
+import lab.util.Utilidades;
 
 public class Laboratorio extends Entidad {
 	private Map<FechaTurno, PruebaLote[]> pruebas;
