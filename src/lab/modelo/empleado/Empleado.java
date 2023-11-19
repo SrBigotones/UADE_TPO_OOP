@@ -2,7 +2,7 @@ package lab.modelo.empleado;
 
 import lab.modelo.Entidad;
 
-public class Empleado extends Entidad {
+public abstract class Empleado extends Entidad {
 	private String nombre;
 	
 	public Empleado(String nombre) {
