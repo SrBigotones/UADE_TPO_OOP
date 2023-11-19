@@ -2,6 +2,7 @@ package lab.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import lab.modelo.empleado.EmpleadoAdministrativo;
 import lab.modelo.enums.Provincia;
@@ -18,8 +19,10 @@ public class Sede extends Entidad {
 		this.laboratorios = new ArrayList<>();
 	}
 
-	public void agregarLaboratorio(Laboratorio lab) {
-		laboratorios.add(lab);
+	public Laboratorio agregarLaboratorio(int capacidadPersonas, Set<TipoPeligro> tipoPeligros) {
+		Laboratorio laboratorio = new Laboratorio(capacidadPersonas, tipoPeligros);
+		laboratorios.add(laboratorio);
+		return laboratorio;
 	}
 
 	public void agendarPrueba() {

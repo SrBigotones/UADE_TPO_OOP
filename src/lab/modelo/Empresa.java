@@ -13,6 +13,7 @@ import lab.modelo.empleado.Empleado;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.Provincia;
 import lab.modelo.enums.TipoProducto;
+import lab.util.Utilidades;
 
 public class Empresa {
 	private static int CANT_SEDE_PROVINCIA = 1;
@@ -49,18 +50,19 @@ public class Empresa {
 	 */
 	private Empleado buscarEmpleado(int idEmpleado) throws EmpleadoNoEncontrado {
 		
-		for(Empleado empleado: empleados) {
-			if(empleado.esPorId(idEmpleado))
-				return empleado;
+		Empleado empleado = Utilidades.buscarEnListaPorId(idEmpleado, empleados);
+		if(empleado != null) {
+			return empleado;
 		}
+		
 		throw new EmpleadoNoEncontrado();
 	}
 	
 	private Sede buscarSede(int idSede) throws SedeNoEncontrada {
 		
-		for(Sede sede: sedes) {
-			if(sede.esPorId(idSede))
-				return sede;
+		Sede sede = Utilidades.buscarEnListaPorId(idSede, sedes);
+		if(sede != null) {
+			return sede;
 		}
 		throw new SedeNoEncontrada();
 	}
@@ -71,11 +73,10 @@ public class Empresa {
 	
 	private PerfilTecnico buscarPerfilTecnico(int idPerfilTecnico) throws PerfilTenicoNoEncontrado {
 		
-		for(PerfilTecnico perfil: perfiles) {
-			if(perfil.esPorId(idPerfilTecnico))
-				return perfil;
-		}
 		
+		PerfilTecnico perfil = Utilidades.buscarEnListaPorId(idPerfilTecnico, perfiles);
+		if(perfil != null)
+			return perfil;
 		
 		throw new PerfilTenicoNoEncontrado();
 	}
@@ -89,10 +90,10 @@ public class Empresa {
 	 */
 	private TipoPeligro buscarTipoPeligro(int idTipoPeligro) throws TipoPeligroNoEncontrado {
 		
-		for(TipoPeligro tipoPeligro: tipoPeligros) {
-			if(tipoPeligro.esPorId(idTipoPeligro))
-				return tipoPeligro;
-		}
+		
+		TipoPeligro tipoPeligro = Utilidades.buscarEnListaPorId(idTipoPeligro, tipoPeligros);
+		if(tipoPeligro != null)
+			return tipoPeligro;
 		
 		throw new TipoPeligroNoEncontrado();
 	}
@@ -143,9 +144,9 @@ public class Empresa {
 	 * @return Empleado creado
 	 */
 	public Empleado crearEmpleado(String nombre) {
-		
-		
-		return null;
+		Empleado empleado = new Empleado(nombre);
+		empleados.add(empleado);
+		return empleado;
 	}
 	 
 	/**
@@ -208,18 +209,29 @@ public class Empresa {
 	 * @param capacidadPersonas
 	 * @param tipoPeligros
 	 * @return Laboratorio creado
+	 * @throws SedeNoEncontrada 
 	 */
-	public Laboratorio crearLaboratorio(int capacidadPersonas, Set<TipoPeligro> tipoPeligros, int idSede) { ///'capacidadPersonas'/
-		return null;
+	public Laboratorio crearLaboratorio(int capacidadPersonas, Set<TipoPeligro> tipoPeligros, int idSede) throws SedeNoEncontrada { ///'capacidadPersonas'/
+		Sede sede = this.buscarSede(idSede);
+		Laboratorio lab = sede.agregarLaboratorio(capacidadPersonas, tipoPeligros);
+		return lab;
 	}
+	
 	/**
 	 * Modificar un laboratorio
 	 * @param capacidadPersonas
 	 * @param tipoPeligros
 	 * @return Laboratorio modificado
+	 * @throws SedeNoEncontrada 
 	 */
-	public Laboratorio modificarLaboratorio(int idLaboratorio, int idSede, int capacidadPersonas, Set<TipoPeligro> tipoPeligros){// /'capacidadPersonas'/
-		return null;
+	public Laboratorio modificarLaboratorio(int idLaboratorio, int idSede, int capacidadPersonas, Set<TipoPeligro> tipoPeligros) throws SedeNoEncontrada{// /'capacidadPersonas'/
+		Sede sede = this.buscarSede(idSede);
+		Laboratorio lab = sede.buscarLaboratorio(idLaboratorio);
+		
+		lab.establecerPeligrosPermitidos(tipoPeligros);
+		lab.setCapacidadPersonas(capacidadPersonas);
+		
+		return lab;
 	}
 	
 	/**
@@ -228,7 +240,10 @@ public class Empresa {
 	 * @return Sede creada
 	 */
 	public Sede crearSede(Provincia provincia) {
-		return null;
+		
+		Sede sede = new Sede(provincia);
+		this.sedes.add(sede);
+		return sede;
 	}
 	 
 	 /*
@@ -241,8 +256,8 @@ public class Empresa {
 	 * @param sede
 	 * @return Reserva?????
 	 */
-	public Object reservar(int idPruebaLote, FechaTurno fechaTurno, int idSede) {
-		return null;
+	public boolean reservar(int idPruebaLote, FechaTurno fechaTurno, int idSede) {
+		return false;
 	}
 	
 	

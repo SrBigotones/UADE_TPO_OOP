@@ -12,6 +12,11 @@ public class Laboratorio extends Entidad {
 	private int capacidadPersonas;
 	private Set<TipoPeligro> peligrosPermitidos;
 
+	/**
+	 * 
+	 * @param capacidadPersonas
+	 * @param tiposPeligro
+	 */
 	public Laboratorio(int capacidadPersonas, Set<TipoPeligro> tiposPeligro) {
 		super();
 		this.peligrosPermitidos = tiposPeligro;
@@ -78,5 +83,13 @@ public class Laboratorio extends Entidad {
 		}
 		
 		throw new PruebaLoteNoEncontrado();
+	}
+
+	public int getCapacidadPersonas() {
+		return capacidadPersonas;
+	}
+
+	public void setCapacidadPersonas(int capacidadPersonas) {
+		this.capacidadPersonas = capacidadPersonas;
 	}
 }
