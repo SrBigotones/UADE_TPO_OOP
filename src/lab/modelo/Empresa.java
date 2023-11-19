@@ -7,11 +7,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import inicializacion.Inicializador;
+import lab.excepciones.EmpleadoIncompatible;
 import lab.excepciones.EmpleadoNoEncontrado;
 import lab.excepciones.PerfilTenicoNoEncontrado;
+import lab.excepciones.ProductoQuimicoNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
 import lab.excepciones.TipoPeligroNoEncontrado;
 import lab.modelo.empleado.Empleado;
+import lab.modelo.empleado.EmpleadoAdministrativo;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.Provincia;
 import lab.modelo.enums.TipoProducto;
@@ -73,8 +76,12 @@ public class Empresa {
 		throw new SedeNoEncontrada();
 	}
 	
-	private ProductoQuimico buscarProductoQuimico(int idProductoQuimico) {
-		return null;
+	private ProductoQuimico buscarProductoQuimico(int idProductoQuimico) throws ProductoQuimicoNoEncontrado {
+		ProductoQuimico productoQuimico = Utilidades.buscarEnListaPorId(idProductoQuimico, productosQuimicos);
+		if(productoQuimico != null)
+			return productoQuimico;
+	
+		throw new ProductoQuimicoNoEncontrado();
 	}
 	
 	private PerfilTecnico buscarPerfilTecnico(int idPerfilTecnico) throws PerfilTenicoNoEncontrado {
@@ -197,7 +204,9 @@ public class Empresa {
 	 * @return 
 	 */
 	public TipoPeligro crearTipoPeligro(String nombre, double costo) {
-		return null;
+		TipoPeligro tipoPeligro = new TipoPeligro(nombre, costo);
+		this.tipoPeligros.add(tipoPeligro);
+		return tipoPeligro;
 	}
 	 
 	/**
@@ -206,8 +215,10 @@ public class Empresa {
 	 * @param costo
 	 * @return TipoPeligro modificado
 	 */
-	public TipoPeligro modificarTipoPeligro(int idPeligro, double costo) {
-		return null;
+	public TipoPeligro modificarTipoPeligro(int idPeligro, double costo){
+		TipoPeligro tipoPeligro = Utilidades.buscarEnListaPorId(idPeligro, tipoPeligros);
+		tipoPeligro.setCosto(costo);
+		return tipoPeligro;
 	}
 	
 	/**
@@ -253,6 +264,18 @@ public class Empresa {
 		this.sedes.add(sede);
 		return sede;
 	}
+	
+	public void asignarAdministrativoASede(int idSede, int idEmpleadoAdministrativo) throws EmpleadoNoEncontrado, SedeNoEncontrada, EmpleadoIncompatible {
+		Sede sede = buscarSede(idSede);
+		Empleado empleado = buscarEmpleado(idEmpleadoAdministrativo);
+		if(empleado.soyAdministrativo()) {
+			sede.asignarEmpleadoAdministrativo((EmpleadoAdministrativo)empleado);
+		}else {
+			throw new EmpleadoIncompatible();
+		}
+		
+		
+	}
 	 
 	 /*
 	  * ***************************METODOS EMPLEADO TECNICO***************************
@@ -264,7 +287,10 @@ public class Empresa {
 	 * @param sede
 	 * @return Reserva?????
 	 */
-	public boolean reservar(int idPruebaLote, FechaTurno fechaTurno, int idSede) {
+	public boolean reservar(int idPruebaLote, FechaTurno fechaTurno, int idSede, int idLaboratorio) {
+		
+		Sede sede = Utilidades.buscarEnListaPorId(idSede, sedes);
+		
 		return false;
 	}
 	
@@ -339,7 +365,13 @@ public class Empresa {
 		return null;
 	}
 	  
-	public void confirmarLote(int idLote) {//'idLote'/	  
+	public void confirmarLote(int idSede, int idLaboratorio, int idLote) {//'idLote'/	  
+	}
+	
+	public boolean laboratorioPuedeProbarProductoQuimico(int idSede, int idLaboratorio, int idProdQuimico) throws SedeNoEncontrada, ProductoQuimicoNoEncontrado {
+		Sede sede = this.buscarSede(idSede);
+		ProductoQuimico productoQuimico = this.buscarProductoQuimico(idProdQuimico);
+		return sede.laboratorioPuedeProbarProductoQuimico(idLaboratorio, productoQuimico);
 	}
 
 	public List<Sede> getSedes() {

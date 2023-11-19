@@ -25,7 +25,7 @@ public class Sede extends Entidad {
 		return laboratorio;
 	}
 
-	public void agendarPrueba() {
+	public void agendarPrueba(int idLaboratorio, PruebaLote pruebaLote ) {
 
 	}
 
@@ -59,5 +59,11 @@ public class Sede extends Entidad {
 
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
+	}
+
+	public boolean laboratorioPuedeProbarProductoQuimico(int idLaboratorio, ProductoQuimico productoQuimico) {
+		// TODO Auto-generated method stub
+		Laboratorio lab = this.buscarLaboratorio(idLaboratorio);
+		return lab.puedeProbarProductoQuimico(productoQuimico);
 	}
 }

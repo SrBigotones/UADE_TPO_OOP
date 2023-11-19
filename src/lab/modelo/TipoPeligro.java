@@ -17,4 +17,16 @@ public class TipoPeligro extends Entidad {
 	public double getCosto() {
 		return costo;
 	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setCosto(double costo) {
+		this.costo = costo;
+	}
+	
+	
+	
+	
 }

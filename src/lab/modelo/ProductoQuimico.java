@@ -6,7 +6,7 @@ import java.util.Set;
 import lab.modelo.enums.TipoProducto;
 
 public class ProductoQuimico extends Entidad {
-	private Map<ElementoQuimico, Integer> formula;
+	private Map<ElementoQuimico, Integer> formula; //Elemento, cantidad
 	private String nombreComercial;
 	private TipoProducto tipoProducto;
 	private Set<TipoPeligro> peligros;
@@ -23,4 +23,10 @@ public class ProductoQuimico extends Entidad {
 	public boolean esMismoTipo(ProductoQuimico prod) {
 		return prod.tipoProducto.equals(tipoProducto);
 	}
+
+	public Set<TipoPeligro> getPeligros() {
+		return peligros;
+	}
+	
+	
 }

@@ -9,15 +9,15 @@ import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.EstadoLote;
 
 public class PruebaLote extends Entidad {
-	private int idProductoQuimico;
+	private ProductoQuimico productoQuimico; //Dentro de ProductoQuimico se almacena los tipos de peligros y tipoDeProducto
 	private LocalDate fechaFabricacion;
 	private EmpleadoTecnico responsable;
 	private Set<EmpleadoTecnico> ayudantes;
 	private EstrategiaVencimiento estrategiaVencimiento;
 	private EstadoLote estado;
 
-	public PruebaLote(int idProductoQuimico, LocalDate fechaFabricacion, EmpleadoTecnico responsable) {
-		this.idProductoQuimico = idProductoQuimico;
+	public PruebaLote(ProductoQuimico productoQuimico, LocalDate fechaFabricacion, EmpleadoTecnico responsable) {
+		this.productoQuimico = productoQuimico;
 		this.fechaFabricacion = fechaFabricacion;
 		this.responsable = responsable;
 
@@ -90,6 +90,10 @@ public class PruebaLote extends Entidad {
 
 	private void setEstado(EstadoLote estado) {
 		this.estado = estado;
+	}
+
+	public ProductoQuimico getProductoQuimico() {
+		return productoQuimico;
 	}
 	
 	

@@ -1,6 +1,8 @@
 package lab.modelo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +43,8 @@ public class Laboratorio extends Entidad {
 	}
 
 	public void reservar(PruebaLote lote, FechaTurno fechaTurno) throws LaboratorioNoDisponible {
-		if (!disponible(lote, fechaTurno)) {
+		
+		if (!disponible(lote, fechaTurno) || this.puedeProbarProductoQuimico(lote.getProductoQuimico())) {
 			throw new LaboratorioNoDisponible();
 		}
 
@@ -58,9 +61,9 @@ public class Laboratorio extends Entidad {
 		}
 	}
 
-	public double calcularCostoPruebaTotal(FechaTurno fechaTurno, int idLote) throws PruebaLoteNoEncontrado {
+	public double calcularCostoPruebaTotal(int idLote) throws PruebaLoteNoEncontrado {
 		// TODO Falta definir el tipo de salida en el diagrama
-		PruebaLote pruebaLote = this.buscarLote(fechaTurno, idLote);
+		PruebaLote pruebaLote = this.buscarLote(idLote);
 		
 		double costo = pruebaLote.calcularCostoPrueba();
 		for(TipoPeligro tipoPeligro: peligrosPermitidos) {
@@ -76,16 +79,25 @@ public class Laboratorio extends Entidad {
 	}
 	
 	
-	private PruebaLote buscarLote(FechaTurno fechaTurno, int idLote) throws PruebaLoteNoEncontrado {
-		for(PruebaLote pruebaLote: pruebas.get(fechaTurno)) {
-			if(pruebaLote.esPorId(idLote)) {
-				return pruebaLote;
-			}
+	private PruebaLote buscarLote(int idLote) throws PruebaLoteNoEncontrado {
+		List<PruebaLote> auxPruebas = new ArrayList<>();
+		
+		for(PruebaLote[] arr: pruebas.values()) {
+			for(PruebaLote value: arr)
+				auxPruebas.add(value);
 		}
+		
+		PruebaLote pruebaLote = Utilidades.buscarEnListaPorId(idLote, auxPruebas);
+		if(pruebaLote != null)
+			return pruebaLote;
 		
 		throw new PruebaLoteNoEncontrado();
 	}
 
+	
+	public boolean puedeProbarProductoQuimico(ProductoQuimico productoQuimico) {
+		return this.peligrosPermitidos.containsAll(productoQuimico.getPeligros());
+	}
 	public int getCapacidadPersonas() {
 		return capacidadPersonas;
 	}
