@@ -21,4 +21,20 @@ public class EmpleadoTecnico extends Empleado {
 	public int getContadorReservasMesActual() {
 		return contadorReservasMesActual;
 	}
+	
+
+	
+	public double getSueldo() {
+		return perfil.getSueldo();
+	}
+
+	public PerfilTecnico getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(PerfilTecnico perfil) {
+		this.perfil = perfil;
+	}
+	
+	
 }

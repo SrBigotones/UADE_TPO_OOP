@@ -32,10 +32,22 @@ public class PruebaLote extends Entidad {
 		return estrategiaVencimiento.calcularVencimiento(this);
 	}
 
+	
+	/**
+	 * Calcula el costo de la prueba parcial, retorna el costo
+	 * de los participantes en la prueba
+	 * @return
+	 */
 	public double calcularCostoPrueba() {
 		// TODO
+		
+		double costo = responsable.getSueldo() / 60;
+		
+		for(EmpleadoTecnico empTec: ayudantes) {
+			costo += (empTec.getSueldo() / 60);
+		}
 
-		return -1;
+		return costo;
 	}
 
 	public void registrarAyudante(EmpleadoTecnico empleado) {
@@ -44,6 +56,24 @@ public class PruebaLote extends Entidad {
 
 	public void establecerEstrategiaVencimiento(EstrategiaVencimiento estrategia) {
 		this.estrategiaVencimiento = estrategia;
+	}
+	
+	
+	/**
+	 * Una vez finalizada la prueba, el profesional que efectuo la reserva debe colar
+	 * si la misma fue "Aceptada" o "Rechazada" y determinar
+	 * que tipo de cirterio tendra ese lote para el calculo de la fecha
+	 * de vencimiento, Este criterio puede ser modificado posteriormente
+	 * @param resultado
+	 * @param estaEstrategiaVencimiento
+	 */
+	public void finalizarPrueba(EstadoLote resultado, EstrategiaVencimiento estrategiaVencimiento) {
+		if(resultado == EstadoLote.ACEPTADO || resultado == EstadoLote.RECHAZADO) {
+			this.setEstado(resultado);
+			this.establecerEstrategiaVencimiento(estrategiaVencimiento);
+		}
+		
+		
 	}
 
 	public void habilitar() throws EstadoLoteInvalido {
@@ -57,4 +87,10 @@ public class PruebaLote extends Entidad {
 	public EstadoLote getEstado() {
 		return estado;
 	}
+
+	private void setEstado(EstadoLote estado) {
+		this.estado = estado;
+	}
+	
+	
 }

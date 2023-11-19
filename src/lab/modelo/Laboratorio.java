@@ -5,13 +5,14 @@ import java.util.Map;
 import java.util.Set;
 
 import lab.excepciones.LaboratorioNoDisponible;
+import lab.excepciones.PruebaLoteNoEncontrado;
 
 public class Laboratorio extends Entidad {
 	private Map<FechaTurno, PruebaLote[]> pruebas;
 	private int capacidadPersonas;
-	private Set<Integer> peligrosPermitidos;
+	private Set<TipoPeligro> peligrosPermitidos;
 
-	public Laboratorio(int capacidadPersonas, Set<Integer> tiposPeligro) {
+	public Laboratorio(int capacidadPersonas, Set<TipoPeligro> tiposPeligro) {
 		super();
 		this.peligrosPermitidos = tiposPeligro;
 		this.capacidadPersonas = capacidadPersonas;
@@ -51,11 +52,31 @@ public class Laboratorio extends Entidad {
 		}
 	}
 
-	public void calcularCostoPruebaTotal(int idLote) {
+	public double calcularCostoPruebaTotal(FechaTurno fechaTurno, int idLote) throws PruebaLoteNoEncontrado {
 		// TODO Falta definir el tipo de salida en el diagrama
+		PruebaLote pruebaLote = this.buscarLote(fechaTurno, idLote);
+		
+		double costo = pruebaLote.calcularCostoPrueba();
+		for(TipoPeligro tipoPeligro: peligrosPermitidos) {
+			costo += tipoPeligro.getCosto();
+		}
+		
+		return costo;
 	}
 
-	public void establecerPeligrosPermitidos(Set<Integer> tiposPeligro) {
+	
+	public void establecerPeligrosPermitidos(Set<TipoPeligro> tiposPeligro) {
 		this.peligrosPermitidos = tiposPeligro;
+	}
+	
+	
+	private PruebaLote buscarLote(FechaTurno fechaTurno, int idLote) throws PruebaLoteNoEncontrado {
+		for(PruebaLote pruebaLote: pruebas.get(fechaTurno)) {
+			if(pruebaLote.esPorId(idLote)) {
+				return pruebaLote;
+			}
+		}
+		
+		throw new PruebaLoteNoEncontrado();
 	}
 }

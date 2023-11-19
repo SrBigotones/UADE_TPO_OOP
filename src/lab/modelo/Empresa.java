@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 import inicializacion.Inicializador;
+import lab.excepciones.EmpleadoNoEncontrado;
+import lab.excepciones.PerfilTenicoNoEncontrado;
+import lab.excepciones.SedeNoEncontrada;
+import lab.excepciones.TipoPeligroNoEncontrado;
 import lab.modelo.empleado.Empleado;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.Provincia;
@@ -16,7 +20,7 @@ public class Empresa {
 	private List<Sede> sedes;
 	private List<ProductoQuimico> productosQuimicos;
 	private List<Empleado> empleados;
-	private List<TipoPeligro> tipoPeligro;
+	private List<TipoPeligro> tipoPeligros;
 	private List<PerfilTecnico> perfiles;
 	
 	private static Empresa empresa;
@@ -27,7 +31,7 @@ public class Empresa {
 		if(empresa == null) {
 			empresa = new Empresa();
 			empresa.sedes = Inicializador.inicializarSedes();
-			empresa.tipoPeligro = Inicializador.inicializarTiposPeligro();
+			empresa.tipoPeligros = Inicializador.inicializarTiposPeligro();
 			empresa.perfiles = Inicializador.inicializarPerfilesTecnicos();
 		}
 		return empresa;
@@ -41,25 +45,56 @@ public class Empresa {
 	 * Busca la existencia de un empleado con determinado id
 	 * @param idEmpleado
 	 * @return Empleado
+	 * @throws EmpleadoNoEncontrado 
 	 */
-	private Empleado buscarEmpleado(int idEmpleado) {
-		return null;
+	private Empleado buscarEmpleado(int idEmpleado) throws EmpleadoNoEncontrado {
+		
+		for(Empleado empleado: empleados) {
+			if(empleado.esPorId(idEmpleado))
+				return empleado;
+		}
+		throw new EmpleadoNoEncontrado();
 	}
 	
-	private Sede buscarSede(int idSede) {
-		return null;
+	private Sede buscarSede(int idSede) throws SedeNoEncontrada {
+		
+		for(Sede sede: sedes) {
+			if(sede.esPorId(idSede))
+				return sede;
+		}
+		throw new SedeNoEncontrada();
 	}
 	
 	private ProductoQuimico buscarProductoQuimico(int idProductoQuimico) {
 		return null;
 	}
 	
-	private PerfilTecnico buscarPerfilTecnico(int idPerfilTecnico) {
-		return null;
+	private PerfilTecnico buscarPerfilTecnico(int idPerfilTecnico) throws PerfilTenicoNoEncontrado {
+		
+		for(PerfilTecnico perfil: perfiles) {
+			if(perfil.esPorId(idPerfilTecnico))
+				return perfil;
+		}
+		
+		
+		throw new PerfilTenicoNoEncontrado();
 	}
 	
-	private TipoPeligro buscarTipoPeligro(int idTipoPeligro) {
-		return null;
+	
+	/**
+	 * Busca tipoPeligro y retorna el mismo.
+	 * @param idTipoPeligro
+	 * @return
+	 * @throws TipoPeligroNoEncontrado
+	 */
+	private TipoPeligro buscarTipoPeligro(int idTipoPeligro) throws TipoPeligroNoEncontrado {
+		
+		for(TipoPeligro tipoPeligro: tipoPeligros) {
+			if(tipoPeligro.esPorId(idTipoPeligro))
+				return tipoPeligro;
+		}
+		
+		throw new TipoPeligroNoEncontrado();
 	}
 	
 	/**
@@ -68,7 +103,13 @@ public class Empresa {
 	 * @return el numero de sedes en la provincia
 	 */
 	private int sedePorProvincia(Provincia provincia) {
-		return 0;
+		int count = 0;
+		for(Sede sede: sedes) {
+			if(sede.getProvincia() == provincia) {
+				count++;
+			}
+		}
+		return count;
 	}
 	
 	/*
@@ -79,8 +120,22 @@ public class Empresa {
 	 * Asociar a un empleado tecnico un perfil tecnico
 	 * @param idPerfil
 	 * @param idEmpleado
+	 * @throws Exception 
 	 */
-	public void asociarPerfilEmpleado(int idPerfil, int idEmpleado){}// /'id de perfil, id de empleado'/
+	public void asociarPerfilEmpleado(int idPerfil, int idEmpleado) throws Exception{
+		Empleado empleado = this.buscarEmpleado(idEmpleado);
+		if(empleado.soyTecnico()) {
+			PerfilTecnico perfilTecnio = this.buscarPerfilTecnico(idPerfil);
+			EmpleadoTecnico empleadoTecnico = (EmpleadoTecnico) empleado;
+			empleadoTecnico.setPerfil(perfilTecnio);
+		}else {
+			throw new Exception("Empleado no cumple condicion");
+		}
+		
+		
+		
+		
+	}// /'id de perfil, id de empleado'/
 	
 	/**
 	 * Crea un nuevo empleado
@@ -88,6 +143,8 @@ public class Empresa {
 	 * @return Empleado creado
 	 */
 	public Empleado crearEmpleado(String nombre) {
+		
+		
 		return null;
 	}
 	 
@@ -99,6 +156,14 @@ public class Empresa {
 	 * @return PerfilTecnico creado
 	 */
 	public PerfilTecnico crearPerfil(String nombre, double sueldo, int maxReservas) { ///'nombrePuesto, sueldo, maxReservas'/
+		if(sueldo >= 0) {
+			if(maxReservas >= 0) {
+				PerfilTecnico perfilTecnico = new PerfilTecnico(nombre, sueldo, maxReservas);
+				perfiles.add(perfilTecnico);
+				return perfilTecnico;
+			}
+		}
+		
 		return null;
 	}
 	
@@ -109,9 +174,13 @@ public class Empresa {
 	 * @param sueldo
 	 * @param maxReservas
 	 * @return PerfilTecnico modificado
+	 * @throws PerfilTenicoNoEncontrado 
 	 */
-	public PerfilTecnico modificarPerfil(int idPuesto, double sueldo, int maxReservas) {// /'idPuesto, sueldo, maxReservas'/
-		 return null;
+	public PerfilTecnico modificarPerfil(int idPerfil, double sueldo, int maxReservas) throws PerfilTenicoNoEncontrado {// /'idPuesto, sueldo, maxReservas'/
+		PerfilTecnico perfil = this.buscarPerfilTecnico(idPerfil);
+		perfil.setSueldo(sueldo);
+		perfil.setMaxReservas(maxReservas);
+		return perfil;
 	}
 	 
 	/**
@@ -172,7 +241,7 @@ public class Empresa {
 	 * @param sede
 	 * @return Reserva?????
 	 */
-	public Object reservar(PruebaLote pruebaLote, FechaTurno fechaTurno, int idSede) {
+	public Object reservar(int idPruebaLote, FechaTurno fechaTurno, int idSede) {
 		return null;
 	}
 	
