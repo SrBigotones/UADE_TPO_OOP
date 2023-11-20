@@ -4,8 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 import lab.modelo.enums.TipoProducto;
+import lab.util.GeneradorID;
 
 public class ProductoQuimico extends Entidad {
+	private static GeneradorID generadorID = new GeneradorID();
 	private Map<ElementoQuimico, Integer> formula; //Elemento, cantidad
 	private String nombreComercial;
 	private TipoProducto tipoProducto;
@@ -13,7 +15,7 @@ public class ProductoQuimico extends Entidad {
 
 	public ProductoQuimico(Map<ElementoQuimico, Integer> formula, String nombreComercial, TipoProducto tipo,
 			Set<TipoPeligro> peligros) {
-		super();
+		super(generadorID);
 		this.formula = formula;
 		this.nombreComercial = nombreComercial;
 		this.tipoProducto = tipo;

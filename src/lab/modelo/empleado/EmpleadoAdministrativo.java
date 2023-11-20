@@ -5,4 +5,9 @@ public class EmpleadoAdministrativo extends Empleado {
 	public EmpleadoAdministrativo(String nombre) {
 		super(nombre);
 	}
+
+	@Override
+	public boolean soyAdministrativo() {
+		return true;
+	}
 }

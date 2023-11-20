@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import lab.excepciones.EmpleadoIncompatible;
+import lab.excepciones.EmpleadoNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
 import lab.modelo.ElementoQuimico;
 import lab.modelo.Empresa;
@@ -49,8 +51,18 @@ public class Inicializador {
 	}
 
 	private static void inicializarEmpleados(Empresa empresa) {
-		empresa.crearEmpleado("Gaston");
-		empresa.crearEmpleado("Augusto");
+		empresa.crearEmpleadoAdministrativo("Gaston");
+		empresa.crearEmpleadoTecnico("Augusto", 1);
+		empresa.crearEmpleadoGerente("Agustin");
+		empresa.crearEmpleadoSoporte("Nicolas");
+		empresa.crearEmpleadoAdministrativo("Pepe");
+		
+		try {
+			empresa.asignarAdministrativoASede(1, 1);
+			empresa.asignarAdministrativoASede(2, 5);
+		} catch (EmpleadoNoEncontrado | SedeNoEncontrada | EmpleadoIncompatible e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void inicializarProductosQuimicos(Empresa empresa) {

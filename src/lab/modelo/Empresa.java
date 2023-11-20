@@ -15,6 +15,8 @@ import lab.excepciones.SedeNoEncontrada;
 import lab.excepciones.TipoPeligroNoEncontrado;
 import lab.modelo.empleado.Empleado;
 import lab.modelo.empleado.EmpleadoAdministrativo;
+import lab.modelo.empleado.EmpleadoGerente;
+import lab.modelo.empleado.EmpleadoSoporte;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.Provincia;
 import lab.modelo.enums.TipoProducto;
@@ -156,8 +158,27 @@ public class Empresa {
 	 * @param nombre del empleado
 	 * @return Empleado creado
 	 */
-	public Empleado crearEmpleado(String nombre) {
-		Empleado empleado = new Empleado(nombre);
+	public EmpleadoTecnico crearEmpleadoTecnico(String nombre, int idPerfil) {
+		PerfilTecnico perfil = Utilidades.buscarEnListaPorId(idPerfil, perfiles);
+		EmpleadoTecnico empleado = new EmpleadoTecnico(nombre, perfil);
+		empleados.add(empleado);
+		return empleado;
+	}
+	
+	public EmpleadoAdministrativo crearEmpleadoAdministrativo(String nombre) {
+		EmpleadoAdministrativo empleado = new EmpleadoAdministrativo(nombre);
+		empleados.add(empleado);
+		return empleado;
+	}
+	
+	public EmpleadoSoporte crearEmpleadoSoporte(String nombre) {
+		EmpleadoSoporte empleado = new EmpleadoSoporte(nombre);
+		empleados.add(empleado);
+		return empleado;
+	}
+	
+	public EmpleadoGerente crearEmpleadoGerente(String nombre) {
+		EmpleadoGerente empleado = new EmpleadoGerente(nombre);
 		empleados.add(empleado);
 		return empleado;
 	}
@@ -184,7 +205,7 @@ public class Empresa {
 	
 	/**
 	 * Modificar perfil tecnico dado un id 
-	 * @param idPuesto
+	 * @param idPuesto1
 	 * @param sueldo
 	 * @param maxReservas
 	 * @return PerfilTecnico modificado
@@ -205,7 +226,7 @@ public class Empresa {
 	 */
 	public TipoPeligro crearTipoPeligro(String nombre, double costo) {
 		TipoPeligro tipoPeligro = new TipoPeligro(nombre, costo);
-		this.tipoPeligros.add(tipoPeligro);
+		this.tiposPeligro.add(tipoPeligro);
 		return tipoPeligro;
 	}
 	 
@@ -216,7 +237,7 @@ public class Empresa {
 	 * @return TipoPeligro modificado
 	 */
 	public TipoPeligro modificarTipoPeligro(int idPeligro, double costo){
-		TipoPeligro tipoPeligro = Utilidades.buscarEnListaPorId(idPeligro, tipoPeligros);
+		TipoPeligro tipoPeligro = Utilidades.buscarEnListaPorId(idPeligro, tiposPeligro);
 		tipoPeligro.setCosto(costo);
 		return tipoPeligro;
 	}
@@ -230,7 +251,7 @@ public class Empresa {
 	 * @throws SedeNoEncontrada
 	 */
 	public Laboratorio crearLaboratorio(int capacidadPersonas, List<Integer> list, int idSede)
-			throws SedeNoEncontrada { /// 'capacidadPersonas'/
+			throws SedeNoEncontrada {
 		Sede sede = this.buscarSede(idSede);
 		
 		Laboratorio lab = sede.agregarLaboratorio(capacidadPersonas, mapIdsToTipoPeligro(list));
@@ -271,7 +292,7 @@ public class Empresa {
 		if(empleado.soyAdministrativo()) {
 			sede.asignarEmpleadoAdministrativo((EmpleadoAdministrativo)empleado);
 		}else {
-			throw new EmpleadoIncompatible();
+			throw new EmpleadoIncompatible(empleado);
 		}
 		
 		

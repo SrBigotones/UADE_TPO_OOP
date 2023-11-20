@@ -1,15 +1,12 @@
 package lab.modelo;
 
-import java.util.List;
-
 import lab.util.GeneradorID;
 
 public abstract class Entidad {
-	private static GeneradorID generadorID = new GeneradorID();
 	private int id;
 	
-	public Entidad() {
-		id = generadorID.nextId();
+	public Entidad(GeneradorID generadorID) {
+		this.id = generadorID.nextId();
 	}
 	
 	public int getId() {

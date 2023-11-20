@@ -8,9 +8,11 @@ import java.util.Set;
 
 import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.PruebaLoteNoEncontrado;
+import lab.util.GeneradorID;
 import lab.util.Utilidades;
 
 public class Laboratorio extends Entidad {
+	private static GeneradorID generadorID = new GeneradorID();
 	private Map<FechaTurno, PruebaLote[]> pruebas;
 	private int capacidadPersonas;
 	private Set<TipoPeligro> peligrosPermitidos;
@@ -21,7 +23,7 @@ public class Laboratorio extends Entidad {
 	 * @param tiposPeligro
 	 */
 	public Laboratorio(int capacidadPersonas, Set<TipoPeligro> tiposPeligro) {
-		super();
+		super(generadorID);
 		this.peligrosPermitidos = tiposPeligro;
 		this.capacidadPersonas = capacidadPersonas;
 		pruebas = new HashMap<>();

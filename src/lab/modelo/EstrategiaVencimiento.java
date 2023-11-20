@@ -2,12 +2,15 @@ package lab.modelo;
 
 import java.time.LocalDate;
 
+import lab.util.GeneradorID;
+
 public abstract class EstrategiaVencimiento extends Entidad {
 	
+	private static GeneradorID generadorID = new GeneradorID();
 	private String descripcion;
 	
 	public EstrategiaVencimiento(String descripcion) {
-		super();
+		super(generadorID);
 		this.descripcion = descripcion;
 	}
 	

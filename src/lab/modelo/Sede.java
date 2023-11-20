@@ -6,15 +6,17 @@ import java.util.Set;
 
 import lab.modelo.empleado.EmpleadoAdministrativo;
 import lab.modelo.enums.Provincia;
+import lab.util.GeneradorID;
 import lab.util.Utilidades;
 
 public class Sede extends Entidad {
+	private static GeneradorID generadorID = new GeneradorID();
 	private EmpleadoAdministrativo administrativo;
 	private List<Laboratorio> laboratorios;
 	private Provincia provincia;
 
 	public Sede(Provincia provincia) {
-		super();
+		super(generadorID);
 		this.provincia = provincia;
 		this.laboratorios = new ArrayList<>();
 	}

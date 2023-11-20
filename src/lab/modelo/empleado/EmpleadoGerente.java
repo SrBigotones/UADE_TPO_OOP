@@ -6,4 +6,8 @@ public class EmpleadoGerente extends Empleado {
 		super(nombre);
 	}
 
+	@Override
+	public boolean soyGerente() {
+		return true;
+	}
 }

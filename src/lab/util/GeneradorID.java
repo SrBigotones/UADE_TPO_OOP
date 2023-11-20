@@ -8,6 +8,6 @@ public class GeneradorID {
 	}
 	
 	public int nextId() {
-		return ++id;
+		return id++;
 	}
 }

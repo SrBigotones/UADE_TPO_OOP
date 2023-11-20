@@ -7,8 +7,10 @@ import java.util.Set;
 import lab.excepciones.EstadoLoteInvalido;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.EstadoLote;
+import lab.util.GeneradorID;
 
 public class PruebaLote extends Entidad {
+	private static GeneradorID generadorID = new GeneradorID();
 	private ProductoQuimico productoQuimico; //Dentro de ProductoQuimico se almacena los tipos de peligros y tipoDeProducto
 	private LocalDate fechaFabricacion;
 	private EmpleadoTecnico responsable;
@@ -17,6 +19,7 @@ public class PruebaLote extends Entidad {
 	private EstadoLote estado;
 
 	public PruebaLote(ProductoQuimico productoQuimico, LocalDate fechaFabricacion, EmpleadoTecnico responsable) {
+		super(generadorID);
 		this.productoQuimico = productoQuimico;
 		this.fechaFabricacion = fechaFabricacion;
 		this.responsable = responsable;

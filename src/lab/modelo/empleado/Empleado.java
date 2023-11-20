@@ -1,13 +1,15 @@
 package lab.modelo.empleado;
 
 import lab.modelo.Entidad;
+import lab.util.GeneradorID;
 
 public abstract class Empleado extends Entidad {
 	private String nombre;
+	private static GeneradorID generadorID = new GeneradorID();
 	
 	public Empleado(String nombre) {
-		super();
-		this.nombre = nombre; 
+		super(generadorID);
+		this.nombre = nombre;
 	}
 	
 	public String getNombre() {

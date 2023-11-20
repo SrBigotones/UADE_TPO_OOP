@@ -6,4 +6,8 @@ public class EmpleadoSoporte extends Empleado {
 		super(nombre);
 	}
 
+	@Override
+	public boolean soySoporte() {
+		return true;
+	}
 }
