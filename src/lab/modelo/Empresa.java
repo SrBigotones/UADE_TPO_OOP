@@ -320,9 +320,9 @@ public class Empresa {
 	 * @return TipoProducto modificado
 	 */
 	public TipoProducto modificarTiposProducto(int idProducto, int diasVencimiento){
-		TipoProducto tipoPeligro = Utilidades.buscarEnListaPorId(idProducto, tiposProducto);
-		tipoPeligro.setDiasVencimiento(diasVencimiento);
-		return tipoPeligro;
+		TipoProducto tipoProducto = Utilidades.buscarEnListaPorId(idProducto, tiposProducto);
+		tipoProducto.setDiasVencimiento(diasVencimiento);
+		return tipoProducto;
 	}
 	
 	 
