@@ -28,7 +28,9 @@ class Empresa {
   + reservar(PruebaLote, FechaTurno, Sede): void
   + diagnosticarPrueba(int, boolean): void /'idLote, aprobacion'/
   + crearProductoQuimico(Map<ElementoQuimico, Integer>, String, TipoProducto, Set<TipoPeligro>): ProductoQuimico
-  
+  + crearTiposProducto(String , int): TipoProducto
+  + modificarTiposProducto(int, int): TipoProducto
+
   + registrarEmpleadoPrueba(EmpleadoTecnico, int): boolean /'id de prueba'/
   + agregarSede(Provincia): void
   + asignarEmpleadoAdministrivoASede(int, int): void /'idSede, idEmpleado'/
