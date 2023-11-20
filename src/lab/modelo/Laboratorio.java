@@ -8,6 +8,7 @@ import java.util.Set;
 
 import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.PruebaLoteNoEncontrado;
+import lab.modelo.empleado.EmpleadoTecnico;
 import lab.util.GeneradorID;
 import lab.util.Utilidades;
 
@@ -29,24 +30,34 @@ public class Laboratorio extends Entidad {
 		pruebas = new HashMap<>();
 	}
 
-	public boolean disponible(PruebaLote lote, FechaTurno fechaTurno) {
+	public boolean disponible(ProductoQuimico productoQuimico, int auxiliaresRequeridos, FechaTurno fechaTurno) {
 		PruebaLote[] pruebasEnTurno = pruebas.get(fechaTurno);
 		boolean turnoDisponible = pruebasEnTurno == null || pruebasEnTurno[0] == null || pruebasEnTurno[1] == null;
 		if (!turnoDisponible)
 			return false;
 
 		// TODO Verficar que el tipo de peligro del lote encaja con el laboratorio
+		this.puedeProbarProductoQuimico(productoQuimico);
 
 		// TODO Verificar la capacidad de personas del laboratorio con las pruebas y el lote
+		int cuentaAuxiliares = capacidadPersonas - auxiliaresRequeridos;
+		if(pruebasEnTurno != null && pruebasEnTurno[0]!= null) {
+			cuentaAuxiliares -= pruebasEnTurno[0].getAuxiliaresRequeridos();
+		}
+		if(cuentaAuxiliares < 0)
+			return false;
 
 		// TODO Verficar que los productos de la prueba ya existente en esa fecha turno, sean compatibles (si es que ya habia una prueba)
+		if(pruebasEnTurno != null && pruebasEnTurno[0] !=  null && !pruebasEnTurno[0].getProductoQuimico().esMismoTipo(productoQuimico)) {
+			return false;
+		}
 		
 		return true;
 	}
 
-	public void reservar(PruebaLote lote, FechaTurno fechaTurno) throws LaboratorioNoDisponible {
+	public void reservar(ProductoQuimico productoQuimico, int auxiliaresRequeridos, EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno) throws LaboratorioNoDisponible {
 		
-		if (!disponible(lote, fechaTurno) || this.puedeProbarProductoQuimico(lote.getProductoQuimico())) {
+		if (!disponible(productoQuimico, auxiliaresRequeridos, fechaTurno) || this.puedeProbarProductoQuimico(productoQuimico)) {
 			throw new LaboratorioNoDisponible();
 		}
 
@@ -56,10 +67,11 @@ public class Laboratorio extends Entidad {
 		}
 
 		PruebaLote[] pruebasEnTurno = pruebas.get(fechaTurno);
+		PruebaLote nuevaPruebaLote = new PruebaLote(productoQuimico, empleadoResponsable, auxiliaresRequeridos );
 		if (pruebasEnTurno[0] == null) {
-			pruebasEnTurno[0] = lote;
+			pruebasEnTurno[0] = nuevaPruebaLote;
 		} else {
-			pruebasEnTurno[1] = lote;
+			pruebasEnTurno[1] = nuevaPruebaLote;
 		}
 	}
 
@@ -97,6 +109,11 @@ public class Laboratorio extends Entidad {
 	}
 
 	
+	public void registrarAyudanteAPrueba(EmpleadoTecnico empleadoTecnico, int idPrueba) throws PruebaLoteNoEncontrado {
+		PruebaLote pruebaLote = this.buscarLote(idPrueba);
+		pruebaLote.registrarAyudante(empleadoTecnico);
+	}
+	
 	public boolean puedeProbarProductoQuimico(ProductoQuimico productoQuimico) {
 		return this.peligrosPermitidos.containsAll(productoQuimico.getPeligros());
 	}
@@ -106,5 +123,19 @@ public class Laboratorio extends Entidad {
 
 	public void setCapacidadPersonas(int capacidadPersonas) {
 		this.capacidadPersonas = capacidadPersonas;
+	}
+
+	public void establecerEstrategiaVencimiento(int idPrueba, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado {
+		// TODO Auto-generated method stub
+		PruebaLote pruebaLote = this.buscarLote(idPrueba);
+		pruebaLote.establecerEstrategiaVencimiento(estrategiaVencimiento);
+		
+	}
+
+	public void confirmarLote(int idLote) throws PruebaLoteNoEncontrado {
+		// TODO Auto-generated method stub
+		PruebaLote pruebaLote = this.buscarLote(idLote);
+		pruebaLote.confirmarLote();
+		
 	}
 }

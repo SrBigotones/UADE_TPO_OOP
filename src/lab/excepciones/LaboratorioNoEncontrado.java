@@ -1,5 +1,5 @@
 package lab.excepciones;
 
-public class LaboratorioNoEncontrado {
+public class LaboratorioNoEncontrado extends Exception{
 
 }

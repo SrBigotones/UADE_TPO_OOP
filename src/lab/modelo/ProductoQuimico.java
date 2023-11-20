@@ -3,6 +3,7 @@ package lab.modelo;
 import java.util.Map;
 import java.util.Set;
 
+import lab.modelo.enums.TipoProducto;
 //import lab.modelo.enums.TipoProducto;
 import lab.util.GeneradorID;
 

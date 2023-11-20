@@ -9,8 +9,10 @@ import java.util.stream.Collectors;
 import inicializacion.Inicializador;
 import lab.excepciones.EmpleadoIncompatible;
 import lab.excepciones.EmpleadoNoEncontrado;
+import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PerfilTenicoNoEncontrado;
 import lab.excepciones.ProductoQuimicoNoEncontrado;
+import lab.excepciones.PruebaLoteNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
 import lab.excepciones.TipoPeligroNoEncontrado;
 import lab.modelo.empleado.Empleado;
@@ -19,6 +21,7 @@ import lab.modelo.empleado.EmpleadoGerente;
 import lab.modelo.empleado.EmpleadoSoporte;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.Provincia;
+import lab.modelo.enums.TipoProducto;
 //import lab.modelo.enums.TipoProducto;
 import lab.util.Utilidades;
 
@@ -225,8 +228,8 @@ public class Empresa {
 	 * @param costo
 	 * @return 
 	 */
-	public TipoPeligro crearTipoPeligro(String nombre, double costo) {
-		TipoPeligro tipoPeligro = new TipoPeligro(nombre, costo);
+	public TipoPeligro crearTipoPeligro(String nombre, double costo, int diasVencimiento) {
+		TipoPeligro tipoPeligro = new TipoPeligro(nombre, costo, diasVencimiento);
 		this.tiposPeligro.add(tipoPeligro);
 		return tipoPeligro;
 	}
@@ -267,8 +270,9 @@ public class Empresa {
 	 * @param tipoPeligros
 	 * @return Laboratorio modificado
 	 * @throws SedeNoEncontrada 
+	 * @throws LaboratorioNoEncontrado 
 	 */
-	public Laboratorio modificarLaboratorio(int idLaboratorio, int idSede, int capacidadPersonas, Set<TipoPeligro> tipoPeligros) throws SedeNoEncontrada{// /'capacidadPersonas'/
+	public Laboratorio modificarLaboratorio(int idLaboratorio, int idSede, int capacidadPersonas, Set<TipoPeligro> tipoPeligros) throws SedeNoEncontrada, LaboratorioNoEncontrado{// /'capacidadPersonas'/
 		Sede sede = this.buscarSede(idSede);
 		Laboratorio lab = sede.buscarLaboratorio(idLaboratorio);
 		
@@ -300,30 +304,30 @@ public class Empresa {
 		
 		
 	}
+	//ESTO NO VA!!!!!!!!!
+//	/**
+//	 * Crea un nuevo tipo de producto
+//	 * @param nombre
+//	 * @param diasVencimiento
+//	 * @return 
+//	 */
+//	public TipoProducto crearTiposProducto(String nombre, int diasVencimiento) {
+//		TipoProducto tipoProducto = new TipoProducto(nombre, diasVencimiento);
+//		this.tiposProducto.add(tipoProducto);
+//		return tipoProducto;
+//	}
 	
-	/**
-	 * Crea un nuevo tipo de producto
-	 * @param nombre
-	 * @param diasVencimiento
-	 * @return 
-	 */
-	public TipoProducto crearTiposProducto(String nombre, int diasVencimiento) {
-		TipoProducto tipoProducto = new TipoProducto(nombre, diasVencimiento);
-		this.tiposProducto.add(tipoProducto);
-		return tipoProducto;
-	}
-	
-	/**
-	 * Modifica tipo de producto existente
-	 * @param idProducto
-	 * @param diasVencimiento
-	 * @return TipoProducto modificado
-	 */
-	public TipoProducto modificarTiposProducto(int idProducto, int diasVencimiento){
-		TipoProducto tipoProducto = Utilidades.buscarEnListaPorId(idProducto, tiposProducto);
-		tipoProducto.setDiasVencimiento(diasVencimiento);
-		return tipoProducto;
-	}
+//	/**
+//	 * Modifica tipo de producto existente
+//	 * @param idProducto
+//	 * @param diasVencimiento
+//	 * @return TipoProducto modificado
+//	 */
+//	public TipoProducto modificarTiposProducto(int idProducto, int diasVencimiento){
+//		TipoProducto tipoProducto = Utilidades.buscarEnListaPorId(idProducto, tiposProducto);
+//		tipoProducto.setDiasVencimiento(diasVencimiento);
+//		return tipoProducto;
+//	}
 	
 	 
 	 /*
@@ -348,9 +352,10 @@ public class Empresa {
 	 * Diagnosticar resultado de prueba
 	 * @param idLote
 	 * @param aprobacion
+	 * @throws SedeNoEncontrada 
 	 */
-	public void diagnosticarPrueba(int idLote, boolean aprobacion) { //'idLote, aprobacion'/
-		 
+	public void diagnosticarPrueba(int idSede, int idLaboratorio,int idLote, boolean aprobacion) throws SedeNoEncontrada { //'idLote, aprobacion'/
+		 Sede sede = this.buscarSede(idSede);
 	}
 	 
 	/**
@@ -373,8 +378,22 @@ public class Empresa {
 	 * @param idPrueba
 	 * @param idSede
 	 * @return exito de la operacion
+	 * @throws SedeNoEncontrada 
+	 * @throws EmpleadoNoEncontrado 
+	 * @throws PruebaLoteNoEncontrado 
+	 * @throws EmpleadoIncompatible 
+	 * @throws LaboratorioNoEncontrado 
 	 */
-	public boolean registrarEmpleadoPrueba(int idEmpleado, int idPrueba, int idSede) { //'id de prueba'/
+	public boolean registrarEmpleadoPrueba(int idEmpleado, int idPrueba, int idSede, int idLaboratorio) throws SedeNoEncontrada, EmpleadoNoEncontrado, PruebaLoteNoEncontrado, EmpleadoIncompatible, LaboratorioNoEncontrado { //'id de prueba'/
+		
+		Sede sede = this.buscarSede(idSede);
+		
+		Empleado empleado = this.buscarEmpleado(idEmpleado);
+		if(empleado.soyTecnico())
+			sede.registrarAyudanteAPrueba((EmpleadoTecnico)empleado, idLaboratorio, idPrueba);
+		else
+			throw new EmpleadoIncompatible(empleado);
+		
 		return false;
 	}
 	 
@@ -382,9 +401,17 @@ public class Empresa {
 	 * Asigna un empleado administrativo a una sede
 	 * @param idSede
 	 * @param idEmpleado
+	 * @throws SedeNoEncontrada 
+	 * @throws EmpleadoNoEncontrado 
+	 * @throws EmpleadoIncompatible 
 	 */
-	public void asignarEmpleadoAdministrivoASede(int idSede, int idEmpleado){//'idSede, idEmpleado'/
-		  
+	public void asignarEmpleadoAdministrivoASede(int idSede, int idEmpleado) throws SedeNoEncontrada, EmpleadoNoEncontrado, EmpleadoIncompatible{//'idSede, idEmpleado'/
+		  Sede sede = this.buscarSede(idSede);
+		  Empleado empleado = this.buscarEmpleado(idEmpleado);
+		  if(empleado.soyAdministrativo())
+			  sede.asignarEmpleadoAdministrativo((EmpleadoAdministrativo)empleado);
+		  else
+			  throw new EmpleadoIncompatible(empleado);
 	}
 	
 	/*
@@ -396,28 +423,25 @@ public class Empresa {
 	 * @param idPrueba
 	 * @param estrategiaVencimiento
 	 * @return La prueba modificada
+	 * @throws SedeNoEncontrada 
+	 * @throws PruebaLoteNoEncontrado 
+	 * @throws LaboratorioNoEncontrado 
 	 */
-	public PruebaLote establecerEstrategiaVencimiento(int idPrueba, EstrategiaVencimiento estrategiaVencimiento){
+	public void establecerEstrategiaVencimiento(int idSede, int idLaboratorio, int idPrueba, EstrategiaVencimiento estrategiaVencimiento) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado{
 		  //'id de prueba'/
-		return null;
+		Sede sede = this.buscarSede(idSede);
+		sede.establecerEstrategiaVencimiento(idLaboratorio, idPrueba, estrategiaVencimiento);
+		
 	}
 	  
-	  //' Gerente '/
-	/**
-	 * Esto parece estar repetido de establecerEstrategiaVencimiento
-	 * @param idLote
-	 * @param estrategiaVencimiento
-	 * @return
-	 */
-	public PruebaLote cambiarCriterioVencimiento(int idLote, EstrategiaVencimiento estrategiaVencimiento){
-		//'idLote'/
-		return null;
-	}
+	
 	  
-	public void confirmarLote(int idSede, int idLaboratorio, int idLote) {//'idLote'/	  
+	public void confirmarLote(int idSede, int idLaboratorio, int idLote) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado {//'idLote'/	
+		Sede sede = this.buscarSede(idSede);
+		sede.confirmarLote(idLaboratorio, idLote);
 	}
 	
-	public boolean laboratorioPuedeProbarProductoQuimico(int idSede, int idLaboratorio, int idProdQuimico) throws SedeNoEncontrada, ProductoQuimicoNoEncontrado {
+	public boolean laboratorioPuedeProbarProductoQuimico(int idSede, int idLaboratorio, int idProdQuimico) throws SedeNoEncontrada, ProductoQuimicoNoEncontrado, LaboratorioNoEncontrado {
 		Sede sede = this.buscarSede(idSede);
 		ProductoQuimico productoQuimico = this.buscarProductoQuimico(idProdQuimico);
 		return sede.laboratorioPuedeProbarProductoQuimico(idLaboratorio, productoQuimico);

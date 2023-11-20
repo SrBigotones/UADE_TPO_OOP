@@ -14,18 +14,19 @@ public class PruebaLote extends Entidad {
 	private ProductoQuimico productoQuimico; //Dentro de ProductoQuimico se almacena los tipos de peligros y tipoDeProducto
 	private LocalDate fechaFabricacion;
 	private EmpleadoTecnico responsable;
-	private Set<EmpleadoTecnico> ayudantes;
+	private Set<EmpleadoTecnico> auxiliares;
+	private int auxiliaresRequeridos;
 	private EstrategiaVencimiento estrategiaVencimiento;
 	private EstadoLote estado;
 
-	public PruebaLote(ProductoQuimico productoQuimico, LocalDate fechaFabricacion, EmpleadoTecnico responsable) {
+	public PruebaLote(ProductoQuimico productoQuimico, EmpleadoTecnico responsable, int auxiliaresRequeridos) {
 		super(generadorID);
 		this.productoQuimico = productoQuimico;
-		this.fechaFabricacion = fechaFabricacion;
+//		this.fechaFabricacion = fechaFabricacion;
 		this.responsable = responsable;
 
 		estado = EstadoLote.PENDIENTE;
-		ayudantes = new HashSet<>();
+		auxiliares = new HashSet<>();
 	}
 
 	public LocalDate calcularFechaVencimiento() throws EstadoLoteInvalido {
@@ -46,7 +47,7 @@ public class PruebaLote extends Entidad {
 		
 		double costo = responsable.getSueldo() / 60;
 		
-		for(EmpleadoTecnico empTec: ayudantes) {
+		for(EmpleadoTecnico empTec: auxiliares) {
 			costo += (empTec.getSueldo() / 60);
 		}
 
@@ -54,7 +55,7 @@ public class PruebaLote extends Entidad {
 	}
 
 	public void registrarAyudante(EmpleadoTecnico empleado) {
-		ayudantes.add(empleado);
+		auxiliares.add(empleado);
 	}
 
 	public void establecerEstrategiaVencimiento(EstrategiaVencimiento estrategia) {
@@ -98,9 +99,32 @@ public class PruebaLote extends Entidad {
 	public ProductoQuimico getProductoQuimico() {
 		return productoQuimico;
 	}
+	
+
+	public Set<EmpleadoTecnico> getAuxiliares() {
+		return auxiliares;
+	}
+
+	public void setAuxiliares(Set<EmpleadoTecnico> ayudantes) {
+		this.auxiliares = ayudantes;
+	}
 
 	public LocalDate getFechaFabricacion() {
 		return fechaFabricacion;
+	}
+
+	public void confirmarLote() {
+		// TODO Auto-generated method stub
+		this.setEstado(EstadoLote.ACEPTADO);
+		
+	}
+
+	public int getAuxiliaresRequeridos() {
+		return auxiliaresRequeridos;
+	}
+
+	public void setAuxiliaresRequeridos(int auxiliaresRequeridos) {
+		this.auxiliaresRequeridos = auxiliaresRequeridos;
 	}
 	
 	

@@ -24,9 +24,9 @@ public class Inicializador {
 	}
 
 	private static void inicializarTiposPeligro(Empresa empresa) {
-		empresa.crearTipoPeligro("Inflamable", 0);
-		empresa.crearTipoPeligro("Toxico", 0);
-		empresa.crearTipoPeligro("Corrosivo", 0);
+		empresa.crearTipoPeligro("Inflamable", 0, 20);
+		empresa.crearTipoPeligro("Toxico", 0, 10);
+		empresa.crearTipoPeligro("Corrosivo", 0, 50);
 	}
 
 	private static void inicializarSedes(Empresa empresa) {
