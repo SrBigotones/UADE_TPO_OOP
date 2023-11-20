@@ -207,7 +207,7 @@ Sede "1" *-- "∞" Laboratorio
 Sede --- Provincia
 Laboratorio "1" o-- "∞" TipoPeligro
 Empresa "1" *-- "∞" TipoPeligro
-ProductoQuimico --- TipoProducto
+Empresa "1" *-- "∞" TipoProducto
 ProductoQuimico "1" o-- "∞" TipoPeligro
 ProductoQuimico "1" --o "∞" PruebaLote
 PruebaLote --- EstadoLote
@@ -222,6 +222,6 @@ Empresa "1" *-- "∞" PerfilTecnico
 Sede "1" o-- "1" EmpleadoAdministrativo
 PruebaLote "1" --o "∞" EmpleadoTecnico
 Empresa "1" *-- "∞" EstrategiaVencimiento
-Entidad <|-- TipoProducto
+PruebaLote "1" o-- "1" TipoProducto
 
 @enduml
