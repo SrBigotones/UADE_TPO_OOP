@@ -11,7 +11,14 @@ public class CriterioMolecular extends EstrategiaVencimiento{
 	@Override
 	public LocalDate calcularVencimiento(PruebaLote lote) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		long sumNumeroAtomico  = 0;
+		
+		for (ElementoQuimico i : lote.getProductoQuimico().getFormula().keySet() ) {
+			sumNumeroAtomico = sumNumeroAtomico + i.getNroAtomico();
+		}
+		
+		return lote.getFechaFabricacion().plusDays(sumNumeroAtomico/lote.getProductoQuimico().getFormula().size());
 	}
 
 

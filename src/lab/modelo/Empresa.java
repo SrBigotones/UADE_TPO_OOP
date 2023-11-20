@@ -19,7 +19,7 @@ import lab.modelo.empleado.EmpleadoGerente;
 import lab.modelo.empleado.EmpleadoSoporte;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.Provincia;
-import lab.modelo.enums.TipoProducto;
+//import lab.modelo.enums.TipoProducto;
 import lab.util.Utilidades;
 
 public class Empresa {
@@ -30,6 +30,7 @@ public class Empresa {
 	private List<Empleado> empleados;
 	private List<TipoPeligro> tiposPeligro;
 	private List<PerfilTecnico> perfiles;
+	private List<TipoProducto> tiposProducto;
 	
 	private static Empresa empresa;
 	
@@ -229,6 +230,8 @@ public class Empresa {
 		this.tiposPeligro.add(tipoPeligro);
 		return tipoPeligro;
 	}
+	
+	
 	 
 	/**
 	 * Modifica peligro quimico existente
@@ -297,6 +300,31 @@ public class Empresa {
 		
 		
 	}
+	
+	/**
+	 * Crea un nuevo tipo de producto
+	 * @param nombre
+	 * @param diasVencimiento
+	 * @return 
+	 */
+	public TipoProducto crearTiposProducto(String nombre, int diasVencimiento) {
+		TipoProducto tipoProducto = new TipoProducto(nombre, diasVencimiento);
+		this.tiposProducto.add(tipoProducto);
+		return tipoProducto;
+	}
+	
+	/**
+	 * Modifica tipo de producto existente
+	 * @param idProducto
+	 * @param diasVencimiento
+	 * @return TipoProducto modificado
+	 */
+	public TipoProducto modificarTiposProducto(int idProducto, int diasVencimiento){
+		TipoProducto tipoPeligro = Utilidades.buscarEnListaPorId(idProducto, tiposProducto);
+		tipoPeligro.setDiasVencimiento(diasVencimiento);
+		return tipoPeligro;
+	}
+	
 	 
 	 /*
 	  * ***************************METODOS EMPLEADO TECNICO***************************

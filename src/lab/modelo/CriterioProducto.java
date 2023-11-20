@@ -11,6 +11,9 @@ public class CriterioProducto extends EstrategiaVencimiento {
 	@Override
 	public LocalDate calcularVencimiento(PruebaLote lote) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		
+		return lote.getFechaFabricacion().plusDays(lote.getProductoQuimico().getTipoProducto().getDiasVencimiento());
 	}
+
 }

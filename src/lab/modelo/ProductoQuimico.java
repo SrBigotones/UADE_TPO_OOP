@@ -3,7 +3,7 @@ package lab.modelo;
 import java.util.Map;
 import java.util.Set;
 
-import lab.modelo.enums.TipoProducto;
+//import lab.modelo.enums.TipoProducto;
 import lab.util.GeneradorID;
 
 public class ProductoQuimico extends Entidad {
@@ -28,6 +28,14 @@ public class ProductoQuimico extends Entidad {
 
 	public Set<TipoPeligro> getPeligros() {
 		return peligros;
+	}
+
+	public Map<ElementoQuimico, Integer> getFormula() {
+		return formula;
+	}
+
+	public TipoProducto getTipoProducto() {
+		return tipoProducto;
 	}
 	
 	

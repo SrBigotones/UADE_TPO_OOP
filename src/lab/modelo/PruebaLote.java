@@ -98,6 +98,10 @@ public class PruebaLote extends Entidad {
 	public ProductoQuimico getProductoQuimico() {
 		return productoQuimico;
 	}
+
+	public LocalDate getFechaFabricacion() {
+		return fechaFabricacion;
+	}
 	
 	
 }
