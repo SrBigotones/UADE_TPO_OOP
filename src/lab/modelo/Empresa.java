@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import inicializacion.Inicializador;
 import lab.excepciones.EmpleadoIncompatible;
 import lab.excepciones.EmpleadoNoEncontrado;
+import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PerfilTenicoNoEncontrado;
 import lab.excepciones.ProductoQuimicoNoEncontrado;
@@ -20,6 +21,7 @@ import lab.modelo.empleado.EmpleadoAdministrativo;
 import lab.modelo.empleado.EmpleadoGerente;
 import lab.modelo.empleado.EmpleadoSoporte;
 import lab.modelo.empleado.EmpleadoTecnico;
+import lab.modelo.enums.EstadoLote;
 import lab.modelo.enums.Provincia;
 import lab.modelo.enums.TipoProducto;
 //import lab.modelo.enums.TipoProducto;
@@ -339,12 +341,22 @@ public class Empresa {
 	 * @param fechaTurno
 	 * @param sede
 	 * @return Reserva?????
+	 * @throws LaboratorioNoDisponible 
+	 * @throws LaboratorioNoEncontrado 
+	 * @throws ProductoQuimicoNoEncontrado 
+	 * @throws EmpleadoNoEncontrado 
+	 * @throws EmpleadoIncompatible 
 	 */
-	public boolean reservar(int idPruebaLote, FechaTurno fechaTurno, int idSede, int idLaboratorio) {
+	public PruebaLote reservar(int idPruebaLote,int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idSede, int idLaboratorio) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
 		
 		Sede sede = Utilidades.buscarEnListaPorId(idSede, sedes);
-		
-		return false;
+		ProductoQuimico prodQuimico = this.buscarProductoQuimico(idProdQuimico);
+		Empleado emp = this.buscarEmpleado(idEmpleadoResponsable);
+		if(emp.soyTecnico()) {
+			return sede.reservarPrueba(idLaboratorio, prodQuimico,cantidadAuxiliares, (EmpleadoTecnico) emp, fechaTurno);		
+		}else {
+			throw new EmpleadoIncompatible(emp);
+		}
 	}
 	
 	
@@ -353,9 +365,12 @@ public class Empresa {
 	 * @param idLote
 	 * @param aprobacion
 	 * @throws SedeNoEncontrada 
+	 * @throws LaboratorioNoEncontrado 
+	 * @throws PruebaLoteNoEncontrado 
 	 */
-	public void diagnosticarPrueba(int idSede, int idLaboratorio,int idLote, boolean aprobacion) throws SedeNoEncontrada { //'idLote, aprobacion'/
+	public void finalizarPrueba(int idSede, int idLaboratorio,int idLote, EstadoLote estado, EstrategiaVencimiento estrategiaVencimiento) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado { //'idLote, aprobacion'/
 		 Sede sede = this.buscarSede(idSede);
+		 sede.finalizarPrueba(idLaboratorio, idLote, estado, estrategiaVencimiento);
 	}
 	 
 	/**
@@ -436,10 +451,6 @@ public class Empresa {
 	  
 	
 	  
-	public void confirmarLote(int idSede, int idLaboratorio, int idLote) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado {//'idLote'/	
-		Sede sede = this.buscarSede(idSede);
-		sede.confirmarLote(idLaboratorio, idLote);
-	}
 	
 	public boolean laboratorioPuedeProbarProductoQuimico(int idSede, int idLaboratorio, int idProdQuimico) throws SedeNoEncontrada, ProductoQuimicoNoEncontrado, LaboratorioNoEncontrado {
 		Sede sede = this.buscarSede(idSede);

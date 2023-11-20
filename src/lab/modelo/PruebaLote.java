@@ -113,11 +113,6 @@ public class PruebaLote extends Entidad {
 		return fechaFabricacion;
 	}
 
-	public void confirmarLote() {
-		// TODO Auto-generated method stub
-		this.setEstado(EstadoLote.ACEPTADO);
-		
-	}
 
 	public int getAuxiliaresRequeridos() {
 		return auxiliaresRequeridos;

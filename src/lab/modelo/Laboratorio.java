@@ -9,6 +9,7 @@ import java.util.Set;
 import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.PruebaLoteNoEncontrado;
 import lab.modelo.empleado.EmpleadoTecnico;
+import lab.modelo.enums.EstadoLote;
 import lab.util.GeneradorID;
 import lab.util.Utilidades;
 
@@ -55,7 +56,7 @@ public class Laboratorio extends Entidad {
 		return true;
 	}
 
-	public void reservar(ProductoQuimico productoQuimico, int auxiliaresRequeridos, EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno) throws LaboratorioNoDisponible {
+	public PruebaLote reservar(ProductoQuimico productoQuimico, int auxiliaresRequeridos, EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno) throws LaboratorioNoDisponible {
 		
 		if (!disponible(productoQuimico, auxiliaresRequeridos, fechaTurno) || this.puedeProbarProductoQuimico(productoQuimico)) {
 			throw new LaboratorioNoDisponible();
@@ -73,6 +74,8 @@ public class Laboratorio extends Entidad {
 		} else {
 			pruebasEnTurno[1] = nuevaPruebaLote;
 		}
+		
+		return nuevaPruebaLote;
 	}
 
 	public double calcularCostoPruebaTotal(int idLote) throws PruebaLoteNoEncontrado {
@@ -132,10 +135,10 @@ public class Laboratorio extends Entidad {
 		
 	}
 
-	public void confirmarLote(int idLote) throws PruebaLoteNoEncontrado {
+	public void finalizarPrueba(int idLote, EstadoLote estadoLote, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado {
 		// TODO Auto-generated method stub
 		PruebaLote pruebaLote = this.buscarLote(idLote);
-		pruebaLote.confirmarLote();
+		pruebaLote.finalizarPrueba(estadoLote, estrategiaVencimiento);
 		
 	}
 }

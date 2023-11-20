@@ -9,6 +9,7 @@ import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PruebaLoteNoEncontrado;
 import lab.modelo.empleado.EmpleadoAdministrativo;
 import lab.modelo.empleado.EmpleadoTecnico;
+import lab.modelo.enums.EstadoLote;
 import lab.modelo.enums.Provincia;
 import lab.util.GeneradorID;
 import lab.util.Utilidades;
@@ -30,10 +31,21 @@ public class Sede extends Entidad {
 		laboratorios.add(laboratorio);
 		return laboratorio;
 	}
-
-	public void reservarPrueba(int idLaboratorio, ProductoQuimico productoQuimico, int cantidadAuxiliares,EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno ) throws LaboratorioNoEncontrado, LaboratorioNoDisponible {
+	
+	/**
+	 * 
+	 * @param idLaboratorio
+	 * @param productoQuimico
+	 * @param cantidadAuxiliares
+	 * @param empleadoResponsable
+	 * @param fechaTurno
+	 * @return
+	 * @throws LaboratorioNoEncontrado
+	 * @throws LaboratorioNoDisponible
+	 */
+	public PruebaLote reservarPrueba(int idLaboratorio, ProductoQuimico productoQuimico, int cantidadAuxiliares,EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno ) throws LaboratorioNoEncontrado, LaboratorioNoDisponible {
 		Laboratorio laboratorio = this.buscarLaboratorio(idLaboratorio);
-		laboratorio.reservar(productoQuimico, cantidadAuxiliares, empleadoResponsable, fechaTurno);
+		return laboratorio.reservar(productoQuimico, cantidadAuxiliares, empleadoResponsable, fechaTurno);
 	}
 	
 
@@ -89,9 +101,9 @@ public class Sede extends Entidad {
 		lab.establecerEstrategiaVencimiento(idPrueba, estrategiaVencimiento);
 	}
 
-	public void confirmarLote(int idLaboratorio, int idLote) throws PruebaLoteNoEncontrado, LaboratorioNoEncontrado {
+	public void finalizarPrueba(int idLaboratorio, int idLote,EstadoLote estadoLote, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado, LaboratorioNoEncontrado {
 		Laboratorio lab = this.buscarLaboratorio(idLaboratorio);
-		lab.confirmarLote(idLote);
+		lab.finalizarPrueba(idLote,estadoLote, estrategiaVencimiento);
 		
 	}
 }
