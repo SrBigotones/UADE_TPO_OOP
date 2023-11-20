@@ -195,6 +195,12 @@ class TipoPeligro {
   - costo: double
   + <<constructor>> TipoPeligro()
 }
+class TipoProducto  {
+	- id: int
+	-nombre: String
+	-diasVencimiento: int
+  + <<constructor>> TipoProducto()
+}
 
 Empresa "1" *--	"∞" Sede
 Sede "1" *-- "∞" Laboratorio
@@ -216,5 +222,6 @@ Empresa "1" *-- "∞" PerfilTecnico
 Sede "1" o-- "1" EmpleadoAdministrativo
 PruebaLote "1" --o "∞" EmpleadoTecnico
 Empresa "1" *-- "∞" EstrategiaVencimiento
+Entidad <|-- TipoProducto
 
 @enduml
