@@ -1,9 +1,8 @@
 package lab.excepciones;
 
-public class EmpleadoNoEncontrado extends Exception{
+public class EmpleadoNoEncontrado extends Exception {
 
-	
 	public EmpleadoNoEncontrado() {
-		super("Empleado no encontrado");
+		super("Empleado/usuario no encontrado");
 	}
 }

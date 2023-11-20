@@ -4,16 +4,22 @@ import lab.modelo.Entidad;
 import lab.util.GeneradorID;
 
 public abstract class Empleado extends Entidad {
+	private String username;
 	private String nombre;
 	private static GeneradorID generadorID = new GeneradorID();
 	
-	public Empleado(String nombre) {
+	public Empleado(String nombre, String username) {
 		super(generadorID);
 		this.nombre = nombre;
+		this.username = username;
 	}
 	
 	public String getNombre() {
 		return nombre;
+	}
+	
+	public String getUsername() {
+		return username;
 	}
 	
 	public boolean soyTecnico() {
