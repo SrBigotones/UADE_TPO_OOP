@@ -19,7 +19,7 @@ public class Login extends JFrame {
         this.setLayout(new BorderLayout());
 
         JLabel bienvenida = new JLabel("Bienvenido" , SwingConstants.CENTER);
-        bienvenida.setFont(new Font("Arial", Font.PLAIN, 56)); // Tamaño de letra
+        bienvenida.setFont(new Font("Arial", Font.PLAIN, 56)); 
 
         JTextField usuario = new JTextField("Nombre de Usuario");
         usuario.setMargin(new Insets(5, 10, 5, 10));
@@ -27,8 +27,7 @@ public class Login extends JFrame {
         
         JButton iniciarSesionButton = new JButton("Iniciar Sesion");
 
-        Font buttonFont = new Font(iniciarSesionButton.getFont().getName(), Font.PLAIN, 22); // Puedes ajustar el tamaño de la fuente
-        iniciarSesionButton.setFont(buttonFont);
+        Font buttonFont = new Font(iniciarSesionButton.getFont().getName(), Font.PLAIN, 22);
 
         JPanel bienvenidaPanel = new JPanel();
         bienvenidaPanel.setLayout(new BorderLayout());
