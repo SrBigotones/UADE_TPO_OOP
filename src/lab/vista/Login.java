@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import lab.controlador.ControladorLogin;
+
 public class Login extends JFrame {
 	
 	public Login() {
@@ -26,6 +28,12 @@ public class Login extends JFrame {
         
         
         JButton iniciarSesionButton = new JButton("Iniciar Sesion");
+        iniciarSesionButton.addActionListener((e) -> {
+        	boolean encontrado = ControladorLogin.getInstance().login(usuario.getText());
+        	if (!encontrado) {
+        		System.out.println("Usuario no encontrado");
+        	}
+        });
 
         Font buttonFont = new Font(iniciarSesionButton.getFont().getName(), Font.PLAIN, 22);
 
@@ -48,8 +56,7 @@ public class Login extends JFrame {
         botonPanel.add(iniciarSesionButton);
 
         add(centroPanel, BorderLayout.CENTER);
-        add(botonPanel, BorderLayout.PAGE_END);
-        
+        add(botonPanel, BorderLayout.PAGE_END);        
         
         setResizable(false);
     }

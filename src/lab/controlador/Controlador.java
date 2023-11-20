@@ -1,12 +1,37 @@
 package lab.controlador;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import lab.modelo.empleado.Empleado;
 
 public abstract class Controlador {
-	private Empleado usuario;
-	private String panelActual;
-	
-	protected void setUsuario(Empleado usuario) {
-		this.usuario = usuario;
+	private static Empleado usuario;
+	protected static JFrame jfLogin;
+	protected static JFrame jfMenu;
+
+	public Controlador() {
+	}
+
+	protected void cambiarPanel(JPanel panel) {
+		// TODO Se espera a que esté hecho el jframe principal
+		JFrame jframe = new JFrame();
+		jframe.setSize(1000, 700);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jframe.setLocationRelativeTo(null);
+		jframe.add(panel);
+		jframe.setVisible(true);
+	}
+
+	protected void loginExitoso(Empleado empleado) {
+		if (jfMenu == null) {
+			jfMenu = new JFrame();
+		}
+
+		usuario = empleado;
+		jfLogin.setVisible(false);
+		// jfMenu.setVisible(true); TODO Se espera as que esté hecho el jframe
+		cambiarPanel(new JPanel());
+		ControladorSoporte.getInstance().mostrarPantallaSedes();
 	}
 }

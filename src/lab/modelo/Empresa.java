@@ -164,27 +164,27 @@ public class Empresa {
 	 * @param nombre del empleado
 	 * @return Empleado creado
 	 */
-	public EmpleadoTecnico crearEmpleadoTecnico(String nombre, int idPerfil) {
+	public EmpleadoTecnico crearEmpleadoTecnico(String nombre, String username, int idPerfil) {
 		PerfilTecnico perfil = Utilidades.buscarEnListaPorId(idPerfil, perfiles);
-		EmpleadoTecnico empleado = new EmpleadoTecnico(nombre, perfil);
+		EmpleadoTecnico empleado = new EmpleadoTecnico(nombre, username, perfil);
 		empleados.add(empleado);
 		return empleado;
 	}
 	
-	public EmpleadoAdministrativo crearEmpleadoAdministrativo(String nombre) {
-		EmpleadoAdministrativo empleado = new EmpleadoAdministrativo(nombre);
+	public EmpleadoAdministrativo crearEmpleadoAdministrativo(String nombre, String username) {
+		EmpleadoAdministrativo empleado = new EmpleadoAdministrativo(nombre, username);
 		empleados.add(empleado);
 		return empleado;
 	}
 	
-	public EmpleadoSoporte crearEmpleadoSoporte(String nombre) {
-		EmpleadoSoporte empleado = new EmpleadoSoporte(nombre);
+	public EmpleadoSoporte crearEmpleadoSoporte(String nombre, String username) {
+		EmpleadoSoporte empleado = new EmpleadoSoporte(nombre, username);
 		empleados.add(empleado);
 		return empleado;
 	}
 	
-	public EmpleadoGerente crearEmpleadoGerente(String nombre) {
-		EmpleadoGerente empleado = new EmpleadoGerente(nombre);
+	public EmpleadoGerente crearEmpleadoGerente(String nombre, String username) {
+		EmpleadoGerente empleado = new EmpleadoGerente(nombre, username);
 		empleados.add(empleado);
 		return empleado;
 	}

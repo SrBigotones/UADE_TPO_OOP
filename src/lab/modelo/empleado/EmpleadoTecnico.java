@@ -8,8 +8,8 @@ public class EmpleadoTecnico extends Empleado {
 	private PerfilTecnico perfil;
 	private int contadorReservasMesActual;
 
-	public EmpleadoTecnico(String nombre, PerfilTecnico perfil) {
-		super(nombre);
+	public EmpleadoTecnico(String nombre, String username, PerfilTecnico perfil) {
+		super(nombre, username);
 		this.contadorReservasMesActual = 0;
 		this.perfil = perfil;
 	}

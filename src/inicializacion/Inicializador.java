@@ -51,11 +51,11 @@ public class Inicializador {
 	}
 
 	private static void inicializarEmpleados(Empresa empresa) {
-		empresa.crearEmpleadoAdministrativo("Gaston");
-		empresa.crearEmpleadoTecnico("Augusto", 1);
-		empresa.crearEmpleadoGerente("Agustin");
-		empresa.crearEmpleadoSoporte("Nicolas");
-		empresa.crearEmpleadoAdministrativo("Pepe");
+		empresa.crearEmpleadoAdministrativo("Gaston", "gaston");
+		empresa.crearEmpleadoTecnico("Augusto", "augusto", 1);
+		empresa.crearEmpleadoGerente("Agustin", "agustin");
+		empresa.crearEmpleadoSoporte("Nicolas", "nicorepo");
+		empresa.crearEmpleadoAdministrativo("Pepe", "pepinho");
 		
 		try {
 			empresa.asignarAdministrativoASede(1, 1);
