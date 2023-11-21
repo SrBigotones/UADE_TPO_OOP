@@ -52,7 +52,7 @@ public class CrearEmpleadoTecnico extends JPanel{
 			String username = tfUsername.getText();
 			int idPerfil = (int) tblPerfilesTecnicos.getValueAt(tblPerfilesTecnicos.getSelectedRow(), 0);
 			controlador.darAltaTecnico(nombre, username, idPerfil);
-			JOptionPane.showMessageDialog(null, "Perfil creado con exito!");
+			JOptionPane.showMessageDialog(null, "Creado con exito!");
 		});
 		
 		

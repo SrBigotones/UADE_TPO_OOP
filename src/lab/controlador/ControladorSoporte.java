@@ -32,7 +32,8 @@ public class ControladorSoporte extends Controlador {
 	public void crearSede() {
 	}
 
-	public void crearPerfilTecnico() {
+	public void crearPerfilTecnico(String nombre, double sueldo, int maxReservas) {
+		empresaInstance.crearPerfil(nombre, sueldo, maxReservas);
 	}
 
 	public void modificarPerfilTecnico() {

@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Nicol/OneDrive/Escritorio/Facu/POO/UADE_TPO_OOP/miglayout-core-11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nicol/OneDrive/Escritorio/Facu/POO/UADE_TPO_OOP/miglayout-swing-5.0.jar"/>
+	<classpathentry kind="lib" path="miglayout-core-11.2.jar"/>
+	<classpathentry kind="lib" path="miglayout-swing-5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
