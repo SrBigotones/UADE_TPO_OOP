@@ -12,7 +12,7 @@ import lab.vista.view.SedeView;
 public class ListadoSedes extends JPanel {
 
 	public ListadoSedes(List<SedeView> sedes) {
-		System.out.println("Hello World!");
+		System.out.println("Listado de sedes");
 		ModeloSedes modelo = new ModeloSedes();
 		modelo.setDatos(sedes);
 		JTable tabla = new JTable(modelo);

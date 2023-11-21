@@ -35,6 +35,5 @@ public class ControladorAdministrativo extends Controlador{
 	@Override
 	public void mostrarBienvenida() {
 		// TODO Auto-generated method stub
-		
 	}
 }
