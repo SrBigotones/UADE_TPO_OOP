@@ -258,11 +258,11 @@ public class Empresa {
 	 * @return Laboratorio creado
 	 * @throws SedeNoEncontrada
 	 */
-	public Laboratorio crearLaboratorio(int capacidadPersonas, List<Integer> list, int idSede)
+	public Laboratorio crearLaboratorio(int capacidadPersonas, List<Integer> idPeligros, int idSede)
 			throws SedeNoEncontrada {
 		Sede sede = this.buscarSede(idSede);
 		
-		Laboratorio lab = sede.agregarLaboratorio(capacidadPersonas, mapIdsToTipoPeligro(list));
+		Laboratorio lab = sede.agregarLaboratorio(capacidadPersonas, mapIdsToTipoPeligro(idPeligros));
 		return lab;
 	}
 
@@ -347,7 +347,7 @@ public class Empresa {
 	 * @throws EmpleadoNoEncontrado 
 	 * @throws EmpleadoIncompatible 
 	 */
-	public PruebaLote reservar(int idPruebaLote,int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idSede, int idLaboratorio) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
+	public PruebaLote reservar(int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idSede, int idLaboratorio) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
 		
 		Sede sede = Utilidades.buscarEnListaPorId(idSede, sedes);
 		ProductoQuimico prodQuimico = this.buscarProductoQuimico(idProdQuimico);
@@ -456,6 +456,35 @@ public class Empresa {
 		Sede sede = this.buscarSede(idSede);
 		ProductoQuimico productoQuimico = this.buscarProductoQuimico(idProdQuimico);
 		return sede.laboratorioPuedeProbarProductoQuimico(idLaboratorio, productoQuimico);
+	}
+	
+	
+	public List<PruebaLote> listarPruebas(){
+		List<PruebaLote> listaLotes = new ArrayList<>();
+		
+		for(Sede sede: sedes) {
+			listaLotes.addAll(sede.obtenerPruebas());
+		}
+		
+		return listaLotes;
+	}
+	
+	public List<PruebaLote> listarPruebaPorEmpleadoResponsable(int idEmpleado){
+		List<PruebaLote> lista = this.listarPruebas().stream()
+				.filter(x -> x.getResponsable().esPorId(idEmpleado))
+				.collect(Collectors.toList());
+		return lista;
+	}
+	
+	
+	public List<PruebaLote> listarPruebaPorSede(int idSede){
+		List<PruebaLote> lista = new ArrayList();
+		
+		for(Sede sede: sedes) {
+			if(sede.esPorId(idSede))
+				lista.addAll(sede.obtenerPruebas());
+		}
+		return lista;
 	}
 
 	public List<Sede> getSedes() {

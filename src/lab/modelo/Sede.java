@@ -106,4 +106,12 @@ public class Sede extends Entidad {
 		lab.finalizarPrueba(idLote,estadoLote, estrategiaVencimiento);
 		
 	}
+	
+	public List<PruebaLote> obtenerPruebas(){
+		List<PruebaLote> lista = new ArrayList();
+		for(Laboratorio lab: laboratorios)
+			lista.addAll(lab.obtenerPruebas());
+		
+		return lista;
+	}
 }

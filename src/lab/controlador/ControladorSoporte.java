@@ -21,8 +21,17 @@ public class ControladorSoporte extends Controlador {
 	}
 
 	public void mostrarPantallaSedes() {
-		List<SedeView> sedesView = Empresa.getInstance().getSedes().stream().map((s) -> new SedeView(s))
+		List<SedeView> sedesView = empresaInstance.getSedes().stream().map((s) -> new SedeView(s))
 				.collect(Collectors.toList());
 		cambiarPanel(new ListadoSedes(sedesView));
 	}
+	
+	
+	public void darAltaAdministrativo() {}
+	
+	public void crearSede() {}
+	
+	public void crearPerfilTecnico() {}
+	
+	public void modificarPerfilTecnico() {}
 }

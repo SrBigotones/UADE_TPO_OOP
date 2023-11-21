@@ -14,6 +14,10 @@ public class PruebaLote extends Entidad {
 	private ProductoQuimico productoQuimico; //Dentro de ProductoQuimico se almacena los tipos de peligros y tipoDeProducto
 	private LocalDate fechaFabricacion;
 	private EmpleadoTecnico responsable;
+	public EmpleadoTecnico getResponsable() {
+		return responsable;
+	}
+
 	private Set<EmpleadoTecnico> auxiliares;
 	private int auxiliaresRequeridos;
 	private EstrategiaVencimiento estrategiaVencimiento;

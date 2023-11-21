@@ -139,6 +139,18 @@ public class Laboratorio extends Entidad {
 		// TODO Auto-generated method stub
 		PruebaLote pruebaLote = this.buscarLote(idLote);
 		pruebaLote.finalizarPrueba(estadoLote, estrategiaVencimiento);
+	}
+	
+	public List<PruebaLote> obtenerPruebas() {
+		List<PruebaLote> lista = new ArrayList<>();
 		
+		for(PruebaLote[] pruebas: pruebas.values()) {
+			if(pruebas[0] != null)
+				lista.add(pruebas[0]);
+			if(pruebas[1] != null)
+				lista.add(pruebas[1]);
+		}
+		
+		return lista;
 	}
 }
