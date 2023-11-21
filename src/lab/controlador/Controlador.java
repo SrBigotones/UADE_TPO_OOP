@@ -40,12 +40,5 @@ public abstract class Controlador {
 			ControladorTecnico.getInstance().mostrarBienvenida();
 		
 		jfLogin.setVisible(false);
-		// jfMenu.setVisible(true); TODO Se espera as que esté hecho el jframe
-//		cambiarPanel(new JPanel());
-//		if(usuario.soyAdministrativo()) {
-//			ControladorAdministrativo.getInstance()
-//		}
-		
-//		ControladorSoporte.getInstance().mostrarBienvenida();
 	}
 }
