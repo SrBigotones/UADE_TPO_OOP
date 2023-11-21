@@ -9,7 +9,7 @@ public class ControladorGerente {
 	 }
 	 
 	
-	public synchronized ControladorGerente getInstance() {
+	public static synchronized ControladorGerente getInstance() {
 		if(instance == null)
 			instance = new ControladorGerente();
 		
@@ -18,4 +18,10 @@ public class ControladorGerente {
 	public void visualizarPruebas() {}
 	public void cambiarCriterioVencimiento() {}
 	public void confimarPruebaParaVenta() {}
+
+
+	public void mostrarBienvenida() {
+		// TODO Auto-generated method stub
+		
+	}
 }

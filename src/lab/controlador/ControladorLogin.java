@@ -45,4 +45,10 @@ public class ControladorLogin extends Controlador {
 		}
 		jfLogin.setVisible(true);
 	}
+
+	@Override
+	public void mostrarBienvenida() {
+		// TODO Auto-generated method stub
+		
+	}
 }

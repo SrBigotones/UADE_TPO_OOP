@@ -31,4 +31,10 @@ public class ControladorAdministrativo extends Controlador{
 	public void asginarPerfilTecnico(int idPerfilTecnico, int idEmpleadoTecnico) throws Exception {
 		empresaInstance.asociarPerfilEmpleado(idPerfilTecnico, idEmpleadoTecnico);
 	}
+
+	@Override
+	public void mostrarBienvenida() {
+		// TODO Auto-generated method stub
+		
+	}
 }

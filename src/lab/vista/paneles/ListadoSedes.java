@@ -12,12 +12,11 @@ import lab.vista.view.SedeView;
 public class ListadoSedes extends JPanel {
 
 	public ListadoSedes(List<SedeView> sedes) {
-
+		System.out.println("Hello World!");
 		ModeloSedes modelo = new ModeloSedes();
 		modelo.setDatos(sedes);
 		JTable tabla = new JTable(modelo);
 		JScrollPane scrollPane = new JScrollPane(tabla);
-
 		add(scrollPane);
 	}
 }

@@ -45,4 +45,10 @@ public class ControladorTecnico extends Controlador{
 	public void listarMisPruebas() {
 		List<PruebaLote> lista = empresaInstance.listarPruebaPorEmpleadoResponsable(usuario.getId());
 	}
+
+	@Override
+	public void mostrarBienvenida() {
+		// TODO Auto-generated method stub
+		
+	}
 }
