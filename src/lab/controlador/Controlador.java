@@ -19,10 +19,8 @@ public abstract class Controlador {
 	}
 
 	protected void cambiarPanel(JPanel panel) {
-		// TODO Se espera a que esté hecho el jframe principal
 		jfMenu.updateView(panel);
 	}
-	
 	
 	public abstract void mostrarBienvenida();
 	
