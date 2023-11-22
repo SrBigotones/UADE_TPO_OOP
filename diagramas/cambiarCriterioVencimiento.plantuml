@@ -1,0 +1,73 @@
+@startuml
+Actor Usuario
+Activate Usuario
+Usuario -> ControladorGerente: cambiarCriterioVencimiento(int idSede, int idLab, int idLote, int idEstrategia)
+	Activate ControladorGerente
+	ControladorGerente -> Empresa: finalizarPrueba(int idSede, int idEmpleado,int idLaboratorio,int idLote, int idEstrategia)
+	Activate ControladorGerente
+		Activate Empresa
+			Loop buscarSede
+				Empresa -> Empresa: buscarSede(int idSede)
+				Activate Empresa
+					Empresa -> Sede: esPorId(int idSede)
+					activate Sede
+					Sede->Empresa
+					Deactivate Sede
+				Deactivate Empresa
+			end buscarSede
+			
+			Loop buscarEmpleado
+				Empresa -> Empresa: buscarEmpleado(int idEmpleado)
+				Activate Empresa
+					Empresa -> Empleado: esPorId(int idEmpleado)
+					Activate Empleado
+					Empleado -> Empresa
+					Deactivate Empleado
+				Deactivate Empresa
+			end buscarEmpleado
+			
+			Activate Empresa
+			Empresa -> Sede: esPorId(int idSedePertenece)
+			Activate Sede
+			Sede -> Empresa
+			
+			
+			Empresa -> Sede: finalizarPrueba(int idLaboratorio, int idLote, EstadoLote estadoLote,EstrategiaVencimiento estrategiaVencimiento)
+			
+			Loop buscarLaboratorio
+				Sede -> Sede: buscarLaboratorio(int idLaboratorio)
+				Activate Sede
+				Sede -> Laboratorio: esPorId(int idLaboratorio)
+				Activate Laboratorio
+				Laboratorio -> Sede
+				Deactivate Laboratorio
+				Deactivate Sede
+			end buscarLaboratorio
+			
+			Sede -> Laboratorio: finalizarPrueba(int idLote, EstadoLote estadoLote, EstrategiaVencimiento estrategiaVencimiento)
+			Activate Laboratorio
+			Loop buscarLote
+			Laboratorio -> Laboratorio : buscarLote(int idLote)
+			Activate Laboratorio
+			Laboratorio -> PruebaLote: esPorId(int idLote)
+			Activate PruebaLote
+			PruebaLote -> Laboratorio
+			Deactivate PruebaLote
+			Deactivate Laboratorio
+			end buscarLote
+			
+			Laboratorio -> PruebaLote: finalizarPrueba(EstadoLote resultado, EstrategiaVencimiento estrategiaVencimiento)
+			Activate PruebaLote
+			PruebaLote -> Laboratorio
+			Deactivate PruebaLote
+			Laboratorio -> Sede
+			Deactivate Laboratorio
+			Sede -> Empresa
+			Deactivate Sede
+			Empresa -> ControladorGerente 
+		Deactivate Empresa
+	Deactivate ControladorGerente
+ControladorGerente -> Usuario
+Deactivate ControladorGerente
+Deactivate Usuario
+@enduml
