@@ -14,6 +14,7 @@ import lab.vista.paneles.BotoneraSoporte;
 import lab.vista.paneles.CrearEmpleadoTecnico;
 import lab.vista.tablas.ModeloPerfilTecnico;
 import lab.vista.view.PerfilTecnicoView;
+import lab.vista.view.SedeView;
 
 public class ControladorAdministrativo extends Controlador{
 	private static ControladorAdministrativo instance;
@@ -65,5 +66,13 @@ public class ControladorAdministrativo extends Controlador{
 				.collect(Collectors.toList());
 		
 		return perfilesTecnicos;
+	}
+	
+	public List<SedeView> listarSedes(){
+		List<SedeView> sedes = empresaInstance.getSedes()
+				.stream()
+				.map(x -> new SedeView(x))
+				.collect(Collectors.toList());
+		return sedes;
 	}
 }
