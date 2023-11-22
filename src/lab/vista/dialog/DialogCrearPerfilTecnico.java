@@ -1,7 +1,5 @@
 package lab.vista.dialog;
 
-import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -21,7 +19,7 @@ public class DialogCrearPerfilTecnico extends JDialog {
 		setSize(300, 300);
 		setLocationRelativeTo(padre);
 		controlador = ControladorSoporte.getInstance();
-		
+
 		controlador = ControladorSoporte.getInstance();
 		setLayout(new MigLayout("", "[fill, grow][fill, grow]", ""));
 

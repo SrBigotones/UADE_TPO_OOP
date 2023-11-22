@@ -22,8 +22,10 @@ import lab.modelo.enums.TipoProducto;
 import lab.vista.Menu;
 import lab.vista.paneles.ActualizarEstadoPruebaTecnico;
 import lab.vista.paneles.BotoneraTecnico;
+import lab.vista.paneles.ListadoProductosQuimicos;
 import lab.vista.view.LaboratorioView;
 import lab.vista.view.PeligrosViewCheck;
+import lab.vista.view.ProductoQuimicoView;
 import lab.vista.view.PruebaLoteView;
 
 public class ControladorTecnico extends Controlador{
@@ -95,7 +97,10 @@ public class ControladorTecnico extends Controlador{
 	public void mostrarActualizarEstadoPrueba() throws SedeNoEncontrada, LaboratorioNoEncontrado {
 		cambiarPanel(new ActualizarEstadoPruebaTecnico());
 	}
-	public void mostrarCrearElementoQuimico() {}
+	public void mostrarPantallaProductosQuimicos() {
+		List<ProductoQuimicoView> productos = Empresa.getInstance().getProductosQuimicos().stream().map((pq) -> new ProductoQuimicoView(pq)).collect(Collectors.toList());
+		cambiarPanel(new ListadoProductosQuimicos(productos));
+	}
 	
 	public List<ElementoQuimico> listarElementosQuimicos() {
 		return null;

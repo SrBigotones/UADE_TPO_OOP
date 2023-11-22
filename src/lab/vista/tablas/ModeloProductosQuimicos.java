@@ -6,18 +6,17 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import lab.vista.view.EmpleadoView;
-import lab.vista.view.SedeView;
+import lab.vista.view.ProductoQuimicoView;
 
-public class ModeloEmpleados  extends AbstractTableModel {
+public class ModeloProductosQuimicos extends AbstractTableModel {
+	private List<ProductoQuimicoView> datos;
+	private String[] columnas = new String[] { "Nombre comercial", "Tipo de producto", "Formula", "Peligros" };
 
-	private List<EmpleadoView> datos;
-	private String[] columnas = new String[] { "Nombre", "Tipo de empleado", "Sede/Provincia"};
-
-	public ModeloEmpleados() {
+	public ModeloProductosQuimicos() {
 		datos = new ArrayList<>();
 	}
 
-	public void setDatos(List<EmpleadoView> datos) {
+	public void setDatos(List<ProductoQuimicoView> datos) {
 		this.datos = datos;
 	}
 
@@ -38,14 +37,16 @@ public class ModeloEmpleados  extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		EmpleadoView sede = datos.get(rowIndex);
+		ProductoQuimicoView sede = datos.get(rowIndex);
 		switch (columnIndex) {
 		case 0:
-			return sede.getNombre();
+			return sede.getNombreComercial();
 		case 1:
-			return sede.getTipo();
+			return sede.getTipoProducto();
 		case 2:
-			return sede.getSede();
+			return sede.generarStringFormula();
+		case 3:
+			return sede.generarStringPeligros();
 		default:
 			return null;
 		}

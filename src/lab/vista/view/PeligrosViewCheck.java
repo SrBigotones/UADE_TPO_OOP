@@ -8,6 +8,7 @@ public class PeligrosViewCheck {
 	private String nombre;
 	private double costo;
 	private long diasVencimiento;
+	
 	public PeligrosViewCheck(TipoPeligro tipoPeligro) {
 		this.idPeligro = tipoPeligro.getId();
 		this.nombre = tipoPeligro.getNombre();
