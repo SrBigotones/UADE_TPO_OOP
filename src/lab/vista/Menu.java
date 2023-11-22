@@ -17,6 +17,7 @@ public class Menu extends JFrame {
 		setSize(1000, 500);
 		setLocationRelativeTo(null);
 		setLayout(new MigLayout("", "10[20%]5[75%]5[5%]10", "[100%]20"));
+		setTitle("Gestion de reserva de laboratorios");
 		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener((e) -> {

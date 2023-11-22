@@ -8,7 +8,7 @@ import lab.vista.view.LaboratorioView;
 
 public class ModeloLaboratorio extends AbstractTableModel {
 	private List<LaboratorioView> datos;
-	private String[] colNames = { "ID", "Capacidad" };
+	private String[] colNames = { "ID", "Capacidad", "Tipos de peligro" };
 
 	public ModeloLaboratorio(List<LaboratorioView> datos) {
 		this.datos = datos;
@@ -38,6 +38,8 @@ public class ModeloLaboratorio extends AbstractTableModel {
 			return lab.getIdLab();
 		case 1:
 			return lab.getCapacidadPersonas();
+		case 2:
+			return lab.getStringPeligros();
 		}
 		return null;
 	}

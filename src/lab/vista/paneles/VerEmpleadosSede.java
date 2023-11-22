@@ -24,7 +24,7 @@ public class VerEmpleadosSede extends JPanel {
 		JTable tablaEmpleados = new JTable(modelo);
 		JScrollPane scrollPaneEmpleados = new JScrollPane(tablaEmpleados);
 
-		add(scrollPaneEmpleados);
+		add(scrollPaneEmpleados, "grow");
 	}
 
 }

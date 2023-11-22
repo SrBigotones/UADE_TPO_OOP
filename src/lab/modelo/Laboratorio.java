@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lab.excepciones.AccesoRestringido;
 import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.PruebaLoteNoEncontrado;
 import lab.modelo.empleado.EmpleadoTecnico;
@@ -135,8 +136,11 @@ public class Laboratorio extends Entidad {
 		
 	}
 
-	public void finalizarPrueba(int idLote, EstadoLote estadoLote, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado {
+	public void finalizarPrueba(int idLote, int idEmpleado, EstadoLote estadoLote, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado, AccesoRestringido {
 		PruebaLote pruebaLote = this.buscarLote(idLote);
+		if (EstadoLote.PENDIENTE.equals(estadoLote) && pruebaLote.getResponsable().getId() != idEmpleado) {
+			throw new AccesoRestringido();
+		}
 		pruebaLote.finalizarPrueba(estadoLote, estrategiaVencimiento);
 	}
 	
@@ -151,5 +155,9 @@ public class Laboratorio extends Entidad {
 		}
 		
 		return lista;
+	}
+	
+	public Set<TipoPeligro> getPeligrosPermitidos() {
+		return peligrosPermitidos;
 	}
 }

@@ -120,11 +120,7 @@ public class CambiarCriterioVencimiento extends JPanel {
 					return;
 				
 				EstadoLote estadoSel = modeloPrueba.getDatos().get(tablaPrueba.getSelectedRow()).getEstadoLote();
-				if(estadoSel == EstadoLote.ACEPTADO) {
-					btnSetEnabled(false);
-				}else {
-					btnSetEnabled(true);
-				}
+				btnSetEnabled(estadoSel.equals(EstadoLote.ACEPTADO));
 				
 			}
 		});

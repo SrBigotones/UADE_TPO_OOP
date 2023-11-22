@@ -3,7 +3,9 @@ package lab.controlador;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import lab.excepciones.AccesoRestringido;
 import lab.excepciones.EmpleadoNoEncontrado;
@@ -19,6 +21,7 @@ import lab.vista.view.CriterioVencimientoView;
 import lab.vista.view.LaboratorioView;
 import lab.vista.view.PruebaLoteView;
 import lab.vista.view.SedeView;
+import net.miginfocom.swing.MigLayout;
 
 public class ControladorGerente extends Controlador{
 	
@@ -41,9 +44,12 @@ public class ControladorGerente extends Controlador{
 		empresaInstance.finalizarPrueba(idSede,usuario.getId(), idLab, idLote, idEstrategia);
 	}
 	public void confimarPruebaParaVenta() {}
+	
 	public void mostrarBienvenida() {
-		// TODO Auto-generated method stub
-		jfMenu = new Menu(new BotoneraGerente(), new JPanel());
+		JPanel panelBienvenida = new JPanel(new MigLayout("fill", "[100%]", ""));
+		panelBienvenida.setSize(200, 300);
+		panelBienvenida.add(new JLabel("¡Bienvenido Gerente!", SwingConstants.CENTER), "grow, center");
+		jfMenu = new Menu(new BotoneraGerente(), panelBienvenida);
 		
 	}
 

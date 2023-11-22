@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
+import lab.excepciones.AccesoRestringido;
 import lab.excepciones.EmpleadoIncompatible;
 import lab.excepciones.EmpleadoNoEncontrado;
 import lab.excepciones.LaboratorioNoDisponible;
@@ -28,6 +31,7 @@ import lab.vista.view.LaboratorioView;
 import lab.vista.view.PeligrosViewCheck;
 import lab.vista.view.ProductoQuimicoView;
 import lab.vista.view.PruebaLoteView;
+import net.miginfocom.swing.MigLayout;
 
 public class ControladorTecnico extends Controlador{
 
@@ -66,11 +70,11 @@ public class ControladorTecnico extends Controlador{
 		empresaInstance.registrarEmpleadoPrueba(usuario.getId(), idPrueba, idLaboratorio);
 	}
 	
-	public void actualizarPrueba(int idLaboratorio, int idLote, EstadoLote estado, EstrategiaVencimiento estrategia ) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado {
+	public void actualizarPrueba(int idLaboratorio, int idLote, EstadoLote estado, EstrategiaVencimiento estrategia)
+			throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado, AccesoRestringido {
 		System.out.println(idLaboratorio);
-		empresaInstance.finalizarPrueba(usuario.getIdSedePertenece(), idLaboratorio, idLote, estado, estrategia);
-		
-		
+		empresaInstance.finalizarPrueba(usuario.getIdSedePertenece(), idLaboratorio, usuario.getId(), idLote, estado,
+				estrategia);
 	}
 	
 	public void crearProductoQuimico(Map<ElementoQuimico, Integer> conjutoQuimico, String nombre, TipoProducto tipoProducto, List<Integer> peligros) {
@@ -98,7 +102,10 @@ public class ControladorTecnico extends Controlador{
 
 	@Override
 	public void mostrarBienvenida() {
-		jfMenu = new Menu(new BotoneraTecnico(), new JPanel());
+		JPanel panelBienvenida = new JPanel(new MigLayout("fill", "[100%]", ""));
+		panelBienvenida.setSize(200, 300);
+		panelBienvenida.add(new JLabel("¡Bienvenido Técnico!", SwingConstants.CENTER), "grow, center");
+		jfMenu = new Menu(new BotoneraTecnico(), panelBienvenida);
 		
 	}
 	

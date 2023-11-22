@@ -3,7 +3,9 @@ package lab.controlador;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import lab.excepciones.SedeNoEncontrada;
 import lab.vista.Menu;
@@ -16,6 +18,7 @@ import lab.vista.view.EmpleadoView;
 import lab.vista.view.PeligrosViewCheck;
 import lab.vista.view.PerfilTecnicoView;
 import lab.vista.view.SedeView;
+import net.miginfocom.swing.MigLayout;
 
 public class ControladorAdministrativo extends Controlador {
 	private static ControladorAdministrativo instance;
@@ -49,7 +52,10 @@ public class ControladorAdministrativo extends Controlador {
 
 	@Override
 	public void mostrarBienvenida() {
-		jfMenu = new Menu(new BotoneraAdministrativo(), new JPanel());
+		JPanel panelBienvenida = new JPanel(new MigLayout("fill", "[100%]", ""));
+		panelBienvenida.setSize(200, 300);
+		panelBienvenida.add(new JLabel("¡Bienvenido Administrativo!", SwingConstants.CENTER), "grow, center");
+		jfMenu = new Menu(new BotoneraAdministrativo(), panelBienvenida);
 	}
 
 	public void mostrarAltaTecnico() {

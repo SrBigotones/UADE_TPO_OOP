@@ -18,9 +18,9 @@ import lab.controlador.ControladorLogin;
 public class Login extends JFrame {
 
 	public Login() {
-		super("LOGIN");
 		this.setLayout(new BorderLayout());
-
+		setTitle("Login");
+		
 		JLabel bienvenida = new JLabel("Bienvenido", SwingConstants.CENTER);
 		bienvenida.setFont(new Font("Arial", Font.PLAIN, 56));
 

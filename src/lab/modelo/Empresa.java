@@ -36,7 +36,6 @@ public class Empresa {
 	private List<TipoPeligro> tiposPeligro;
 	private List<PerfilTecnico> perfiles;
 	private List<EstrategiaVencimiento> estrategiasVencimiento;
-	private List<TipoProducto> tiposProducto;
 	
 	private static Empresa empresa;
 	
@@ -107,38 +106,6 @@ public class Empresa {
 			return perfil;
 		
 		throw new PerfilTenicoNoEncontrado();
-	}
-	
-	
-	/**
-	 * Busca tipoPeligro y retorna el mismo.
-	 * @param idTipoPeligro
-	 * @return
-	 * @throws TipoPeligroNoEncontrado
-	 */
-	private TipoPeligro buscarTipoPeligro(int idTipoPeligro) throws TipoPeligroNoEncontrado {
-		
-		
-		TipoPeligro tipoPeligro = Utilidades.buscarEnListaPorId(idTipoPeligro, tiposPeligro);
-		if(tipoPeligro != null)
-			return tipoPeligro;
-		
-		throw new TipoPeligroNoEncontrado();
-	}
-	
-	/**
-	 * Busca cuantas sedes existen en una determina provincia
-	 * @param provincia
-	 * @return el numero de sedes en la provincia
-	 */
-	private int sedePorProvincia(Provincia provincia) {
-		int count = 0;
-		for(Sede sede: sedes) {
-			if(sede.getProvincia() == provincia) {
-				count++;
-			}
-		}
-		return count;
 	}
 	
 	/*
@@ -374,12 +341,15 @@ public class Empresa {
 	 * @throws SedeNoEncontrada 
 	 * @throws LaboratorioNoEncontrado 
 	 * @throws PruebaLoteNoEncontrado 
+	 * @throws AccesoRestringido 
 	 */
-	public void finalizarPrueba(int idSede, int idLaboratorio,int idLote, EstadoLote estado, EstrategiaVencimiento estrategiaVencimiento) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado { //'idLote, aprobacion'/
-		 Sede sede = this.buscarSede(idSede);
-		 sede.finalizarPrueba(idLaboratorio, idLote, estado, estrategiaVencimiento);
+	public void finalizarPrueba(int idSede, int idLaboratorio, int idEmpleado, int idLote, EstadoLote estado,
+			EstrategiaVencimiento estrategiaVencimiento)
+			throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado, AccesoRestringido { // 'idLote, aprobacion'/
+		Sede sede = this.buscarSede(idSede);
+		sede.finalizarPrueba(idLaboratorio, idLote, idEmpleado, estado, estrategiaVencimiento);
 	}
-	
+
 	public void finalizarPrueba(int idSede, int idEmpleado,int idLaboratorio,int idLote, int idEstrategia) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado, AccesoRestringido, EmpleadoNoEncontrado { //'idLote, aprobacion'/
 		 Sede sede = this.buscarSede(idSede);
 		 Empleado empleado = this.buscarEmpleado(idEmpleado);
@@ -387,7 +357,7 @@ public class Empresa {
 			 throw new AccesoRestringido();
 		 }
 		 EstrategiaVencimiento e = this.buscarEstrategia(idEstrategia);
-		 sede.finalizarPrueba(idLaboratorio, idLote, EstadoLote.ACEPTADO, e);
+		 sede.finalizarPrueba(idLaboratorio, idEmpleado, idLote, EstadoLote.FINALIZADO, e);
 	}
 	 
 	/**
@@ -495,7 +465,7 @@ public class Empresa {
 	
 	
 	public List<PruebaLote> listarPruebaPorSede(int idSede){
-		List<PruebaLote> lista = new ArrayList();
+		List<PruebaLote> lista = new ArrayList<>();
 		
 		for(Sede sede: sedes) {
 			if(sede.esPorId(idSede))

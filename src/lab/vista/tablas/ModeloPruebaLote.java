@@ -8,6 +8,7 @@ import lab.vista.view.PruebaLoteView;
 
 public class ModeloPruebaLote extends AbstractTableModel {
 	private List<PruebaLoteView> datos;
+	
 	private String[] colNames = { "ID", "Nombre Prod", "Tipo", "Fecha Fab", "Empleado", "Estado", "Auxiliares", "Aux. requeridos", "Formula Generica","FechaVTO"};
 
 	@Override

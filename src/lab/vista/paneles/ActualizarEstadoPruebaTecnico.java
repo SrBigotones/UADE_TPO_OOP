@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 
 import lab.controlador.Controlador;
 import lab.controlador.ControladorTecnico;
+import lab.excepciones.AccesoRestringido;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PruebaLoteNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
@@ -97,9 +98,9 @@ public class ActualizarEstadoPruebaTecnico extends JPanel {
 			EstadoLote estado = comboEstados.getItemAt(comboEstados.getSelectedIndex());
 			try {
 				controlador.actualizarPrueba(idLab, idLote, estado, new CriterioMolecular(""));
-				JOptionPane.showMessageDialog(null, "Creado con exito!");
+				JOptionPane.showMessageDialog(null, "Modificado con exito!");
 				controlador.mostrarActualizarEstadoPrueba();
-			} catch (SedeNoEncontrada | PruebaLoteNoEncontrado | LaboratorioNoEncontrado e1) {
+			} catch (SedeNoEncontrada | PruebaLoteNoEncontrado | LaboratorioNoEncontrado | AccesoRestringido e1) {
 				JOptionPane.showMessageDialog(null, "Algo no salio como se esperaba...");
 				e1.printStackTrace();
 			}

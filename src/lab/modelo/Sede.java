@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import lab.excepciones.AccesoRestringido;
 import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PruebaLoteNoEncontrado;
@@ -101,10 +102,10 @@ public class Sede extends Entidad {
 		lab.establecerEstrategiaVencimiento(idPrueba, estrategiaVencimiento);
 	}
 
-	public void finalizarPrueba(int idLaboratorio, int idLote, EstadoLote estadoLote,
-			EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado, LaboratorioNoEncontrado {
+	public void finalizarPrueba(int idLaboratorio, int idLote, int idEmpleado, EstadoLote estadoLote,
+			EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado, LaboratorioNoEncontrado, AccesoRestringido {
 		Laboratorio lab = this.buscarLaboratorio(idLaboratorio);
-		lab.finalizarPrueba(idLote, estadoLote, estrategiaVencimiento);
+		lab.finalizarPrueba(idLote, idEmpleado, estadoLote, estrategiaVencimiento);
 
 	}
 

@@ -13,15 +13,6 @@ import lab.modelo.enums.EstadoLote;
 import lab.modelo.enums.TipoProducto;
 
 public class PruebaLoteView {
-
-	public String getFechaVTO() {
-		return fechaVTO;
-	}
-
-	public void setFechaVTO(String fechaVTO) {
-		this.fechaVTO = fechaVTO;
-	}
-
 	private int idPruebaLote;
 	private String nombreProdQuimico;
 	private TipoProducto tipoProducto;
@@ -29,10 +20,10 @@ public class PruebaLoteView {
 	private EmpleadoTecnicoView responsable;
 	private EstadoLote estadoLote;
 	private List<EmpleadoTecnicoView> auxiliares;
-	private String fechaVTO;
 	private int maxAuxiliares;
 
 	private String formulaGenerica;
+	private String fechaVTO;
 	
 	public PruebaLoteView(PruebaLote pruebaLote){
 		this.idPruebaLote = pruebaLote.getId();
@@ -107,5 +98,9 @@ public class PruebaLoteView {
 
 	public String getFormulaGenerica() {
 		return formulaGenerica;
-	}	
+	}
+
+	public String getFechaVTO() {
+		return fechaVTO;
+	}
 }
