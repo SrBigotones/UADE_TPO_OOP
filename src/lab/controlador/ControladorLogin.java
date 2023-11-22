@@ -39,7 +39,7 @@ public class ControladorLogin extends Controlador {
 		if (jfLogin == null) {
 			jfLogin = new Login();
 			jfLogin.setSize(400, 500);
-			jfLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jfLogin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			jfLogin.setLocationRelativeTo(null);
 		}
 		jfLogin.setVisible(true);
@@ -47,7 +47,5 @@ public class ControladorLogin extends Controlador {
 
 	@Override
 	public void mostrarBienvenida() {
-		// TODO Auto-generated method stub
-		
 	}
 }

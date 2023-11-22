@@ -28,6 +28,7 @@ public class PruebaLote extends Entidad {
 		this.productoQuimico = productoQuimico;
 		this.fechaFabricacion = LocalDate.now();
 		this.responsable = responsable;
+		this.auxiliaresRequeridos = auxiliaresRequeridos;
 
 		estado = EstadoLote.PENDIENTE;
 		auxiliares = new HashSet<>();

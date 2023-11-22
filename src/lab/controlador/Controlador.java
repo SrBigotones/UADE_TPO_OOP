@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import lab.modelo.Empresa;
 import lab.modelo.empleado.Empleado;
 import lab.vista.Menu;
+import lab.vista.view.EmpleadoView;
 
 public abstract class Controlador {
 	protected static Empleado usuario;
@@ -38,5 +39,9 @@ public abstract class Controlador {
 			ControladorTecnico.getInstance().mostrarBienvenida();
 		
 		jfLogin.setVisible(false);
+	}
+	
+	public static EmpleadoView getUsuario() {
+		return new EmpleadoView(usuario);
 	}
 }

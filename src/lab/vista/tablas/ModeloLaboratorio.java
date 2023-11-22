@@ -26,7 +26,7 @@ public class ModeloLaboratorio extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 2;
+		return colNames.length;
 	}
 
 	@Override
@@ -40,6 +40,10 @@ public class ModeloLaboratorio extends AbstractTableModel {
 			return lab.getCapacidadPersonas();
 		}
 		return null;
+	}
+	
+	public List<LaboratorioView> getDatos() {
+		return datos;
 	}
 
 }

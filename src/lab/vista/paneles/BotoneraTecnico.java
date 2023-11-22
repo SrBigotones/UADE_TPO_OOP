@@ -8,53 +8,39 @@ import javax.swing.JPanel;
 import lab.controlador.ControladorTecnico;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
+import net.miginfocom.swing.MigLayout;
 
-public class BotoneraTecnico extends JPanel{
+public class BotoneraTecnico extends JPanel {
 	private ControladorTecnico controlador;
-	
+
 	public BotoneraTecnico() {
 		controlador = ControladorTecnico.getInstance();
-		GridLayout layout = new GridLayout(4, 1);
-		setLayout(layout);
-		
-		
+		setLayout(new MigLayout("fillx"));
+
 		JButton btnReservarLaboratorio = new JButton("Reservar Laboratorio");
-		JButton btnActualizarEstadoPrueba = new JButton("Actualizar Estado Prueba");
-		JButton btnIncribirseAPrueba = new JButton("Inscribirse a prueba");
+		JButton btnActualizarEstadoPrueba = new JButton("Pruebas");
 		JButton btnCrearProductoQuimico = new JButton("Crear Producto Quimico");
-		
-		
-		add(btnActualizarEstadoPrueba);
-		add(btnCrearProductoQuimico);
-		add(btnIncribirseAPrueba);
-		add(btnReservarLaboratorio);
-		
-		
+
+		add(btnActualizarEstadoPrueba, "wrap,grow");
+		add(btnCrearProductoQuimico, "wrap,grow");
+		add(btnReservarLaboratorio, "wrap,grow");
+
 		btnActualizarEstadoPrueba.addActionListener(e -> {
 			try {
 				controlador.mostrarActualizarEstadoPrueba();
-			} catch (SedeNoEncontrada e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (LaboratorioNoEncontrado e1) {
-				// TODO Auto-generated catch block
+			} catch (SedeNoEncontrada | LaboratorioNoEncontrado e1) {
 				e1.printStackTrace();
 			}
 		});
-		
+
 		btnCrearProductoQuimico.addActionListener(e -> {
 			controlador.mostrarPantallaProductosQuimicos();
 		});
-		
-		btnIncribirseAPrueba.addActionListener(e -> {
-			controlador.mostrarInscribirseAPrueba();
-		});
-		
+
 		btnReservarLaboratorio.addActionListener(e -> {
 			try {
 				controlador.mostrarReservarPrueba();
 			} catch (SedeNoEncontrada e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});

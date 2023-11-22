@@ -13,7 +13,7 @@ public class Menu extends JFrame {
 
 	public Menu(JPanel panelIzq, JPanel panelCentral) {
 		this.panelCentral = panelCentral;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setSize(1000, 500);
 		setLocationRelativeTo(null);
 		setLayout(new MigLayout("", "10[20%]5[75%]5[5%]10", "[100%]20"));
