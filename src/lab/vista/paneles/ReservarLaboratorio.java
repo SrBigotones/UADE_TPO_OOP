@@ -21,6 +21,7 @@ import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.ProductoQuimicoNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
+import lab.modelo.ElementoQuimico;
 import lab.modelo.FechaTurno;
 import lab.modelo.enums.Turno;
 import lab.vista.tablas.ModeloLaboratorio;
@@ -33,7 +34,7 @@ public class ReservarLaboratorio extends JPanel{
 	public ReservarLaboratorio() throws SedeNoEncontrada {
 		controlador = ControladorTecnico.getInstance();
 		
-		GridLayout layout = new GridLayout(10,2);
+		GridLayout layout = new GridLayout(6,2);
 		setLayout(layout);
 		ModeloLaboratorio modeloLab = new ModeloLaboratorio(controlador.listarLaboratorios());
 		JTable tablaLabs = new JTable(modeloLab);
@@ -80,7 +81,7 @@ public class ReservarLaboratorio extends JPanel{
 			} catch (LaboratorioNoEncontrado | LaboratorioNoDisponible | ProductoQuimicoNoEncontrado
 					| EmpleadoNoEncontrado | EmpleadoIncompatible e1) {
 				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(null, "Algo salio mal...");
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
 			}
 		});

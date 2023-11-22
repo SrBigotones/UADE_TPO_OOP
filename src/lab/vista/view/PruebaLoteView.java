@@ -1,7 +1,10 @@
 package lab.vista.view;
 
 import java.time.LocalDate;
+import java.util.Map;
 
+import lab.modelo.ElementoQuimico;
+import lab.modelo.ProductoQuimico;
 import lab.modelo.PruebaLote;
 import lab.modelo.enums.EstadoLote;
 import lab.modelo.enums.TipoProducto;
@@ -14,6 +17,7 @@ public class PruebaLoteView {
 	private LocalDate fechaFabricacion;
 	private String nombreResponsable;
 	private EstadoLote estadoLote;
+	private String formulaGenerica;
 	
 	public PruebaLoteView(PruebaLote pruebaLote) {
 		this.idPruebaLote = pruebaLote.getId();
@@ -22,9 +26,20 @@ public class PruebaLoteView {
 		this.nombreProdQuimico = pruebaLote.getProductoQuimico().getNombreComercial();
 		this.fechaFabricacion = pruebaLote.getFechaFabricacion();
 		this.nombreResponsable = pruebaLote.getResponsable().getNombre();
+		this.formulaGenerica = this.generateFormulaGenerica(pruebaLote.getProductoQuimico());
 	}
 	
 	
+	
+	private String generateFormulaGenerica(ProductoQuimico prodQuimico) {
+		Map<ElementoQuimico, Integer> formula = prodQuimico.getFormula();
+		String formulaGen = "";
+		for(ElementoQuimico elQ: formula.keySet()) {
+			formulaGen+= formula.get(elQ) + elQ.getSimbolo() + "-";
+		}
+		
+		return formulaGen.substring(0, formulaGen.length() -1);
+	}
 	@Override
 	public String toString() {
 		return "PruebaLoteView [idPruebaLote=" + idPruebaLote + ", nombreProdQuimico=" + nombreProdQuimico
@@ -76,6 +91,18 @@ public class PruebaLoteView {
 
 	public void setEstadoLote(EstadoLote estadoLote) {
 		this.estadoLote = estadoLote;
+	}
+
+
+
+	public String getFormulaGenerica() {
+		return formulaGenerica;
+	}
+
+
+
+	public void setFormulaGenerica(String formulaGenerica) {
+		this.formulaGenerica = formulaGenerica;
 	}
 	
 	

@@ -23,7 +23,7 @@ public class Login extends JFrame {
         JLabel bienvenida = new JLabel("Bienvenido" , SwingConstants.CENTER);
         bienvenida.setFont(new Font("Arial", Font.PLAIN, 56)); 
 
-        JTextField usuario = new JTextField("nicorepo");
+        JTextField usuario = new JTextField("agustin");
         usuario.setMargin(new Insets(5, 10, 5, 10));
         
         

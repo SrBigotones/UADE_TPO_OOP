@@ -10,7 +10,7 @@ import lab.vista.view.SedeView;
 public class ModeloSedes extends AbstractTableModel {
 
 	private List<SedeView> datos;
-	private String[] columnas = new String[] { "Provincia", "Administrativo", "Gerente", "Cantidad de laboratorios" };
+	private String[] columnas = new String[] { "ID","Provincia", "Administrativo", "Gerente", "Cantidad de laboratorios" };
 
 	public ModeloSedes() {
 		datos = new ArrayList<>();
@@ -40,12 +40,14 @@ public class ModeloSedes extends AbstractTableModel {
 		SedeView sede = datos.get(rowIndex);
 		switch (columnIndex) {
 		case 0:
-			return sede.getProvincia();
+			return sede.getId();
 		case 1:
-			return sede.getAdministrativo();
+			return sede.getProvincia();
 		case 2:
-			return sede.getGerente();
+			return sede.getAdministrativo();
 		case 3:
+			return sede.getGerente();
+		case 4:
 			return sede.getNroLabs();
 		default:
 			return null;
