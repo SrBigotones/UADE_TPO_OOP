@@ -8,8 +8,6 @@ public class PerfilTecnicoView {
 	private double sueldo;
 	private int maxReservas;
 	
-	
-	
 	public PerfilTecnicoView(PerfilTecnico perfilTecnico) {
 		this.idPerfil = perfilTecnico.getId();
 		this.nombre = perfilTecnico.getNombre();

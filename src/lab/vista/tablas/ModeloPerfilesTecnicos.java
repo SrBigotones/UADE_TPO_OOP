@@ -5,18 +5,18 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import lab.vista.view.SedeView;
+import lab.vista.view.PerfilTecnicoView;
 
-public class ModeloSedes extends AbstractTableModel {
+public class ModeloPerfilesTecnicos extends AbstractTableModel {
 
-	private List<SedeView> datos;
-	private String[] columnas = new String[] { "Provincia", "Administrativo", "Gerente", "Cantidad de laboratorios" };
+	List<PerfilTecnicoView> datos;
+	String[] columnas = new String[] { "Nombre de perfil", "Sueldo", "Máximo de reservas" };
 
-	public ModeloSedes() {
+	public ModeloPerfilesTecnicos() {
 		datos = new ArrayList<>();
 	}
 
-	public void setDatos(List<SedeView> datos) {
+	public void setDatos(List<PerfilTecnicoView> datos) {
 		this.datos = datos;
 	}
 
@@ -37,19 +37,16 @@ public class ModeloSedes extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		SedeView sede = datos.get(rowIndex);
+		PerfilTecnicoView perfil = datos.get(rowIndex);
 		switch (columnIndex) {
 		case 0:
-			return sede.getProvincia();
+			return perfil.getNombre();
 		case 1:
-			return sede.getAdministrativo();
+			return perfil.getSueldo();
 		case 2:
-			return sede.getGerente();
-		case 3:
-			return sede.getNroLabs();
+			return perfil.getMaxReservas();
 		default:
 			return null;
 		}
 	}
-
 }
