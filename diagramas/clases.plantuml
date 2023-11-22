@@ -1,58 +1,73 @@
 @startuml
 
-class Empresa {
-  {static} - cantSedeProvincia: int
-  {static} - instance: Empresa
-  - Empresa()
+class Empresa extends Entidad{
+   {static} - cantSedeProvincia: int
+  
   - sedes: List<Sede>
   - productosQuimicos: List<ProductoQuimico>
   - empleados: List<Empleado>
   - tiposPeligro: List<TipoPeligro>
   - perfiles: List<PerfilTecnico>
-  - estrategiasVencimiento: List<EstrategiaVencimiento>
+  - tiposProductos: List<TipoProducto>
   
-  - buscarEmpleado(int): Empleado
-  - sedePorProvincia(Provincia): int
+  {static} - instance: Empresa
+  - Empresa()
   {static} + getInstance(): Empresa
-  /' Empleado administrativo '/
-  + asociarPerfilEmpleado(int, int) /'id de perfil, id de empleado'/
-  + agregarEmpleado(string, PerfilTecnico): Empleado
-  + agregarPerfil(string, double, int) /'nombrePuesto, sueldo, maxReservas'/
-  + modificarPerfil(int, double, int) /'idPuesto, sueldo, maxReservas'/
-  + agregarTipoPeligro(string, double): int
-  + modificarTipoPeligro(int, double): void
-  + crearLaboratorio(int, int, Set<TipoPeligro>): Laboratorio /'idSede, capacidadPersonas'/
-  + modificarLaboratorio(int, Set<TipoPeligro>): int /'capacidadPersonas'/
-
-  /' Empleado tecnico '/
-  + reservar(PruebaLote, FechaTurno, Sede): void
-  + diagnosticarPrueba(int, boolean): void /'idLote, aprobacion'/
-  + crearProductoQuimico(Map<ElementoQuimico, Integer>, String, TipoProducto, Set<TipoPeligro>): ProductoQuimico
-  + crearTiposProducto(String , int): TipoProducto
-  + modificarTiposProducto(int, int): TipoProducto
-
-  + registrarEmpleadoPrueba(EmpleadoTecnico, int): boolean /'id de prueba'/
-  + agregarSede(Provincia): void
-  + asignarEmpleadoAdministrivoASede(int, int): void /'idSede, idEmpleado'/
-  + establecerEstrategiaVencimiento(int, EstrategiaVencimiento): void /'id de prueba'/
   
-  /' Gerente '/
-  + cambiarCriterioVencimiento(int , EstrategiaVencimiento): void /'idLote'/
-  + confirmarLote(int) : void /'idLote'/
-  + listarEstrategiasVencimiento(): List<EstrategiasVencimiento>
+  - buscarEmpleado(int): Empleado /' id de Empleado'/
+  - buscarSede(int): Sede /' id de Sede '/
+  - buscarProductoQuimico(int): ProductoQuimico /' id de Producto Quimico '/
+  - buscarPerfiltecnico(int): PerfilTecnico /' id de Perfil Tecnico '/
+  - buscarTipoPeligro(int): TipoPeligro /' id de Tipo de Peligro '/
+  - sedePorProvincia(Provincia): int 
+ 
+  /' Metodos para Empleado Soporte '/
+  + asociarPerfilEmpleado(int, int) /'id de perfil, id de empleado'/
+  + crearEmpleadoTecnico(String, String, int, int): EmpleadoTecnico /' nombre, username, idPerfil, idSedePertence '/ 
+  + crearEmpleadoAdministrativo(String, String, int): EmpleadoAdministrativo /' nombre, username, idSedePertenece '/ 
+  + crearEmpleadoSoporte(String, String): EmpleadoSoporte /' nombre, username '/
+  + crearEmpleadoGerente(String, String, idSedePertenece): EmpleadoGerente /' nombre, username, idSedePertenece '/
+  + crearPerfil(String, double, int): PerfilTecnico /' nombre, sueldo, maxReservas '/
+  + modificarPerfil(int, double, int): PerfilTecnico /' idPerfil, sueldo, maxReservas'/
+  + crearTipoPeligro(String, double, int): TipoPeligro /' nombre, costo, diasVencimiento '/
+  + modificarTipoPeligro(int, double): TipoPeligro /' idPeligro, costo '/
+  + crearLaboratorio(int, List<Integer>, int): Laboratorio /'idSede, capacidadPersonas'/
+  + modificarLaboratorio(int, int, int, Set<TipoPeligro>): Laboratorio /'idLaboratorio, idSede, capacidadPersonas, tipoPeligros'/
+  + crearSede(Provincia): Sede
+
+  /' Metodos para Empleado Tecnico '/
+  + reservar(int, int, int, Fechaturno, int): PruebaLote /' idProdQuimico, cantidadAuxiliares, idEmpleadoResponsable, fechaTurno, idLaboratorio '/
+  + finalizarPrueba(int, int, int, EstadoLote, EstrategiaVencimiento) /' idSede, idLaboratorio, idLote, estado, estrategiaVencimiento '/
+  + crearProductoQuimico(Map<ElementoQuimico, Integer>, String, TipoProducto, List<Integer>): ProductoQuimico /' conjuntoQuimico, nombre, tipoProduco, peligro '/
+  + registrarEmpleadoPrueba(int, int, int): boolean /' idEmpleado, idPrueba, idLaboratorio '/
+  
+  /' Metodos para Empleado Administrativo '/
+  + establecerEstrategiaVencimiento(int, int, int, EstrategiaVencimiento) /' idSede, idLaboratorio, idPrueba, estrategiaVencimiento'/
+  + laboratorioPuedeProbarProducto(int, int, int): boolean /' idSede, idLaboratorio, idProdQuimico '/
 }
 
-class Sede {
+abstract class Entidad{
   - id: int
-  - administrativo: EmpleadoAdministrativo
+  
+  + esPorId(int): boolean
+  + equals(Object): boolean
+}
+
+class Sede extends Entidad{
+  {static} - generadorID: GeneradorID
   - laboratorios: List<Laboratorio>
   - provincia: Provincia
 
-  + agregarLaboratorio(Laboratorio): void
-  + agendarPrueba(PruebaLote, FechaTurno): void
-  + asignarEmpleadoAdministrativo(EmpleadoAdministrativo)
-  + listarLaboratorios(): List<Laboratorio>
-  + buscarLaboratorio(int): Laboratorio
+  + agregarLaboratorio(int, Set<TipoPeligro>): Laboratorio /' capacidadPersonas, tipoPeligros'/
+  + reservarPrueba(int, ProductoQuimico, int, EmpleadoTecnico, FechaTurno): PruebaLote /'idLaboratorio, productoQuimico, cantidadAuxiliares, empleadoResponsable, fechaTurno'/
+  + buscarLaboratorio(int): Laboratorio /' idLab '/
+  + obtenerGerenteDeSede(): Empleado
+  + obtenerAdminDeSede(): Empleado
+  + laboratorioPuedeProbarPruebaQuimica(int, ProductoQuimico): boolean /' idLaboratorio, produtoQuimico '/
+  + registrarAyudanteAPrueba(EmpleadoTenico, int, int) /' empleado, idLaboratorio, idPrueba '/
+  + establecerEstrategiaVencimiento(int, int, EstrategiaVencimiento) /' idLaboratorio, idPrueba, estrategiaVencimiento '/
+  + finalizarPrueba(int, int, EstadoLote, estrategiaVencimiento) /' idLaboratorio, idPrueba, estadoLote, estrategiaVencimiento '/
+  + obtenerPruebas(): List<PruebaLote>
 }
 
 enum Provincia {
@@ -61,37 +76,41 @@ enum Provincia {
   etc
 }
 
-class ProductoQuimico {
-  - id: int
-  - formula: Map<ElementoQuimico, Integer>
+class ProductoQuimico extends Entidad {
+  {static} - genradorId: GeneradorID 
+  - formula: Map<ElementoQuimico, Integer> 
   - nombreComercial: String
   - tipoProducto: TipoProducto
   - peligros: Set<TipoPeligro>
 
-  + esMismoTipo(ProductoQuimico): boolean
+  + esMismoTipo(ProductoQuimico): boolean /' prod '/
 }
 
-class PruebaLote {
-  - id: int
-  - idProductoQuimico: int
+class PruebaLote extends Entidad{
+  {static} - generadorId: GeneradorID
+  - productoQuimico: ProductoQuimico
   - fechaFabricacion: LocalDate
   - responsable: EmpleadoTecnico
   - ayudantes: Set<EmpleadoTecnico>
+  - auxiliaresRequeridos: int
   - estrategiaVencimiento: EstrategiaVencimiento
   - estado: EstadoLote
+  
   + calcularFechaVencimiento(): LocalDate
   + calcularCostoPrueba(): double
-  + registrarAyudante(EmpleadoTecnico): void
-  + establecerEstrategiaVencimiento(EstragiaVencimiento): void
-  + habilitar(): void
-  + <<constructor>> PruebaLote(int, EmpleadoTecnico)
+  + registrarAyudante(EmpleadoTecnico)
+  + establecerEstrategiaVencimiento(EstragiaVencimiento)
+  + finalizarPrueba(EstadoLote, EstrategiaVencimiento) /' resultado, estrategiaVencimiento '/
+  + habilitar()
+  
+  + <<constructor>> PruebaLote(ProductoQuimico, EmpleadoTecnico, auxiliaresRequeridos) /'productoQuimico, responsable, auxiliaresRequeridos'/
 }
 
-abstract class EstrategiaVencimiento {
-  - id: int
+abstract class EstrategiaVencimiento extends Entidad{
+  {static} - generadorID: GeneradorID 
   - descripcion: String
+  
   - <<constructor>> EstrategiaVencimiento(String) /'descripcion'/
-  + esPorId(int): boolean
   + {abstract} calcularVencimiento(PruebaLote)
 }
 
@@ -133,14 +152,18 @@ enum ElementoQuimico {
   - << constructor >> ElementoQuimico(int, String, String)
 }
 
-abstract class Empleado {
-  - id: int
+abstract class Empleado extends Entidad{
+  {static} - generadorID: GeneradorID
   - nombre: String
+  - username: String
+  - idSedePertenece: int
 
   + soyTecnico(): boolean
   + soyAdministrativo(): boolean
   + soySoporte(): boolean
   + soyGerente(): boolean
+  
+  - << constructor >> Empleado(String, String, int) /' nombre, username, idSedePertence '/
 }
 
 'Edita todo lo relacionado con los puestos y gesetion del sistema (SysAdmin)

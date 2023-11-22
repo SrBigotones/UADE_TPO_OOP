@@ -333,18 +333,20 @@ public class Empresa {
 	 /*
 	  * ***************************METODOS EMPLEADO TECNICO***************************
 	  */
-	/**
-	 * Reservar un laboratorio para realizar una prueba
-	 * @param pruebaLote
-	 * @param fechaTurno
-	 * @param sede
-	 * @return Reserva?????
-	 * @throws LaboratorioNoDisponible 
-	 * @throws LaboratorioNoEncontrado 
-	 * @throws ProductoQuimicoNoEncontrado 
-	 * @throws EmpleadoNoEncontrado 
-	 * @throws EmpleadoIncompatible 
-	 */
+/**
+ * 
+ * @param idProdQuimico
+ * @param cantidadAuxiliares
+ * @param idEmpleadoResponsable
+ * @param fechaTurno
+ * @param idLaboratorio
+ * @return
+ * @throws LaboratorioNoEncontrado
+ * @throws LaboratorioNoDisponible
+ * @throws ProductoQuimicoNoEncontrado
+ * @throws EmpleadoNoEncontrado
+ * @throws EmpleadoIncompatible
+ */
 	public PruebaLote reservar(int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idLaboratorio) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
 		Empleado emp = this.buscarEmpleado(idEmpleadoResponsable);
 		Sede sede = Utilidades.buscarEnListaPorId(emp.getIdSedePertenece(), sedes);

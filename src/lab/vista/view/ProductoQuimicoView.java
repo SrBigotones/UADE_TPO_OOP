@@ -11,6 +11,7 @@ import lab.modelo.enums.TipoProducto;
 
 public class ProductoQuimicoView {
 
+	private int idProductoQuimico;
 	private Map<ElementoQuimico, Integer> formula;
 	private String nombreComercial;
 	private TipoProducto tipoProducto;
@@ -49,6 +50,15 @@ public class ProductoQuimicoView {
 	}
 	
 	public String getNombreComercial() {
+		return nombreComercial;
+	}
+
+	public int getIdProductoQuimico() {
+		return idProductoQuimico;
+	}
+
+	@Override
+	public String toString() {
 		return nombreComercial;
 	}
 }
