@@ -1,7 +1,7 @@
 @startuml
 
 class Empresa extends Entidad{
-   {static} - cantSedeProvincia: int
+   {static} - CANT_SEDE_PROVINCIA: int
   
   - sedes: List<Sede>
   - productosQuimicos: List<ProductoQuimico>
@@ -51,6 +51,8 @@ abstract class Entidad{
   
   + esPorId(int): boolean
   + equals(Object): boolean
+  
+  + <<constructor>> Entidad(GeneradorID) /' generadorID '/
 }
 
 class Sede extends Entidad{
@@ -68,6 +70,8 @@ class Sede extends Entidad{
   + establecerEstrategiaVencimiento(int, int, EstrategiaVencimiento) /' idLaboratorio, idPrueba, estrategiaVencimiento '/
   + finalizarPrueba(int, int, EstadoLote, estrategiaVencimiento) /' idLaboratorio, idPrueba, estadoLote, estrategiaVencimiento '/
   + obtenerPruebas(): List<PruebaLote>
+  
+  + <<constructor>> Sede(Provincia) /'provincia'/
 }
 
 enum Provincia {
@@ -84,6 +88,8 @@ class ProductoQuimico extends Entidad {
   - peligros: Set<TipoPeligro>
 
   + esMismoTipo(ProductoQuimico): boolean /' prod '/
+  
+  + <<constructor>> ProductoQuimico(Map<EkementoQuimico, Integer>, String, TipoProducto, Set<TipoPeligro>) /' formula, nombreComercial, tipo, peligros '/
 }
 
 class PruebaLote extends Entidad{
@@ -91,6 +97,7 @@ class PruebaLote extends Entidad{
   - productoQuimico: ProductoQuimico
   - fechaFabricacion: LocalDate
   - responsable: EmpleadoTecnico
+  
   - ayudantes: Set<EmpleadoTecnico>
   - auxiliaresRequeridos: int
   - estrategiaVencimiento: EstrategiaVencimiento
@@ -110,8 +117,8 @@ abstract class EstrategiaVencimiento extends Entidad{
   {static} - generadorID: GeneradorID 
   - descripcion: String
   
+  + {abstract} calcularVencimiento(PruebaLote): LocalDate /' lote '/
   - <<constructor>> EstrategiaVencimiento(String) /'descripcion'/
-  + {abstract} calcularVencimiento(PruebaLote)
 }
 
 class CriterioPeligrosidad extends EstrategiaVencimiento {}
@@ -146,10 +153,12 @@ enum ElementoQuimico {
   SODIO
   CALCIO
   AZUFRE
+  
   + nroAtomico: int
   + simbolo: String
   + nombre: String
-  - << constructor >> ElementoQuimico(int, String, String)
+  
+  + << constructor >> ElementoQuimico(int, String, String)
 }
 
 abstract class Empleado extends Entidad{
@@ -163,7 +172,7 @@ abstract class Empleado extends Entidad{
   + soySoporte(): boolean
   + soyGerente(): boolean
   
-  - << constructor >> Empleado(String, String, int) /' nombre, username, idSedePertence '/
+  + << constructor >> Empleado(String, String, int) /' nombre, username, idSedePertence '/
 }
 
 'Edita todo lo relacionado con los puestos y gesetion del sistema (SysAdmin)
@@ -184,11 +193,12 @@ class EmpleadoTecnico extends Empleado {
 }
 
 class PerfilTecnico {
-  - id: int
+  {static} - generadorID: GeneradorID
+  - nombre: String
   - sueldo: double
-  - nombre: string
   - maxReservas: int
-  + esPerfil(int): boolean /'idPerfil'/
+  
+  + <<constructor>> PerfilTecnico(String, double, int) /' nombre, sueldo, maxReservas '/
 }
 
 ' Se puede reservar si: '
@@ -196,35 +206,48 @@ class PerfilTecnico {
 '   ya existente '
 ' - Toxicidades sean compatibles entre producto y laboratorio '
 ' - Tipo de producto compatible entre pruebas '
-class Laboratorio {
-  - id: int
+class Laboratorio extends Entidad{
+  {static} - generadorID: GeneradorID
   - pruebas: Map<FechaTurno, PruebaLote[]>
   - capacidadPersonas: int
   - peligrosPermitidos: Set<TipoPeligro>
   'disponible devuelve true si hay una lugar disponible para una nueva prueba y,
   'en caso de haber otra prueba en curso, si el producto es compatible con mi prueba'
-  + disponible(PruebaLote, FechaTurno): boolean
-  + reservar(PruebaLote, FechaTurno): void
-  + calcularCostoPruebaTotal(int)
-  + establecerPeligrosPermitidos(Set<TipoPeligros>): void
+  + disponible(ProductoQuimico, int, FechaTurno): boolean /' productoQuimico, auxiliaresRequeridos, fechaTurno '/
+  + reservar(ProductoQuimico, int, EmpleadoTecnico, FechaTurno): PruebaLote /' productoQuimico, auxiliaresRequeridos, EmpreadoResponsable, fechaTurno '/
+  + calcularCostoPruebaTotal(int): double /' idLote '/
+  + establecerPeligrosPermitidos(Set<TipoPeligros>) /' tiposPeligro '/
+  + buscarLote(int): PruebaLote /' idLote '/
+  + registrarAyudanteAPrueba(EmpleadoTecnico, int) /'empleadoTecnico, idPrueba'/
+  + puedePribarProductoQuimico(ProductoQuimico): boolean /' productoQuimico '/
+  + establecerEstrategiaVencimiento(int, EstrategiaVencimiento) /' idPrueba, estrategiaVencimiento '/
+  + finalizarPrueba(int, EstadoLote, EstrategiaVencmiento) /'idLote, estadoLote, estrategiaVencmiento'/
+  + obtenerPruebas(): List<PruebasLote>
+  
+  + <<constructor>> Laboratorio(int, Set<TipoPeligro>) /' CapacidadPersonas, tiposPeligro '/
 }
 
 class FechaTurno {
   fecha: LocalDate
   turno: Turno
+  
+  + equals(Object): boolean /'obj'/
+  
+  + <<constructor>> FechaTurno(LocalDate, Turno) /' fecha, turno '/
 }
 
-class TipoPeligro {
-  - id: int
+class TipoPeligro extends Entidad {
+  {static} - generadorID = GeneradorID
   - nombre: String
   - costo: double
-  + <<constructor>> TipoPeligro()
+  + <<constructor>> TipoPeligro(String, double, int) /' nombre, costo, diasVencimiento '/
 }
 class TipoProducto  {
-	- id: int
-	-nombre: String
-	-diasVencimiento: int
-  + <<constructor>> TipoProducto()
+  {static} - genereadorID: GeneradorID 
+  - nombre: String
+  - diasVencimiento: int
+  
+  + <<constructor>> TipoProducto(String, int) /' nombre, diasVencimiento '/
 }
 
 Empresa "1" *--	"∞" Sede
