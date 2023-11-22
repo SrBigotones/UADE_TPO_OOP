@@ -7,6 +7,11 @@ import lab.modelo.enums.Turno;
 public class FechaTurno {
 	private LocalDate fecha;
 	private Turno turno;
+	
+	public FechaTurno(LocalDate fecha, Turno turno) {
+		this.fecha = fecha;
+		this.turno = turno;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

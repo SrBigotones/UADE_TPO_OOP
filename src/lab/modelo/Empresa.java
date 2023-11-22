@@ -50,7 +50,6 @@ public class Empresa {
 	public static synchronized Empresa getInstance() {
 		if(empresa == null) {
 			empresa = new Empresa();
-			Inicializador.ejecutar(empresa);
 		}
 		return empresa;
 	}
@@ -483,6 +482,21 @@ public class Empresa {
 				lista.addAll(sede.obtenerPruebas());
 		}
 		return lista;
+	}
+	
+	public List<PruebaLote> listarPruebaPorLaboratorio(int idSede, int idLaboratorio) throws LaboratorioNoEncontrado, SedeNoEncontrada{
+		Sede sede = buscarSede(idSede);
+		Laboratorio lab = sede.buscarLaboratorio(idLaboratorio);
+		
+		List<PruebaLote> lista = lab.obtenerPruebas();
+		
+		return lista;
+	}
+	
+	public List<Laboratorio> listarLaboratoriosPorSede(int idSede) throws SedeNoEncontrada{
+		Sede sede = this.buscarSede(idSede);
+		
+		return sede.getLaboratorios();
 	}
 
 	public List<Sede> getSedes() {

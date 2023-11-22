@@ -26,7 +26,7 @@ public class PruebaLote extends Entidad {
 	public PruebaLote(ProductoQuimico productoQuimico, EmpleadoTecnico responsable, int auxiliaresRequeridos) {
 		super(generadorID);
 		this.productoQuimico = productoQuimico;
-//		this.fechaFabricacion = fechaFabricacion;
+		this.fechaFabricacion = LocalDate.now();
 		this.responsable = responsable;
 
 		estado = EstadoLote.PENDIENTE;

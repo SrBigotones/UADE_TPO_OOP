@@ -65,7 +65,6 @@ public class ControladorAdministrativo extends Controlador{
 	public void mostrarAltaLaboratorio() {
 		cambiarPanel(new CrearLaboratorio());
 	}
-	public void mostrarAsignarPerfilTecnico() {}
 	
 	public List<PerfilTecnicoView> listarPerfilesTecnicos() {
 		List<PerfilTecnicoView> perfilesTecnicos = empresaInstance.getPerfiles().stream()

@@ -1,26 +1,33 @@
 package inicializacion;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import lab.excepciones.EmpleadoIncompatible;
 import lab.excepciones.EmpleadoNoEncontrado;
+import lab.excepciones.LaboratorioNoDisponible;
+import lab.excepciones.LaboratorioNoEncontrado;
+import lab.excepciones.ProductoQuimicoNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
 import lab.modelo.ElementoQuimico;
 import lab.modelo.Empresa;
+import lab.modelo.FechaTurno;
 import lab.modelo.enums.Provincia;
 import lab.modelo.enums.TipoProducto;
+import lab.modelo.enums.Turno;
 
 public class Inicializador {
 
-	public static void ejecutar(Empresa empresa) {
+	public static void ejecutar(Empresa empresa) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
 		inicializarTiposPeligro(empresa);
 		inicializarSedes(empresa);
 		inicializarLaboratorios(empresa);
 		inicializarPerfilesTecnicos(empresa);
 		inicializarEmpleados(empresa);
 		inicializarProductosQuimicos(empresa);
+		inicializarPrueba(empresa);
 	}
 
 	private static void inicializarTiposPeligro(Empresa empresa) {
@@ -88,5 +95,10 @@ public class Inicializador {
 		elementos.put(ElementoQuimico.CALCIO, 2);
 
 		empresa.crearProductoQuimico(elementos, "Producto 4", TipoProducto.PERFUMERIA, Arrays.asList(1, 3));
+	}
+	
+	
+	private static void inicializarPrueba(Empresa empresa) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
+		empresa.reservar(1, 5, 2, new FechaTurno(LocalDate.now(), Turno.MAÑANA), 1);
 	}
 }

@@ -43,13 +43,14 @@ public class Sede extends Entidad {
 	 * @throws LaboratorioNoDisponible
 	 */
 	public PruebaLote reservarPrueba(int idLaboratorio, ProductoQuimico productoQuimico, int cantidadAuxiliares,EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno ) throws LaboratorioNoEncontrado, LaboratorioNoDisponible {
+		System.out.println(idLaboratorio);
 		Laboratorio laboratorio = this.buscarLaboratorio(idLaboratorio);
 		return laboratorio.reservar(productoQuimico, cantidadAuxiliares, empleadoResponsable, fechaTurno);
 	}
 	
 
-	public Laboratorio buscarLaboratorio(int id) throws LaboratorioNoEncontrado {
-		Laboratorio lab =Utilidades.buscarEnListaPorId(id, laboratorios);
+	public Laboratorio buscarLaboratorio(int idLab) throws LaboratorioNoEncontrado {
+		Laboratorio lab =Utilidades.buscarEnListaPorId(idLab, laboratorios);
 		if(lab != null)
 			return lab;
 		

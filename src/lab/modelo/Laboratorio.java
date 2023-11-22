@@ -58,7 +58,7 @@ public class Laboratorio extends Entidad {
 
 	public PruebaLote reservar(ProductoQuimico productoQuimico, int auxiliaresRequeridos, EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno) throws LaboratorioNoDisponible {
 		
-		if (!disponible(productoQuimico, auxiliaresRequeridos, fechaTurno) || this.puedeProbarProductoQuimico(productoQuimico)) {
+		if (!disponible(productoQuimico, auxiliaresRequeridos, fechaTurno)) {
 			throw new LaboratorioNoDisponible();
 		}
 
@@ -100,9 +100,9 @@ public class Laboratorio extends Entidad {
 		
 		for(PruebaLote[] arr: pruebas.values()) {
 			for(PruebaLote value: arr)
-				auxPruebas.add(value);
+				if(value != null)
+					auxPruebas.add(value);
 		}
-		
 		PruebaLote pruebaLote = Utilidades.buscarEnListaPorId(idLote, auxPruebas);
 		if(pruebaLote != null)
 			return pruebaLote;
@@ -117,6 +117,7 @@ public class Laboratorio extends Entidad {
 	}
 	
 	public boolean puedeProbarProductoQuimico(ProductoQuimico productoQuimico) {
+		System.out.println("Puede Probar");
 		return this.peligrosPermitidos.containsAll(productoQuimico.getPeligros());
 	}
 	public int getCapacidadPersonas() {
