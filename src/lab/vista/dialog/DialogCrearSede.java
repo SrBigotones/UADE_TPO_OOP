@@ -30,7 +30,7 @@ public class DialogCrearSede extends JDialog {
 		JLabel lblError = new JLabel("");
 		lblError.setForeground(Color.RED);
 		
-		add(new JLabel("Provincia:"));
+		add(new JLabel("Provincia"));
 		add(cbProvincia, "wrap");
 		add(btnConfirmar, "wrap, span 2");
 		add(btnCancelar, "wrap, span 2");

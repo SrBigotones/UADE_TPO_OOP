@@ -1,6 +1,5 @@
 package lab.controlador;
 
-import java.awt.BorderLayout;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,6 @@ import javax.swing.SwingConstants;
 
 import lab.modelo.Empresa;
 import lab.modelo.enums.Provincia;
-import lab.util.Utilidades;
 import lab.vista.Menu;
 import lab.vista.paneles.BotoneraSoporte;
 import lab.vista.paneles.ListadoAdministrativos;

@@ -2,30 +2,32 @@ package lab.vista.tablas;
 
 import java.util.List;
 
-import javax.swing.JCheckBox;
 import javax.swing.table.AbstractTableModel;
 
 import lab.vista.view.PeligrosViewCheck;
-import lab.vista.view.PerfilTecnicoView;
 
 public class ModeloPeligrosSeleccion extends AbstractTableModel{
 
-	List<PeligrosViewCheck> datos;
+	private List<PeligrosViewCheck> datos;
+	private String[] columnas = new String[] { "", "id", "Nombre", "Costo" };
 	
 	public ModeloPeligrosSeleccion(List<PeligrosViewCheck> datos) {
 		this.datos = datos;
 	}
 	
 	@Override
+	public String getColumnName(int column) {
+		return columnas[column];
+	}
+	
+	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return datos.size();
 	}
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 4;
+		return columnas.length;
 	}
 
 	@Override

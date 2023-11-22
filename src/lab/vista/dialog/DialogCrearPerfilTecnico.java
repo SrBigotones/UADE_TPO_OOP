@@ -1,7 +1,5 @@
 package lab.vista.dialog;
 
-import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -21,7 +19,7 @@ public class DialogCrearPerfilTecnico extends JDialog {
 		setSize(300, 300);
 		setLocationRelativeTo(padre);
 		controlador = ControladorSoporte.getInstance();
-		
+
 		controlador = ControladorSoporte.getInstance();
 		setLayout(new MigLayout("", "[fill, grow][fill, grow]", ""));
 
@@ -31,11 +29,11 @@ public class DialogCrearPerfilTecnico extends JDialog {
 		JButton btnCrearPerfil = new JButton("Confirmar");
 		JButton btnCancelar = new JButton("Cancelar");
 
-		add(new JLabel("Nombre:"));
+		add(new JLabel("Nombre"));
 		add(tfNombre, "wrap");
-		add(new JLabel("Sueldo:"));
+		add(new JLabel("Sueldo"));
 		add(tfSueldo, "wrap");
-		add(new JLabel("Max Reservas:"));
+		add(new JLabel("Max Reservas"));
 		add(tfReservas, "wrap");
 		add(btnCrearPerfil, "wrap, span 2");
 		add(btnCancelar, "wrap, span 2");

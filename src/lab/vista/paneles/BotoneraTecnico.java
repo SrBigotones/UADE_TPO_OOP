@@ -21,11 +21,11 @@ public class BotoneraTecnico extends JPanel{
 		JButton btnReservarLaboratorio = new JButton("Reservar Laboratorio");
 		JButton btnActualizarEstadoPrueba = new JButton("Actualizar Estado Prueba");
 		JButton btnIncribirseAPrueba = new JButton("Inscribirse a prueba");
-		JButton btnCrearElementoQuimico = new JButton("Crear Elemento Quimico");
+		JButton btnCrearProductoQuimico = new JButton("Crear Producto Quimico");
 		
 		
 		add(btnActualizarEstadoPrueba);
-		add(btnCrearElementoQuimico);
+		add(btnCrearProductoQuimico);
 		add(btnIncribirseAPrueba);
 		add(btnReservarLaboratorio);
 		
@@ -42,8 +42,8 @@ public class BotoneraTecnico extends JPanel{
 			}
 		});
 		
-		btnCrearElementoQuimico.addActionListener(e -> {
-			controlador.mostrarCrearElementoQuimico();
+		btnCrearProductoQuimico.addActionListener(e -> {
+			controlador.mostrarPantallaProductosQuimicos();
 		});
 		
 		btnIncribirseAPrueba.addActionListener(e -> {

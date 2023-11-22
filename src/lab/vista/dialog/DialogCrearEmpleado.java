@@ -33,11 +33,11 @@ public class DialogCrearEmpleado extends JDialog {
 		JLabel lblError = new JLabel("");
 		lblError.setForeground(Color.RED);
 
-		add(new JLabel("Nombre:"));
+		add(new JLabel("Nombre"));
 		add(txtNombre, "wrap");
-		add(new JLabel("Sede/Provincia:"));
+		add(new JLabel("Sede/Provincia"));
 		add(cbSede, "wrap");
-		add(new JLabel("Username:"));
+		add(new JLabel("Username"));
 		add(txtUsername, "wrap");
 		add(btnConfirmar, "wrap, span 2");
 		add(btnCancelar, "wrap, span 2");

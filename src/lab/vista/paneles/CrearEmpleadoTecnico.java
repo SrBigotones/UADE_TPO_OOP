@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
 
 import lab.controlador.ControladorAdministrativo;
 import lab.vista.tablas.ModeloPerfilTecnico;
+import net.miginfocom.swing.MigLayout;
 
 public class CrearEmpleadoTecnico extends JPanel{
 
@@ -22,12 +22,12 @@ public class CrearEmpleadoTecnico extends JPanel{
 	public CrearEmpleadoTecnico() {
 		controlador = ControladorAdministrativo.getInstance();
 		
-		GridLayout layout = new GridLayout(5,2);
+		MigLayout layout = new MigLayout("fillx");
 		setLayout(layout);
 		
-		JLabel lblNombre = new JLabel("Nombre:");
-		JLabel lblUsername = new JLabel("Username:");
-		JLabel lblPerfilTecnico = new JLabel("PerfilTecnico");
+		JLabel lblNombre = new JLabel("Nombre");
+		JLabel lblUsername = new JLabel("Username");
+		JLabel lblPerfilTecnico = new JLabel("Perfil técnico");
 		
 		JTextField tfNombre = new JTextField();
 		JTextField tfUsername = new JTextField();
@@ -38,13 +38,12 @@ public class CrearEmpleadoTecnico extends JPanel{
 		JTable tblPerfilesTecnicos = new JTable(modelo);
 		JScrollPane scrollPane = new JScrollPane(tblPerfilesTecnicos);
 		add(lblNombre);
-		add(tfNombre);
+		add(tfNombre, "wrap, grow");
 		add(lblUsername);
-		add(tfUsername);
-		add(lblPerfilTecnico);
-		add(scrollPane);
-		add(new JLabel());
-		add(btnDarAlta);
+		add(tfUsername, "wrap, grow");
+		add(lblPerfilTecnico, "top");
+		add(scrollPane, "wrap, grow");
+		add(btnDarAlta, "skip, right");
 		
 		
 		btnDarAlta.addActionListener(x -> {

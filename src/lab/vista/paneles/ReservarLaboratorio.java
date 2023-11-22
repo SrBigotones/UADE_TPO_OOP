@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,6 +25,7 @@ import lab.modelo.FechaTurno;
 import lab.modelo.enums.Turno;
 import lab.vista.tablas.ModeloLaboratorio;
 import lab.vista.view.ProductoQuimicoView;
+import net.miginfocom.swing.MigLayout;
 
 public class ReservarLaboratorio extends JPanel{
 	
@@ -34,7 +34,7 @@ public class ReservarLaboratorio extends JPanel{
 	public ReservarLaboratorio() throws SedeNoEncontrada {
 		controlador = ControladorTecnico.getInstance();
 		
-		GridLayout layout = new GridLayout(6,2);
+		MigLayout layout = new MigLayout("fill", "", "[::200]");
 		setLayout(layout);
 		ModeloLaboratorio modeloLab = new ModeloLaboratorio(controlador.listarLaboratorios());
 		JTable tablaLabs = new JTable(modeloLab);
@@ -53,24 +53,24 @@ public class ReservarLaboratorio extends JPanel{
 			comboProdQ.addItem(prod);
 		}
 		
-		add(new JLabel("Laboratorios:"));
-		add(scrollPane);
-		add(new JLabel("Producto Quimico:"));
-		add(comboProdQ);
-		add(new JLabel("Turno:"));
-		add(comboTurno);
+		add(new JLabel("Laboratorios"), "top");
+		add(scrollPane, "wrap, grow");
+		add(new JLabel("Producto Quimico"));
+		add(comboProdQ, "wrap, grow");
+		add(new JLabel("Turno"));
+		add(comboTurno, "wrap, grow");
 		add(new JLabel("Fecha(DD/MM/YY)"));
-		add(tfDate);
-		add(new JLabel("N. Ayudantes:"));
-		add(tfNAyudantes);
+		add(tfDate, "wrap, grow");
+		add(new JLabel("N. Ayudantes"));
+		add(tfNAyudantes, "wrap, grow");
 		
 		
-		add(btnReservar);
+		add(btnReservar, "skip, right");
 		
 		
 		btnReservar.addActionListener(e -> {
 			int idLab = (int) tablaLabs.getValueAt(tablaLabs.getSelectedRow(), 0);
-			int idProdQ = ((ProductoQuimicoView)comboProdQ.getSelectedItem()).getIdProdQuimico();
+			int idProdQ = ((ProductoQuimicoView)comboProdQ.getSelectedItem()).getIdProductoQuimico();
 			int cantAuxiliares = Integer.parseInt(tfNAyudantes.getText());
 			LocalDate date = LocalDate.parse(tfDate.getText(), DateTimeFormatter.ofPattern("dd/MM/yy")); 			
 			FechaTurno fecha = new FechaTurno(date, comboTurno.getItemAt(comboTurno.getSelectedIndex()));

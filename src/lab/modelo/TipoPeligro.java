@@ -6,13 +6,13 @@ public class TipoPeligro extends Entidad {
 	private static GeneradorID generadorID = new GeneradorID();
 	private String nombre;
 	private double costo;
-	private long diasVencimineto;
+	private long diasVencimiento;
 	
-	public TipoPeligro(String nombre, double costo, int diasVencimineto) {
+	public TipoPeligro(String nombre, double costo, int diasVencimiento) {
 		super(generadorID);
 		this.nombre = nombre;
 		this.costo = costo;
-		this.diasVencimineto= diasVencimineto;
+		this.diasVencimiento= diasVencimiento;
 	}
 	
 	public String getNombre() {
@@ -32,7 +32,7 @@ public class TipoPeligro extends Entidad {
 	}
 
 	public long getDiasVencimineto() {
-		return diasVencimineto;
+		return diasVencimiento;
 	}
 	
 	

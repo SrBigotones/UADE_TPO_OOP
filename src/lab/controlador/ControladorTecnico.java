@@ -17,13 +17,12 @@ import lab.modelo.ElementoQuimico;
 import lab.modelo.Empresa;
 import lab.modelo.EstrategiaVencimiento;
 import lab.modelo.FechaTurno;
-import lab.modelo.PruebaLote;
-import lab.modelo.TipoPeligro;
 import lab.modelo.enums.EstadoLote;
 import lab.modelo.enums.TipoProducto;
 import lab.vista.Menu;
 import lab.vista.paneles.ActualizarEstadoPruebaTecnico;
 import lab.vista.paneles.BotoneraTecnico;
+import lab.vista.paneles.ListadoProductosQuimicos;
 import lab.vista.paneles.ReservarLaboratorio;
 import lab.vista.view.LaboratorioView;
 import lab.vista.view.PeligrosViewCheck;
@@ -88,7 +87,6 @@ public class ControladorTecnico extends Controlador{
 		return lista;
 	}
 	
-	
 	public List<LaboratorioView> listarLaboratorios() throws SedeNoEncontrada{
 		List<LaboratorioView> lab = empresaInstance.listarLaboratoriosPorSede(usuario.getIdSedePertenece())
 				.stream()
@@ -105,7 +103,6 @@ public class ControladorTecnico extends Controlador{
 		
 	}
 	
-	
 	public void mostrarReservarPrueba() throws SedeNoEncontrada {
 		cambiarPanel(new ReservarLaboratorio());
 	}
@@ -115,7 +112,10 @@ public class ControladorTecnico extends Controlador{
 	public void mostrarActualizarEstadoPrueba() throws SedeNoEncontrada, LaboratorioNoEncontrado {
 		cambiarPanel(new ActualizarEstadoPruebaTecnico());
 	}
-	public void mostrarCrearElementoQuimico() {}
+	public void mostrarPantallaProductosQuimicos() {
+		List<ProductoQuimicoView> productos = Empresa.getInstance().getProductosQuimicos().stream().map((pq) -> new ProductoQuimicoView(pq)).collect(Collectors.toList());
+		cambiarPanel(new ListadoProductosQuimicos(productos));
+	}
 	
 	public List<ElementoQuimico> listarElementosQuimicos() {
 		return null;

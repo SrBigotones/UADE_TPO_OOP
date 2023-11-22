@@ -4,17 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 
 import lab.excepciones.SedeNoEncontrada;
 import lab.vista.Menu;
 import lab.vista.paneles.BotoneraAdministrativo;
-import lab.vista.paneles.BotoneraSoporte;
 import lab.vista.paneles.CrearEmpleadoGerente;
 import lab.vista.paneles.CrearEmpleadoTecnico;
 import lab.vista.paneles.CrearLaboratorio;
-import lab.vista.tablas.ModeloPerfilTecnico;
 import lab.vista.view.PeligrosViewCheck;
 import lab.vista.view.PerfilTecnicoView;
 import lab.vista.view.SedeView;
