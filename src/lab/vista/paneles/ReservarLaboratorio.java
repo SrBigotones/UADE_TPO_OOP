@@ -69,7 +69,7 @@ public class ReservarLaboratorio extends JPanel{
 		
 		btnReservar.addActionListener(e -> {
 			int idLab = (int) tablaLabs.getValueAt(tablaLabs.getSelectedRow(), 0);
-			int idProdQ = ((ProductoQuimicoView)comboProdQ.getSelectedItem()).getIdProdQuimico();
+			int idProdQ = ((ProductoQuimicoView)comboProdQ.getSelectedItem()).getIdProductoQuimico();
 			int cantAuxiliares = Integer.parseInt(tfNAyudantes.getText());
 			LocalDate date = LocalDate.parse(tfDate.getText(), DateTimeFormatter.ofPattern("dd/MM/yy")); 			
 			FechaTurno fecha = new FechaTurno(date, comboTurno.getItemAt(comboTurno.getSelectedIndex()));
