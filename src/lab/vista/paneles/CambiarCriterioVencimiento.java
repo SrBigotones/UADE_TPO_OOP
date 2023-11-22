@@ -96,6 +96,9 @@ public class CambiarCriterioVencimiento extends JPanel{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				if(tablaLab.getSelectedRow() < 0)
+					return;
+				
 				int idSede = (int)tablaSedes.getValueAt(tablaSedes.getSelectedRow(), 0);
 				int idLab = (int)tablaLab.getValueAt(tablaLab.getSelectedRow(), 0);
 				try {
