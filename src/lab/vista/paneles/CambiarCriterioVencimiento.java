@@ -19,6 +19,7 @@ import lab.excepciones.EmpleadoNoEncontrado;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PruebaLoteNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
+import lab.modelo.enums.EstadoLote;
 import lab.vista.tablas.ModeloLaboratorio;
 import lab.vista.tablas.ModeloPruebaLote;
 import lab.vista.tablas.ModeloSedes;
@@ -29,6 +30,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class CambiarCriterioVencimiento extends JPanel {
 	private ControladorGerente controlador;
+	private JButton btnCambiarCriterio = new JButton("Cambiar Criterio");
 
 	public CambiarCriterioVencimiento() {
 		controlador = ControladorGerente.getInstance();
@@ -55,7 +57,7 @@ public class CambiarCriterioVencimiento extends JPanel {
 			comboCriterio.addItem(crit);
 		}
 
-		JButton btnCambiarCriterio = new JButton("Cambiar Criterio");
+		
 
 		add(new JLabel("Sedes"), "top");
 		add(scrollSedes, "wrap, grow");
@@ -66,6 +68,8 @@ public class CambiarCriterioVencimiento extends JPanel {
 		add(new JLabel("Criterio"));
 		add(comboCriterio, "wrap, grow");
 		add(btnCambiarCriterio, "skip, right");
+		
+		this.btnSetEnabled(false);
 
 		// Tengo un bug aca, al cambiar seleccion de tabla cuando ya habias elegido en
 		// las otras tablas
@@ -105,6 +109,25 @@ public class CambiarCriterioVencimiento extends JPanel {
 				}
 			}
 		});
+		
+		tablaPrueba.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+				if (tablaPrueba.getSelectedRow() < 0)
+					return;
+				
+				EstadoLote estadoSel = modeloPrueba.getDatos().get(tablaPrueba.getSelectedRow()).getEstadoLote();
+				if(estadoSel == EstadoLote.ACEPTADO) {
+					btnSetEnabled(false);
+				}else {
+					btnSetEnabled(true);
+				}
+				
+			}
+		});
 
 		btnCambiarCriterio.addActionListener(e -> {
 			int idSede = (int) tablaSedes.getValueAt(tablaSedes.getSelectedRow(), 0);
@@ -122,6 +145,11 @@ public class CambiarCriterioVencimiento extends JPanel {
 			}
 		});
 
+	}
+	
+	
+	public void btnSetEnabled(boolean estado) {
+		this.btnCambiarCriterio.setEnabled(estado);
 	}
 
 }
