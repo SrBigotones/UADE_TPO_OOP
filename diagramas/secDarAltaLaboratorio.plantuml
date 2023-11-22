@@ -1,0 +1,27 @@
+@startuml
+
+  Actor UsuarioAdministrador
+  UsuarioAdministrador -> ControladorAdministrativo 
+  Activate UsuarioAdministrador
+
+  Activate ControladorAdministrativo
+  ControladorAdministrativo -> Empresa: darAltaLaboratorio(int, int, List<Integer>)
+
+  Activate Empresa
+  Empresa -> Utilidades: crearLaboratorio(int, List<PerfilesTecnico>)
+  Activate Utilidades
+ 
+  loop buscarEnListaPorId(int, list<Sede>)
+  Utilidades -> Utilidades : buscarSede(int)
+  end buscarSede
+  Utilidades --> Empresa: Sede
+  Deactivate Utilidades
+
+  Empresa -> Empresa: EmpleadoTecnico(String, String, PerfilTecnico)
+  Empresa --> ControladorAdministrativo : Empleado
+  Deactivate Empresa
+  ControladorAdministrativo --> UsuarioAdministrador 
+  Deactivate ControladorAdministrativo
+  Deactivate UsuarioAdministrador
+
+@enduml
