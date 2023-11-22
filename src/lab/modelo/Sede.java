@@ -75,13 +75,26 @@ public class Sede extends Entidad {
 	}
 
 	public Empleado obtenerGerenteDeSede() {
-		return Empresa.getInstance().getEmpleados().stream()
-				.filter((e) -> e.soyGerente() && e.getIdSedePertenece() == getId()).findFirst().orElse(null);
+		List<Empleado> empleados = Empresa.getInstance().getEmpleados();
+		for (int i = empleados.size()-1; i > 0; i--) {
+			if (empleados.get(i).soyGerente() && empleados.get(i).getIdSedePertenece() == getId()) {
+				return empleados.get(i);
+				
+			}
+		}
+		
+		return null;
 	}
 	
 	public Empleado obtenerAdminDeSede() {
-		return Empresa.getInstance().getEmpleados().stream()
-				.filter((e) -> e.soyAdministrativo() && e.getIdSedePertenece() == getId()).findFirst().orElse(null);
+		List<Empleado> empleados = Empresa.getInstance().getEmpleados();
+		for (int i = empleados.size()-1; i > 0; i--) {
+			if (empleados.get(i).soyAdministrativo() && empleados.get(i).getIdSedePertenece() == getId()) {
+				return empleados.get(i);
+			}
+		}
+		
+		return null;
 	}
 
 	public boolean laboratorioPuedeProbarProductoQuimico(int idLaboratorio, ProductoQuimico productoQuimico)
