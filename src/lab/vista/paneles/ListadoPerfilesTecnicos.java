@@ -24,7 +24,7 @@ public class ListadoPerfilesTecnicos extends JPanel {
 		controlador = ControladorSoporte.getInstance();
 		System.out.println("Listado de perfiles tecnicos");
 
-		setLayout(new MigLayout("debug", "20[80%]10[20%]20", "[]"));
+		setLayout(new MigLayout("", "20[100%]20", "[][]"));
 
 		ModeloPerfilesTecnicos modelo = new ModeloPerfilesTecnicos();
 		modelo.setDatos(perfiles);
@@ -38,11 +38,11 @@ public class ListadoPerfilesTecnicos extends JPanel {
 			controlador.mostrarPantallaPerfilesTecnicos();
 		});
 
-		JPanel botonera = new JPanel(new MigLayout("", "[fill, grow]", ""));
+		JPanel botonera = new JPanel(new MigLayout("", "", ""));
 		botonera.add(btnCrearPerfil, "wrap");
 
-		add(scrollPane, "cell 0 0, grow");
-		add(botonera, "cell 1 0");
+		add(botonera, "cell 0 0");
+		add(scrollPane, "cell 0 1, grow");
 
 	}
 
