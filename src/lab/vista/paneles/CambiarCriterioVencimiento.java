@@ -57,11 +57,11 @@ public class CambiarCriterioVencimiento extends JPanel {
 
 		JButton btnCambiarCriterio = new JButton("Cambiar Criterio");
 
-		add(new JLabel("Sedes"));
+		add(new JLabel("Sedes"), "top");
 		add(scrollSedes, "wrap, grow");
-		add(new JLabel("Laboratorios"));
+		add(new JLabel("Laboratorios"), "top");
 		add(scrollLab, "wrap, grow");
-		add(new JLabel("Pruebas"));
+		add(new JLabel("Pruebas"), "top");
 		add(scrollPrueba, "wrap, grow");
 		add(new JLabel("Criterio"));
 		add(comboCriterio, "wrap, grow");
