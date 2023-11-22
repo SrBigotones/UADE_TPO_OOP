@@ -21,7 +21,7 @@ public class DialogCrearEmpleado extends JDialog {
 	public DialogCrearEmpleado(JFrame padre) {
 		super(padre, JDialog.DEFAULT_MODALITY_TYPE);
 		setLayout(new MigLayout("", "[fill, grow][fill, grow]", ""));
-		setSize(300, 250);
+		setSize(400, 250);
 		setLocationRelativeTo(padre);
 		controlador = ControladorSoporte.getInstance();
 

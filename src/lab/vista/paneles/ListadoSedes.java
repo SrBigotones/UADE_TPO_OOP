@@ -24,7 +24,7 @@ public class ListadoSedes extends JPanel {
 		controlador = ControladorSoporte.getInstance();
 		System.out.println("Listado de sedes");
 
-		setLayout(new MigLayout("debug", "20[80%]10[20%]20", "[]"));
+		setLayout(new MigLayout("", "20[100%]20", "[][]"));
 
 		ModeloSedes modelo = new ModeloSedes();
 		modelo.setDatos(sedes);
@@ -38,10 +38,10 @@ public class ListadoSedes extends JPanel {
 			controlador.mostrarPantallaSedes();
 		});
 
-		JPanel botonera = new JPanel(new MigLayout("", "[fill, grow]", ""));
+		JPanel botonera = new JPanel(new MigLayout("", "", ""));
 		botonera.add(btnCrearSede, "wrap");
 
-		add(scrollPane, "cell 0 0, grow");
-		add(botonera, "cell 1 0");
+		add(botonera, "cell 0 0");
+		add(scrollPane, "cell 0 1, grow");
 	}
 }

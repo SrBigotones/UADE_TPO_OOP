@@ -7,7 +7,15 @@ import javax.swing.table.AbstractTableModel;
 import lab.vista.view.PruebaLoteView;
 
 public class ModeloPruebaLote extends AbstractTableModel{
-	List<PruebaLoteView> datos;
+	private List<PruebaLoteView> datos;
+	private String[] colNames = {"ID","Nombre Prod", "Tipo", "Fecha Fab", "Empleado", "Estado"};
+
+
+	@Override
+	public String getColumnName(int column) {
+		// TODO Auto-generated method stub
+		return colNames[column];
+	}
 
 
 	public ModeloPruebaLote(List<PruebaLoteView> datos) {

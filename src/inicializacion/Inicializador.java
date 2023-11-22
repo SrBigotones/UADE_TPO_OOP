@@ -64,12 +64,6 @@ public class Inicializador {
 		empresa.crearEmpleadoSoporte("Nicolas", "nicorepo");
 		empresa.crearEmpleadoAdministrativo("Pepe", "pepinho",1);
 		
-//		try {
-//			empresa.asignarAdministrativoASede(1, 1);
-//			empresa.asignarAdministrativoASede(2, 5);
-//		} catch (EmpleadoNoEncontrado | SedeNoEncontrada | EmpleadoIncompatible e) {
-//			e.printStackTrace();
-//		}
 	}
 
 	private static void inicializarProductosQuimicos(Empresa empresa) {

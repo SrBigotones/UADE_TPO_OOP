@@ -17,12 +17,10 @@ public class BotoneraSoporte extends JPanel {
 		setLayout(new MigLayout("", "[fill, grow]", "[]"));
 
 		JButton botonSede = new JButton("Sedes");
-		JButton botonProductos = new JButton("Productos");
 		JButton botonAdministrativos = new JButton("Empleados administrativos");
 		JButton botonPerfilesTecnicos = new JButton("Perfiles técnicos");
 
 		add(botonSede, "wrap");
-		add(botonProductos, "wrap");
 		add(botonAdministrativos, "wrap");
 		add(botonPerfilesTecnicos, "wrap");
 
