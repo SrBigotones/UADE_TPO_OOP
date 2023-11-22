@@ -51,7 +51,12 @@ public class BotoneraTecnico extends JPanel{
 		});
 		
 		btnReservarLaboratorio.addActionListener(e -> {
-			controlador.mostrarReservarPrueba();
+			try {
+				controlador.mostrarReservarPrueba();
+			} catch (SedeNoEncontrada e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 	}
 }

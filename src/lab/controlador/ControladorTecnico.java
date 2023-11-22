@@ -8,7 +8,9 @@ import javax.swing.JPanel;
 
 import lab.excepciones.EmpleadoIncompatible;
 import lab.excepciones.EmpleadoNoEncontrado;
+import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.LaboratorioNoEncontrado;
+import lab.excepciones.ProductoQuimicoNoEncontrado;
 import lab.excepciones.PruebaLoteNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
 import lab.modelo.ElementoQuimico;
@@ -22,8 +24,10 @@ import lab.modelo.enums.TipoProducto;
 import lab.vista.Menu;
 import lab.vista.paneles.ActualizarEstadoPruebaTecnico;
 import lab.vista.paneles.BotoneraTecnico;
+import lab.vista.paneles.ReservarLaboratorio;
 import lab.vista.view.LaboratorioView;
 import lab.vista.view.PeligrosViewCheck;
+import lab.vista.view.ProductoQuimicoView;
 import lab.vista.view.PruebaLoteView;
 
 public class ControladorTecnico extends Controlador{
@@ -43,8 +47,20 @@ public class ControladorTecnico extends Controlador{
 	}
 	
 	
-	public void reservarPrueba(int idProdQuimico,int cantidadAuxiliares, FechaTurno fechaTurno, int idLaboratorio) {
-		
+	/**
+	 * 
+	 * @param idProdQuimico
+	 * @param cantidadAuxiliares
+	 * @param fechaTurno
+	 * @param idLaboratorio
+	 * @throws EmpleadoIncompatible 
+	 * @throws EmpleadoNoEncontrado 
+	 * @throws ProductoQuimicoNoEncontrado 
+	 * @throws LaboratorioNoDisponible 
+	 * @throws LaboratorioNoEncontrado 
+	 */
+	public void reservarPrueba(int idProdQuimico,int cantidadAuxiliares, FechaTurno fechaTurno, int idLaboratorio) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
+		empresaInstance.reservar(idProdQuimico, cantidadAuxiliares, usuario.getId(), fechaTurno, idLaboratorio);
 	}
 	
 	public void incribirseAPrueba(int idLaboratorio, int idPrueba) throws SedeNoEncontrada, EmpleadoNoEncontrado, PruebaLoteNoEncontrado, EmpleadoIncompatible, LaboratorioNoEncontrado {
@@ -90,8 +106,12 @@ public class ControladorTecnico extends Controlador{
 	}
 	
 	
-	public void mostrarReservarPrueba() {}
+	public void mostrarReservarPrueba() throws SedeNoEncontrada {
+		cambiarPanel(new ReservarLaboratorio());
+	}
+	
 	public void mostrarInscribirseAPrueba() {}
+	
 	public void mostrarActualizarEstadoPrueba() throws SedeNoEncontrada, LaboratorioNoEncontrado {
 		cambiarPanel(new ActualizarEstadoPruebaTecnico());
 	}
@@ -99,6 +119,14 @@ public class ControladorTecnico extends Controlador{
 	
 	public List<ElementoQuimico> listarElementosQuimicos() {
 		return null;
+	}
+	
+	public List<ProductoQuimicoView> listarProductosQuimicos(){
+		List<ProductoQuimicoView> lista = empresaInstance.getProductosQuimicos()
+				.stream()
+				.map(x -> new ProductoQuimicoView(x))
+				.collect(Collectors.toList());
+		return lista;
 	}
 	public List<PeligrosViewCheck> listarPeligros(){
 		List<PeligrosViewCheck> lista = empresaInstance.getTiposPeligro()
