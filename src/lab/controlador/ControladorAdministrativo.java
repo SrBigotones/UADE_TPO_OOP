@@ -13,7 +13,9 @@ import lab.vista.paneles.BotoneraAdministrativo;
 import lab.vista.paneles.BotoneraSoporte;
 import lab.vista.paneles.CrearEmpleadoGerente;
 import lab.vista.paneles.CrearEmpleadoTecnico;
+import lab.vista.paneles.CrearLaboratorio;
 import lab.vista.tablas.ModeloPerfilTecnico;
+import lab.vista.view.PeligrosViewCheck;
 import lab.vista.view.PerfilTecnicoView;
 import lab.vista.view.SedeView;
 
@@ -38,8 +40,8 @@ public class ControladorAdministrativo extends Controlador{
 		empresaInstance.crearEmpleadoGerente(nombre, username, usuario.getIdSedePertenece());
 	}
 	
-	public void darAltaLaboratorio(int capacidadPersonas, int idSede, List<Integer> idPeligros) throws SedeNoEncontrada {
-		empresaInstance.crearLaboratorio(capacidadPersonas, idPeligros, idSede);
+	public void darAltaLaboratorio(int capacidadPersonas, List<Integer> idPeligros) throws SedeNoEncontrada {
+		empresaInstance.crearLaboratorio(capacidadPersonas, idPeligros, usuario.getIdSedePertenece());
 	}
 	
 	public void asginarPerfilTecnico(int idPerfilTecnico, int idEmpleadoTecnico) throws Exception {
@@ -60,7 +62,9 @@ public class ControladorAdministrativo extends Controlador{
 	public void mostrarAltaGerente() {
 		cambiarPanel(new CrearEmpleadoGerente());
 	}
-	public void mostrarAltaLaboratorio() {}
+	public void mostrarAltaLaboratorio() {
+		cambiarPanel(new CrearLaboratorio());
+	}
 	public void mostrarAsignarPerfilTecnico() {}
 	
 	public List<PerfilTecnicoView> listarPerfilesTecnicos() {
@@ -78,4 +82,12 @@ public class ControladorAdministrativo extends Controlador{
 				.collect(Collectors.toList());
 		return sedes;
 	}
+	
+	public List<PeligrosViewCheck> listarPeligros(){
+		List<PeligrosViewCheck> lista = empresaInstance.getTiposPeligro()
+				.stream()
+				.map(x -> new PeligrosViewCheck(x))
+				.collect(Collectors.toList());
+		return lista;
+	} 
 }
