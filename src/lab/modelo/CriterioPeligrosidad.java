@@ -10,12 +10,11 @@ public class CriterioPeligrosidad extends EstrategiaVencimiento {
 
 	@Override
 	public LocalDate calcularVencimiento(PruebaLote lote) {
-		// TODO Auto-generated method stub
 		long diasVencimientoMinimo  = Integer.MAX_VALUE;
 		
-		for (TipoPeligro i : lote.getProductoQuimico().getPeligros() ) {
-			if(diasVencimientoMinimo  > i.getDiasVencimineto())
-				diasVencimientoMinimo  = i.getDiasVencimineto();
+		for (TipoPeligro peligro : lote.getProductoQuimico().getPeligros() ) {
+			if(diasVencimientoMinimo  > peligro.getDiasVencimineto())
+				diasVencimientoMinimo  = peligro.getDiasVencimineto();
 		}
 		
 		
