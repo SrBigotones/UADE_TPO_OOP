@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 
 import lab.modelo.Empresa;
 import lab.modelo.enums.Provincia;
+import lab.util.Utilidades;
 import lab.vista.Menu;
 import lab.vista.paneles.BotoneraSoporte;
 import lab.vista.paneles.ListadoAdministrativos;
@@ -57,6 +58,9 @@ public class ControladorSoporte extends Controlador {
 		if (Empresa.getInstance().getEmpleados().stream().anyMatch((e) -> e.getUsername().equals(username))) {
 			return "El username ya está registrado";
 		}
+		if (Empresa.getInstance().getEmpleados().stream().anyMatch((e) -> e.getIdSedePertenece() == idSede && e.soyAdministrativo())) {
+			return "Ya hay un empleado administrativo asignado a la sede";
+		}
 		Empresa.getInstance().crearEmpleadoAdministrativo(nombre, username, idSede);
 		return null;
 	}
@@ -86,9 +90,9 @@ public class ControladorSoporte extends Controlador {
 
 	@Override
 	public void mostrarBienvenida() {
-		JPanel panelBienvenida = new JPanel(new MigLayout("", "[]", ""));
-		panelBienvenida.setLayout(new BorderLayout());
-		panelBienvenida.add(new JLabel("¡Bienvenido a Soporte!", SwingConstants.CENTER));
+		JPanel panelBienvenida = new JPanel(new MigLayout("fill", "[100%]", ""));
+		panelBienvenida.setSize(200, 300);
+		panelBienvenida.add(new JLabel("¡Bienvenido a Soporte!", SwingConstants.CENTER), "grow, center");
 		jfMenu = new Menu(new BotoneraSoporte(), panelBienvenida);
 	}
 }

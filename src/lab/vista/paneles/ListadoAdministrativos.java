@@ -24,7 +24,7 @@ public class ListadoAdministrativos extends JPanel {
 		controlador = ControladorSoporte.getInstance();
 		System.out.println("Listado de administrativos");
 
-		setLayout(new MigLayout("", "20[80%]10[20%]20", "[]"));
+		setLayout(new MigLayout("", "20[100%]20", "[][]"));
 
 		ModeloEmpleados modelo = new ModeloEmpleados();
 		modelo.setDatos(empleados);
@@ -39,11 +39,11 @@ public class ListadoAdministrativos extends JPanel {
 			controlador.mostrarPantallaAdministrativos();
 		});
 
-		JPanel botonera = new JPanel(new MigLayout("", "[fill, grow]", ""));
-		botonera.add(btnCrearEmpleadoAdministrativo, "wrap");
+		JPanel botonera = new JPanel(new MigLayout("", "", ""));
+		botonera.add(btnCrearEmpleadoAdministrativo);
 
-		add(scrollPane, "cell 0 0, grow");
-		add(botonera, "cell 1 0");
+		add(botonera, "cell 0 0");
+		add(scrollPane, "cell 0 1, grow");
 
 	}
 }
