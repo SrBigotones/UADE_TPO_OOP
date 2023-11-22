@@ -10,7 +10,6 @@ public class CriterioMolecular extends EstrategiaVencimiento{
 
 	@Override
 	public LocalDate calcularVencimiento(PruebaLote lote) {
-		// TODO Auto-generated method stub
 		
 		long sumNumeroAtomico  = 0;
 		

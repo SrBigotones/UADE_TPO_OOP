@@ -51,18 +51,18 @@ public class Inicializador {
 	}
 
 	private static void inicializarEmpleados(Empresa empresa) {
-		empresa.crearEmpleadoAdministrativo("Gaston", "gaston");
-		empresa.crearEmpleadoTecnico("Augusto", "augusto", 1);
-		empresa.crearEmpleadoGerente("Agustin", "agustin");
+		empresa.crearEmpleadoAdministrativo("Gaston", "gaston",1);
+		empresa.crearEmpleadoTecnico("Augusto", "augusto", 1,1);
+		empresa.crearEmpleadoGerente("Agustin", "agustin",1);
 		empresa.crearEmpleadoSoporte("Nicolas", "nicorepo");
-		empresa.crearEmpleadoAdministrativo("Pepe", "pepinho");
+		empresa.crearEmpleadoAdministrativo("Pepe", "pepinho",1);
 		
-		try {
-			empresa.asignarAdministrativoASede(1, 1);
-			empresa.asignarAdministrativoASede(2, 5);
-		} catch (EmpleadoNoEncontrado | SedeNoEncontrada | EmpleadoIncompatible e) {
-			e.printStackTrace();
-		}
+//		try {
+//			empresa.asignarAdministrativoASede(1, 1);
+//			empresa.asignarAdministrativoASede(2, 5);
+//		} catch (EmpleadoNoEncontrado | SedeNoEncontrada | EmpleadoIncompatible e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	private static void inicializarProductosQuimicos(Empresa empresa) {

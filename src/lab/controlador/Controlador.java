@@ -19,10 +19,8 @@ public abstract class Controlador {
 	}
 
 	protected void cambiarPanel(JPanel panel) {
-		// TODO Se espera a que esté hecho el jframe principal
 		jfMenu.updateView(panel);
 	}
-	
 	
 	public abstract void mostrarBienvenida();
 	
@@ -40,12 +38,5 @@ public abstract class Controlador {
 			ControladorTecnico.getInstance().mostrarBienvenida();
 		
 		jfLogin.setVisible(false);
-		// jfMenu.setVisible(true); TODO Se espera as que esté hecho el jframe
-//		cambiarPanel(new JPanel());
-//		if(usuario.soyAdministrativo()) {
-//			ControladorAdministrativo.getInstance()
-//		}
-		
-//		ControladorSoporte.getInstance().mostrarBienvenida();
 	}
 }

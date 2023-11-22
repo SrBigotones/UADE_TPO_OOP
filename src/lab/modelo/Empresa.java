@@ -164,15 +164,15 @@ public class Empresa {
 	 * @param nombre del empleado
 	 * @return Empleado creado
 	 */
-	public EmpleadoTecnico crearEmpleadoTecnico(String nombre, String username, int idPerfil) {
+	public EmpleadoTecnico crearEmpleadoTecnico(String nombre, String username, int idPerfil, int idSedePertenece) {
 		PerfilTecnico perfil = Utilidades.buscarEnListaPorId(idPerfil, perfiles);
-		EmpleadoTecnico empleado = new EmpleadoTecnico(nombre, username, perfil);
+		EmpleadoTecnico empleado = new EmpleadoTecnico(nombre, username, perfil, idSedePertenece);
 		empleados.add(empleado);
 		return empleado;
 	}
 	
-	public EmpleadoAdministrativo crearEmpleadoAdministrativo(String nombre, String username) {
-		EmpleadoAdministrativo empleado = new EmpleadoAdministrativo(nombre, username);
+	public EmpleadoAdministrativo crearEmpleadoAdministrativo(String nombre, String username, int idSedePertenece) {
+		EmpleadoAdministrativo empleado = new EmpleadoAdministrativo(nombre, username, idSedePertenece);
 		empleados.add(empleado);
 		return empleado;
 	}
@@ -183,8 +183,8 @@ public class Empresa {
 		return empleado;
 	}
 	
-	public EmpleadoGerente crearEmpleadoGerente(String nombre, String username) {
-		EmpleadoGerente empleado = new EmpleadoGerente(nombre, username);
+	public EmpleadoGerente crearEmpleadoGerente(String nombre, String username, int idSedePertence) {
+		EmpleadoGerente empleado = new EmpleadoGerente(nombre, username, idSedePertence);
 		empleados.add(empleado);
 		return empleado;
 	}
@@ -295,17 +295,16 @@ public class Empresa {
 		return sede;
 	}
 	
-	public void asignarAdministrativoASede(int idSede, int idEmpleadoAdministrativo) throws EmpleadoNoEncontrado, SedeNoEncontrada, EmpleadoIncompatible {
-		Sede sede = buscarSede(idSede);
-		Empleado empleado = buscarEmpleado(idEmpleadoAdministrativo);
-		if(empleado.soyAdministrativo()) {
-			sede.asignarEmpleadoAdministrativo((EmpleadoAdministrativo)empleado);
-		}else {
-			throw new EmpleadoIncompatible(empleado);
-		}
-		
-		
-	}
+//	public void asignarAdministrativoASede(int idSede, int idEmpleadoAdministrativo) throws EmpleadoNoEncontrado, SedeNoEncontrada, EmpleadoIncompatible {
+//		Sede sede = buscarSede(idSede);
+//		Empleado empleado = buscarEmpleado(idEmpleadoAdministrativo);
+//		if(empleado.soyGerente()) {
+//			sede.asignarEmpleadoGerente((EmpleadoGerente)empleado);
+//		}else {
+//			throw new EmpleadoIncompatible(empleado);
+//		}	
+//		
+//	}
 	//ESTO NO VA!!!!!!!!!
 //	/**
 //	 * Crea un nuevo tipo de producto
@@ -347,11 +346,10 @@ public class Empresa {
 	 * @throws EmpleadoNoEncontrado 
 	 * @throws EmpleadoIncompatible 
 	 */
-	public PruebaLote reservar(int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idSede, int idLaboratorio) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
-		
-		Sede sede = Utilidades.buscarEnListaPorId(idSede, sedes);
-		ProductoQuimico prodQuimico = this.buscarProductoQuimico(idProdQuimico);
+	public PruebaLote reservar(int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idLaboratorio) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
 		Empleado emp = this.buscarEmpleado(idEmpleadoResponsable);
+		Sede sede = Utilidades.buscarEnListaPorId(emp.getIdSedePertenece(), sedes);
+		ProductoQuimico prodQuimico = this.buscarProductoQuimico(idProdQuimico);
 		if(emp.soyTecnico()) {
 			return sede.reservarPrueba(idLaboratorio, prodQuimico,cantidadAuxiliares, (EmpleadoTecnico) emp, fechaTurno);		
 		}else {
@@ -399,11 +397,11 @@ public class Empresa {
 	 * @throws EmpleadoIncompatible 
 	 * @throws LaboratorioNoEncontrado 
 	 */
-	public boolean registrarEmpleadoPrueba(int idEmpleado, int idPrueba, int idSede, int idLaboratorio) throws SedeNoEncontrada, EmpleadoNoEncontrado, PruebaLoteNoEncontrado, EmpleadoIncompatible, LaboratorioNoEncontrado { //'id de prueba'/
-		
-		Sede sede = this.buscarSede(idSede);
+	public boolean registrarEmpleadoPrueba(int idEmpleado, int idPrueba, int idLaboratorio) throws SedeNoEncontrada, EmpleadoNoEncontrado, PruebaLoteNoEncontrado, EmpleadoIncompatible, LaboratorioNoEncontrado { //'id de prueba'/
 		
 		Empleado empleado = this.buscarEmpleado(idEmpleado);
+		Sede sede = this.buscarSede(empleado.getIdSedePertenece());
+		
 		if(empleado.soyTecnico())
 			sede.registrarAyudanteAPrueba((EmpleadoTecnico)empleado, idLaboratorio, idPrueba);
 		else
@@ -412,22 +410,22 @@ public class Empresa {
 		return false;
 	}
 	 
-	/**
-	 * Asigna un empleado administrativo a una sede
-	 * @param idSede
-	 * @param idEmpleado
-	 * @throws SedeNoEncontrada 
-	 * @throws EmpleadoNoEncontrado 
-	 * @throws EmpleadoIncompatible 
-	 */
-	public void asignarEmpleadoAdministrivoASede(int idSede, int idEmpleado) throws SedeNoEncontrada, EmpleadoNoEncontrado, EmpleadoIncompatible{//'idSede, idEmpleado'/
-		  Sede sede = this.buscarSede(idSede);
-		  Empleado empleado = this.buscarEmpleado(idEmpleado);
-		  if(empleado.soyAdministrativo())
-			  sede.asignarEmpleadoAdministrativo((EmpleadoAdministrativo)empleado);
-		  else
-			  throw new EmpleadoIncompatible(empleado);
-	}
+//	/**
+//	 * Asigna un empleado administrativo a una sede
+//	 * @param idSede
+//	 * @param idEmpleado
+//	 * @throws SedeNoEncontrada 
+//	 * @throws EmpleadoNoEncontrado 
+//	 * @throws EmpleadoIncompatible 
+//	 */
+//	public void asignarEmpleadoGerenteASede(int idSede, int idEmpleado) throws SedeNoEncontrada, EmpleadoNoEncontrado, EmpleadoIncompatible{//'idSede, idEmpleado'/
+//		  Sede sede = this.buscarSede(idSede);
+//		  Empleado empleado = this.buscarEmpleado(idEmpleado);
+//		  if(empleado.soyGerente())
+//			  sede.asignarEmpleadoGerente((EmpleadoGerente)empleado);
+//		  else
+//			  throw new EmpleadoIncompatible(empleado);
+//	}
 	
 	/*
 	 ***************************METODOS PARA EMPLEADO ADMINISTRATIVO***************************
