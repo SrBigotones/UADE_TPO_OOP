@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import lab.excepciones.EstadoLoteInvalido;
 import lab.modelo.ElementoQuimico;
 import lab.modelo.ProductoQuimico;
 import lab.modelo.PruebaLote;
@@ -13,6 +14,14 @@ import lab.modelo.enums.TipoProducto;
 
 public class PruebaLoteView {
 
+	public String getFechaVTO() {
+		return fechaVTO;
+	}
+
+	public void setFechaVTO(String fechaVTO) {
+		this.fechaVTO = fechaVTO;
+	}
+
 	private int idPruebaLote;
 	private String nombreProdQuimico;
 	private TipoProducto tipoProducto;
@@ -20,11 +29,12 @@ public class PruebaLoteView {
 	private EmpleadoTecnicoView responsable;
 	private EstadoLote estadoLote;
 	private List<EmpleadoTecnicoView> auxiliares;
+	private String fechaVTO;
 	private int maxAuxiliares;
 
 	private String formulaGenerica;
 	
-	public PruebaLoteView(PruebaLote pruebaLote) {
+	public PruebaLoteView(PruebaLote pruebaLote){
 		this.idPruebaLote = pruebaLote.getId();
 		this.estadoLote = pruebaLote.getEstado();
 		this.tipoProducto = pruebaLote.getProductoQuimico().getTipoProducto();
@@ -35,6 +45,12 @@ public class PruebaLoteView {
 				.collect(Collectors.toList());
 		this.maxAuxiliares = pruebaLote.getAuxiliaresRequeridos();
 		this.formulaGenerica = this.generateFormulaGenerica(pruebaLote.getProductoQuimico());
+		try {
+			this.fechaVTO = pruebaLote.calcularFechaVencimiento().toString();
+			System.out.println(pruebaLote.calcularFechaVencimiento());
+		} catch (EstadoLoteInvalido e) {
+			this.fechaVTO = "-";
+		}
 	}	
 	
 	private String generateFormulaGenerica(ProductoQuimico prodQuimico) {

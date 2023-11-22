@@ -35,7 +35,7 @@ public class PruebaLote extends Entidad {
 	}
 
 	public LocalDate calcularFechaVencimiento() throws EstadoLoteInvalido {
-		if (!EstadoLote.FINALIZADO.equals(estado)) {
+		if (!EstadoLote.ACEPTADO.equals(estado)) {
 			throw new EstadoLoteInvalido();
 		}
 		return estrategiaVencimiento.calcularVencimiento(this);
