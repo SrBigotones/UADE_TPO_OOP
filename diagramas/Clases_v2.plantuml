@@ -1,4 +1,88 @@
 @startuml
+
+abstract class Controlador {
+	#{static} usuario: Empleado
+	#{static} empresaInstance: Empresa
+	#{static} jfLogin: JFrame
+	#{static} jfMenu: Menu
+	+Controlador()
+	#cambiarPanel(JPanel): void
+	+{abstract} mostrarBienvenida(): void
+	#loginExitoso(Empleado): void
+}
+
+class ControladorAdministrativo {
+	-{static} instance: ControladorAdministrativo
+	-ControladorAdministrativo()
+	+{static} getInstance(): ControladorAdministrativo
+	+darAltaTecnico(String, String, int): void
+	+darAltaGerente(String, String): void
+	+darAltaLaboratorio(int, List<Integer>): void
+	+asginarPerfilTecnico(int, int): void
+	+mostrarBienvenida(): void
+	+mostrarAltaTecnico(): void
+	+mostrarAltaGerente(): void
+	+mostrarAltaLaboratorio(): void
+	+listarPerfilesTecnicos(): List<PerfilTecnicoView>
+	+listarSedes(): List<SedeView>
+	+listarPeligros(): List<PeligrosViewCheck>
+}
+
+class ControladorGerente {
+	-{static} instance: ControladorGerente
+	-ControladorGerente()
+	+{static} getInstance(): ControladorGerente
+	+visualizarPruebas(): void
+	+cambiarCriterioVencimiento(): void
+	+confimarPruebaParaVenta(): void
+	+mostrarBienvenida(): void
+}
+
+class ControladorLogin {
+	-{static} instance: ControladorLogin
+	~ControladorLogin()
+	+{static} getInstance(): ControladorLogin
+	+login(String): boolean
+	+inicializarLogin(): void
+	+mostrarBienvenida(): void
+}
+
+class ControladorSoporte {
+	-{static} instance: ControladorSoporte
+	~ControladorSoporte()
+	+{static} getInstance(): ControladorSoporte
+	+darAltaAdministrativo(): void
+	+listarSedes(): List<SedeView>
+	+crearSede(Provincia): String
+	+crearEmpleadoAdministrativo(String, String, int): String
+	+crearPerfilTecnico(String, double, int): void
+	+modificarPerfilTecnico(): void
+	+mostrarPantallaSedes(): void
+	+mostrarPantallaPerfilesTecnicos(): void
+	+mostrarPantallaAdministrativos(): void
+	+mostrarBienvenida(): void
+}
+
+class ControladorTecnico {
+	-{static} instance: ControladorTecnico
+	-ControladorTecnico()
+	+{static} getInstance(): ControladorTecnico
+	+reservarPrueba(int, int, FechaTurno, int): void
+	+incribirseAPrueba(int, int): void
+	+actualizarPrueba(int, int, EstadoLote, EstrategiaVencimiento): void
+	+crearProductoQuimico(Map<ElementoQuimico,Integer>, String, TipoProducto, List<Integer>): void
+	+listarPruebasEnLaboratorio(int): List<PruebaLoteView>
+	+listarLaboratorios(): List<LaboratorioView>
+	+mostrarBienvenida(): void
+	+mostrarReservarPrueba(): void
+	+mostrarInscribirseAPrueba(): void
+	+mostrarActualizarEstadoPrueba(): void
+	+mostrarPantallaProductosQuimicos(): void
+	+listarElementosQuimicos(): List<ElementoQuimico>
+	+listarProductosQuimicos(): List<ProductoQuimicoView>
+	+listarPeligros(): List<PeligrosViewCheck>
+}
+
 class Empresa {
 	-{static} CANT_SEDE_Provincia: int
 	-sedes: List<Sede>
@@ -296,6 +380,11 @@ enum ElementoQuimico {
 	+getSimbolo(): String
 	+getNombre(): String
 }
+Controlador <|-- ControladorTecnico
+Controlador <|-- ControladorSoporte
+Controlador <|-- ControladorLogin
+Controlador <|-- ControladorAdministrativo
+Controlador <|-- ControladorGerente
 
 Empleado <|-- EmpleadoTecnico
 Empleado <|-- EmpleadoSoporte
@@ -336,4 +425,9 @@ Empresa "1" *-- "∞" EstrategiaVencimiento
 PruebaLote "1" o-- "1" TipoProducto
 Entidad "1" o-- "∞" GeneradorID
 
+ControladorTecnico "1" *--"1" Empresa
+ControladorSoporte "1" *--"1" Empresa
+ControladorLogin "1" *--"1" Empresa
+ControladorAdministrativo "1" *--"1" Empresa
+ControladorGerente "1" *--"1" Empresa
 @enduml

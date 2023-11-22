@@ -1,7 +1,5 @@
 package lab.vista.paneles;
 
-import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,7 +42,6 @@ public class CrearEmpleadoTecnico extends JPanel{
 		add(lblPerfilTecnico, "top");
 		add(scrollPane, "wrap, grow");
 		add(btnDarAlta, "skip, right");
-		
 		
 		btnDarAlta.addActionListener(x -> {
 			String nombre = tfNombre.getText();

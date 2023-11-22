@@ -98,7 +98,6 @@ public class ControladorTecnico extends Controlador{
 
 	@Override
 	public void mostrarBienvenida() {
-		// TODO Auto-generated method stub
 		jfMenu = new Menu(new BotoneraTecnico(), new JPanel());
 		
 	}
@@ -107,11 +106,19 @@ public class ControladorTecnico extends Controlador{
 		cambiarPanel(new ReservarLaboratorio());
 	}
 	
-	public void mostrarInscribirseAPrueba() {}
+	public void inscribirseAPrueba(int idEmpleado, int idPrueba, int idLab) {
+		try {
+			Empresa.getInstance().registrarEmpleadoPrueba(idEmpleado, idPrueba, idLab);
+		} catch (SedeNoEncontrada | EmpleadoNoEncontrado | PruebaLoteNoEncontrado | EmpleadoIncompatible
+				| LaboratorioNoEncontrado e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void mostrarActualizarEstadoPrueba() throws SedeNoEncontrada, LaboratorioNoEncontrado {
 		cambiarPanel(new ActualizarEstadoPruebaTecnico());
 	}
+
 	public void mostrarPantallaProductosQuimicos() {
 		List<ProductoQuimicoView> productos = Empresa.getInstance().getProductosQuimicos().stream().map((pq) -> new ProductoQuimicoView(pq)).collect(Collectors.toList());
 		cambiarPanel(new ListadoProductosQuimicos(productos));

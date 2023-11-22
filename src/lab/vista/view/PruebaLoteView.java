@@ -1,7 +1,9 @@
 package lab.vista.view;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import lab.modelo.ElementoQuimico;
 import lab.modelo.ProductoQuimico;
@@ -15,8 +17,11 @@ public class PruebaLoteView {
 	private String nombreProdQuimico;
 	private TipoProducto tipoProducto;
 	private LocalDate fechaFabricacion;
-	private String nombreResponsable;
+	private EmpleadoTecnicoView responsable;
 	private EstadoLote estadoLote;
+	private List<EmpleadoTecnicoView> auxiliares;
+	private int maxAuxiliares;
+
 	private String formulaGenerica;
 	
 	public PruebaLoteView(PruebaLote pruebaLote) {
@@ -25,11 +30,12 @@ public class PruebaLoteView {
 		this.tipoProducto = pruebaLote.getProductoQuimico().getTipoProducto();
 		this.nombreProdQuimico = pruebaLote.getProductoQuimico().getNombreComercial();
 		this.fechaFabricacion = pruebaLote.getFechaFabricacion();
-		this.nombreResponsable = pruebaLote.getResponsable().getNombre();
+		this.responsable = new EmpleadoTecnicoView(pruebaLote.getResponsable());
+		this.auxiliares = pruebaLote.getAuxiliares().stream().map((a) -> new EmpleadoTecnicoView(a))
+				.collect(Collectors.toList());
+		this.maxAuxiliares = pruebaLote.getAuxiliaresRequeridos();
 		this.formulaGenerica = this.generateFormulaGenerica(pruebaLote.getProductoQuimico());
-	}
-	
-	
+	}	
 	
 	private String generateFormulaGenerica(ProductoQuimico prodQuimico) {
 		Map<ElementoQuimico, Integer> formula = prodQuimico.getFormula();
@@ -44,66 +50,46 @@ public class PruebaLoteView {
 	public String toString() {
 		return "PruebaLoteView [idPruebaLote=" + idPruebaLote + ", nombreProdQuimico=" + nombreProdQuimico
 				+ ", tipoProducto=" + tipoProducto + ", fechaFabricacion=" + fechaFabricacion + ", nombreResponsable="
-				+ nombreResponsable + ", estadoLote=" + estadoLote + "]";
+				+ responsable.getNombre() + ", estadoLote=" + estadoLote + "]";
 	}
-
 
 	public int getIdPruebaLote() {
 		return idPruebaLote;
 	}
-	public void setIdPruebaLote(int idPruebaLote) {
-		this.idPruebaLote = idPruebaLote;
-	}
+
 	public String getNombreProdQuimico() {
 		return nombreProdQuimico;
 	}
-	public void setNombreProdQuimico(String nombreProdQuimico) {
-		this.nombreProdQuimico = nombreProdQuimico;
-	}
+
 	public LocalDate getFechaFabricacion() {
 		return fechaFabricacion;
 	}
-	public void setFechaFabricacion(LocalDate fechaFabricacion) {
-		this.fechaFabricacion = fechaFabricacion;
-	}
-	public String getNombreResponsable() {
-		return nombreResponsable;
-	}
-	public void setNombreResponsable(String nombreResponsable) {
-		this.nombreResponsable = nombreResponsable;
-	}
 
+	public String getNombreResponsable() {
+		return responsable.getNombre();
+	}
+	
+	public EmpleadoTecnicoView getResponsable() {
+		return responsable;
+	}
 
 	public TipoProducto getTipoProducto() {
 		return tipoProducto;
 	}
 
-
-	public void setTipoProducto(TipoProducto tipoProducto) {
-		this.tipoProducto = tipoProducto;
-	}
-
-
 	public EstadoLote getEstadoLote() {
 		return estadoLote;
 	}
 
-
-	public void setEstadoLote(EstadoLote estadoLote) {
-		this.estadoLote = estadoLote;
+	public List<EmpleadoTecnicoView> getAuxiliares() {
+		return auxiliares;
 	}
 
-
+	public int getMaxAuxiliares() {
+		return maxAuxiliares;
+	}
 
 	public String getFormulaGenerica() {
 		return formulaGenerica;
-	}
-
-
-
-	public void setFormulaGenerica(String formulaGenerica) {
-		this.formulaGenerica = formulaGenerica;
-	}
-	
-	
+	}	
 }

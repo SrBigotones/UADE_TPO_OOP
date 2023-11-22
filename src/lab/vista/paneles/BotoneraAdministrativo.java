@@ -5,31 +5,39 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import lab.controlador.Controlador;
 import lab.controlador.ControladorAdministrativo;
 
-public class BotoneraAdministrativo extends JPanel{
-	
+public class BotoneraAdministrativo extends JPanel {
+
 	private ControladorAdministrativo controlador;
 
-	
 	public BotoneraAdministrativo() {
 		controlador = ControladorAdministrativo.getInstance();
 		JButton btnAltaTecnico = new JButton("Alta Tecnico");
 		JButton btnAltaGerente = new JButton("Alta Gerente");
 		JButton btnAltaLaboratorio = new JButton("Alta Laboratorio");
-		
+		JButton btnVerEmpleados = new JButton("Empleados");
+
 		GridLayout layout = new GridLayout(10, 1);
 		setLayout(layout);
-		
+
 		add(btnAltaTecnico);
 		add(btnAltaGerente);
 		add(btnAltaLaboratorio);
-		
-		
-		btnAltaTecnico.addActionListener(x -> {controlador.mostrarAltaTecnico();});
-		btnAltaGerente.addActionListener(x -> {controlador.mostrarAltaGerente();});
-		btnAltaLaboratorio.addActionListener(x -> {controlador.mostrarAltaLaboratorio();});
-		
-		
+		add(btnVerEmpleados);
+
+		btnAltaTecnico.addActionListener(x -> {
+			controlador.mostrarAltaTecnico();
+		});
+		btnAltaGerente.addActionListener(x -> {
+			controlador.mostrarAltaGerente();
+		});
+		btnAltaLaboratorio.addActionListener(x -> {
+			controlador.mostrarAltaLaboratorio();
+		});
+		btnVerEmpleados.addActionListener(x -> {
+			controlador.mostrarEmpleados();
+		});
 	}
 }

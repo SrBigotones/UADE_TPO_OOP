@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import lab.controlador.Controlador;
 import lab.controlador.ControladorTecnico;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PruebaLoteNoEncontrado;
@@ -22,6 +23,7 @@ import lab.modelo.CriterioMolecular;
 import lab.modelo.enums.EstadoLote;
 import lab.vista.tablas.ModeloLaboratorio;
 import lab.vista.tablas.ModeloPruebaLote;
+import lab.vista.view.LaboratorioView;
 import lab.vista.view.PruebaLoteView;
 import net.miginfocom.swing.MigLayout;
 
@@ -45,6 +47,9 @@ public class ActualizarEstadoPruebaTecnico extends JPanel {
 		comboEstados.addItem(EstadoLote.RECHAZADO);
 		comboEstados.addItem(EstadoLote.ACEPTADO);
 
+		JButton btnInscribirse = new JButton("Inscribirse");
+		btnInscribirse.setEnabled(false);
+
 		JButton btnActualizarEstado = new JButton("Actualizar Estado Prueba");
 		btnActualizarEstado.setEnabled(false);
 
@@ -54,7 +59,8 @@ public class ActualizarEstadoPruebaTecnico extends JPanel {
 		add(scrollPane, "wrap, grow");
 		add(new JLabel("Estados"));
 		add(comboEstados, "wrap, grow");
-		add(btnActualizarEstado, "skip, right");
+		add(btnInscribirse, "skip,wrap");
+		add(btnActualizarEstado, "skip");
 
 		tablaLabs.getSelectionModel().addListSelectionListener((e) -> {
 			int value = (int) tablaLabs.getValueAt(tablaLabs.getSelectedRow(), 0);
@@ -62,6 +68,7 @@ public class ActualizarEstadoPruebaTecnico extends JPanel {
 				modeloPruebas.setDatos(controlador.listarPruebasEnLaboratorio(value));
 				modeloPruebas.fireTableDataChanged();
 				btnActualizarEstado.setEnabled(false);
+				btnInscribirse.setEnabled(false);
 			} catch (LaboratorioNoEncontrado | SedeNoEncontrada e1) {
 				e1.printStackTrace();
 			}
@@ -72,7 +79,16 @@ public class ActualizarEstadoPruebaTecnico extends JPanel {
 				return;
 			PruebaLoteView pruebaSeleccionada = modeloPruebas.getDatos().get(tablaPruebas.getSelectedRow());
 			btnActualizarEstado.setEnabled(EstadoLote.PENDIENTE.equals(pruebaSeleccionada.getEstadoLote()));
+			if (pruebaSeleccionada.getAuxiliares().stream()
+					.anyMatch((a) -> a.getIdEmpleado() == Controlador.getUsuario().getIdEmpleado())
+					|| pruebaSeleccionada.getMaxAuxiliares() == pruebaSeleccionada.getAuxiliares().size()
+					|| !EstadoLote.PENDIENTE.equals(pruebaSeleccionada.getEstadoLote()) || pruebaSeleccionada
+							.getResponsable().getIdEmpleado() == Controlador.getUsuario().getIdEmpleado()) {
+				btnInscribirse.setEnabled(false);
 
+			} else {
+				btnInscribirse.setEnabled(true);
+			}
 		});
 
 		btnActualizarEstado.addActionListener(e -> {
@@ -89,5 +105,17 @@ public class ActualizarEstadoPruebaTecnico extends JPanel {
 			}
 		});
 
+		btnInscribirse.addActionListener((e) -> {
+			PruebaLoteView prueba = modeloPruebas.getDatos().get(tablaPruebas.getSelectedRow());
+			LaboratorioView lab = modeloLab.getDatos().get(tablaLabs.getSelectedRow());
+			controlador.inscribirseAPrueba(Controlador.getUsuario().getIdEmpleado(), prueba.getIdPruebaLote(),
+					lab.getIdLab());
+			JOptionPane.showMessageDialog(null, "Inscripción realizada con éxito!");
+			try {
+				controlador.mostrarActualizarEstadoPrueba();
+			} catch (SedeNoEncontrada | LaboratorioNoEncontrado e1) {
+				e1.printStackTrace();
+			}
+		});
 	}
 }

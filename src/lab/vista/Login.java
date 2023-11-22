@@ -16,49 +16,47 @@ import javax.swing.border.EmptyBorder;
 import lab.controlador.ControladorLogin;
 
 public class Login extends JFrame {
-	
+
 	public Login() {
-        super("LOGIN");
-        this.setLayout(new BorderLayout());
+		super("LOGIN");
+		this.setLayout(new BorderLayout());
 
-        JLabel bienvenida = new JLabel("Bienvenido" , SwingConstants.CENTER);
-        bienvenida.setFont(new Font("Arial", Font.PLAIN, 56)); 
+		JLabel bienvenida = new JLabel("Bienvenido", SwingConstants.CENTER);
+		bienvenida.setFont(new Font("Arial", Font.PLAIN, 56));
 
-        JTextField usuario = new JTextField("agustin");
-        usuario.setMargin(new Insets(5, 10, 5, 10));
-        
-        
-        JButton iniciarSesionButton = new JButton("Iniciar Sesion");
-        iniciarSesionButton.addActionListener((e) -> {
-        	boolean encontrado = ControladorLogin.getInstance().login(usuario.getText());
-        	if (!encontrado) {
-        		System.out.println("Usuario no encontrado");
-        	}
-        });
+		JTextField usuario = new JTextField("augusto");
+		usuario.setMargin(new Insets(5, 10, 5, 10));
 
-        Font buttonFont = new Font(iniciarSesionButton.getFont().getName(), Font.PLAIN, 22);
+		JButton iniciarSesionButton = new JButton("Iniciar Sesion");
+		iniciarSesionButton.addActionListener((e) -> {
+			boolean encontrado = ControladorLogin.getInstance().login(usuario.getText());
+			if (!encontrado) {
+				System.out.println("Usuario no encontrado");
+			}
+		});
 
-        JPanel bienvenidaPanel = new JPanel();
-        bienvenidaPanel.setLayout(new BorderLayout());
-        bienvenidaPanel.setBorder(new EmptyBorder(60,0,60,0));
-        bienvenidaPanel.add(bienvenida);
+		Font buttonFont = new Font(iniciarSesionButton.getFont().getName(), Font.PLAIN, 22);
 
-        setLayout(new BorderLayout());
-        add(bienvenidaPanel, BorderLayout.PAGE_START);
-        
-        
-        JPanel centroPanel = new JPanel();
-        centroPanel.setLayout(new GridLayout(3, 1, 10, 10));
-        centroPanel.setBorder(new EmptyBorder(20,20,20,20));
-        centroPanel.add(usuario);
+		JPanel bienvenidaPanel = new JPanel();
+		bienvenidaPanel.setLayout(new BorderLayout());
+		bienvenidaPanel.setBorder(new EmptyBorder(60, 0, 60, 0));
+		bienvenidaPanel.add(bienvenida);
 
-        JPanel botonPanel = new JPanel();
-        botonPanel.setBorder(new EmptyBorder(0,0,20,0));
-        botonPanel.add(iniciarSesionButton);
+		setLayout(new BorderLayout());
+		add(bienvenidaPanel, BorderLayout.PAGE_START);
 
-        add(centroPanel, BorderLayout.CENTER);
-        add(botonPanel, BorderLayout.PAGE_END);        
-        
-        setResizable(false);
-    }
+		JPanel centroPanel = new JPanel();
+		centroPanel.setLayout(new GridLayout(3, 1, 10, 10));
+		centroPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		centroPanel.add(usuario);
+
+		JPanel botonPanel = new JPanel();
+		botonPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
+		botonPanel.add(iniciarSesionButton);
+
+		add(centroPanel, BorderLayout.CENTER);
+		add(botonPanel, BorderLayout.PAGE_END);
+
+		setResizable(false);
+	}
 }

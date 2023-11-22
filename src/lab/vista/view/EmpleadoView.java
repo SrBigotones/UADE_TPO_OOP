@@ -9,7 +9,7 @@ public class EmpleadoView {
 	private int idEmpleado;
 	private String nombre;
 	private String tipo;
-	private String sede;
+	private SedeView sede;
 
 	public EmpleadoView(Empleado empleado) {
 		this.idEmpleado = empleado.getId();
@@ -17,7 +17,7 @@ public class EmpleadoView {
 		this.tipo = mapTipo(empleado);
 		Sede sedePertenece = Utilidades.buscarEnListaPorId(empleado.getIdSedePertenece(),
 				Empresa.getInstance().getSedes());
-		this.sede = sedePertenece != null ? sedePertenece.getProvincia().getDescripcion() : " - ";
+		this.sede = new SedeView(sedePertenece);
 	}
 
 	public String getNombre() {
@@ -32,7 +32,11 @@ public class EmpleadoView {
 		return tipo;
 	}
 
-	public String getSede() {
+	public String getNombreSede() {
+		return sede != null ? sede.getProvincia().getDescripcion() : " - ";
+	}
+	
+	public SedeView getSede() {
 		return sede;
 	}
 	
@@ -46,5 +50,9 @@ public class EmpleadoView {
 		if (empleado.soyTecnico())
 			return "Técnico";
 		return " - ";
+	}
+
+	public int getIdSede() {
+		return 0;
 	}
 }
