@@ -1,8 +1,5 @@
 package lab.vista.view;
 
-import java.util.Optional;
-
-import lab.modelo.Empresa;
 import lab.modelo.Sede;
 import lab.modelo.empleado.Empleado;
 import lab.modelo.enums.Provincia;

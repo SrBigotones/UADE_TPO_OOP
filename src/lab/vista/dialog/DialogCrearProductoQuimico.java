@@ -20,7 +20,6 @@ import lab.controlador.ControladorTecnico;
 import lab.modelo.ElementoQuimico;
 import lab.modelo.enums.TipoProducto;
 import lab.vista.tablas.ModeloPeligrosSeleccion;
-import lab.vista.view.PeligrosViewCheck;
 import net.miginfocom.swing.MigLayout;
 
 public class DialogCrearProductoQuimico extends JDialog {
@@ -43,19 +42,19 @@ public class DialogCrearProductoQuimico extends JDialog {
 		JButton btnCancelar = new JButton("Cancelar");
 		JScrollPane scrollPanePeligros = new JScrollPane(new JTable(modeloPeligros));
 
-		add(new JLabel("Nombre comercial:"));
+		add(new JLabel("Nombre comercial"));
 		add(tfNombre, "wrap");
 
 		add(new JLabel("Elementos químicos", SwingConstants.CENTER), "wrap, grow, span 2");
 		// Se agregan tf de elementos quimicos dinamicamente
 		for (Map.Entry<ElementoQuimico, JTextField> entry : mapElemTf.entrySet()) {
-			add(new JLabel(entry.getKey().getNombre() + " (" + entry.getKey().getSimbolo() + "): "));
+			add(new JLabel(entry.getKey().getNombre() + " (" + entry.getKey().getSimbolo() + ")"));
 			add(entry.getValue(), "wrap");
 		}
 
-		add(new JLabel("Tipo de producto:"));
+		add(new JLabel("Tipo de producto"));
 		add(cbTipoProducto, "wrap");
-		add(new JLabel("Tipos de peligro:"));
+		add(new JLabel("Tipos de peligro"));
 		add(scrollPanePeligros, "wrap");
 		add(btnCrearPerfil, "wrap, span 2");
 		add(btnCancelar, "wrap, span 2");

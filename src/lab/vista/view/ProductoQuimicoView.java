@@ -18,6 +18,7 @@ public class ProductoQuimicoView {
 	private List<TipoPeligro> tiposPeligro;
 
 	public ProductoQuimicoView(ProductoQuimico pq) {
+		idProductoQuimico = pq.getId();
 		nombreComercial = pq.getNombreComercial();
 		tipoProducto = pq.getTipoProducto();
 		formula = pq.getFormula();

@@ -1,19 +1,15 @@
 package lab.vista.paneles;
 
 import java.awt.GridLayout;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import lab.controlador.ControladorAdministrativo;
-import lab.vista.tablas.ModeloSedes;
-import lab.vista.view.SedeView;
+import net.miginfocom.swing.MigLayout;
 
 public class CrearEmpleadoGerente extends JPanel{
 
@@ -21,21 +17,20 @@ public class CrearEmpleadoGerente extends JPanel{
 	
 	public CrearEmpleadoGerente() {
 		controlador = ControladorAdministrativo.getInstance();
-		GridLayout layout = new GridLayout(3,2);
+		MigLayout layout = new MigLayout("fillx");
 		setLayout(layout);
 		
 		JTextField tfNombre = new JTextField();
 		JTextField tfUsername = new JTextField();
-		JLabel lblNombre = new JLabel("Nombre:");
-		JLabel lblUsername = new JLabel("Username:");
+		JLabel lblNombre = new JLabel("Nombre");
+		JLabel lblUsername = new JLabel("Username");
 		JButton btnCrearGerente = new JButton("Crear Gerente");
 		
 		add(lblNombre);
-		add(tfNombre);
+		add(tfNombre, "wrap,grow");
 		add(lblUsername);
-		add(tfUsername);
-		add(new JLabel());
-		add(btnCrearGerente);
+		add(tfUsername, "wrap,grow");
+		add(btnCrearGerente, "skip, right");
 		
 		
 		btnCrearGerente.addActionListener(e -> {

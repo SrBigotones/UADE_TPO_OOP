@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +24,7 @@ public class Login extends JFrame {
         JLabel bienvenida = new JLabel("Bienvenido" , SwingConstants.CENTER);
         bienvenida.setFont(new Font("Arial", Font.PLAIN, 56)); 
 
-        JTextField usuario = new JTextField("augusto");
+        JTextField usuario = new JTextField("agustin");
         usuario.setMargin(new Insets(5, 10, 5, 10));
         
         

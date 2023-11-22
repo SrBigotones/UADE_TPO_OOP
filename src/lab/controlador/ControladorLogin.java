@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.swing.JFrame;
 
-import lab.excepciones.EmpleadoNoEncontrado;
 import lab.modelo.Empresa;
 import lab.modelo.empleado.Empleado;
 import lab.vista.Login;

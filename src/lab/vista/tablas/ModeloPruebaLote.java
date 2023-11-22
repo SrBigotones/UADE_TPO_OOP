@@ -8,7 +8,7 @@ import lab.vista.view.PruebaLoteView;
 
 public class ModeloPruebaLote extends AbstractTableModel{
 	private List<PruebaLoteView> datos;
-	private String[] colNames = {"ID","Nombre Prod", "Tipo", "Fecha Fab", "Empleado", "Estado"};
+	private String[] colNames = {"ID","Nombre Prod", "Tipo", "Fecha Fab", "Empleado", "Estado", "Formula Generica"};
 
 
 	@Override
@@ -32,7 +32,7 @@ public class ModeloPruebaLote extends AbstractTableModel{
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 7;
 	}
 
 	@Override
@@ -52,6 +52,8 @@ public class ModeloPruebaLote extends AbstractTableModel{
 			return prueba.getNombreResponsable();
 		case 5:
 			return prueba.getEstadoLote();
+		case 6:
+			return prueba.getFormulaGenerica();
 		}
 		return null;
 	}

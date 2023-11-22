@@ -1,7 +1,6 @@
 package lab.vista.paneles;
 
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,7 @@ import javax.swing.JTextField;
 import lab.controlador.ControladorAdministrativo;
 import lab.excepciones.SedeNoEncontrada;
 import lab.vista.tablas.ModeloPeligrosSeleccion;
-import lab.vista.view.PeligrosViewCheck;
+import net.miginfocom.swing.MigLayout;
 
 public class CrearLaboratorio extends JPanel{
 	private ControladorAdministrativo controlador;
@@ -24,7 +23,7 @@ public class CrearLaboratorio extends JPanel{
 	public CrearLaboratorio() {
 		controlador = ControladorAdministrativo.getInstance();
 		
-		GridLayout layout = new GridLayout(3,2);
+		MigLayout layout = new MigLayout("fillx");
 		setLayout(layout);
 		ModeloPeligrosSeleccion modelo = new ModeloPeligrosSeleccion(controlador.listarPeligros());
 		JTable peligros = new JTable(modelo);
@@ -32,13 +31,11 @@ public class CrearLaboratorio extends JPanel{
 		
 		JTextField tfCapacidad = new JTextField();
 		JButton btnCrearLaboratorio = new JButton("Crear Laboratorio");
-		add(new JLabel("Peligros permitidos:"));
-		add(scrollPane);
-		add(new JLabel("Capacidad personas:"));
-		add(tfCapacidad);
-		add(btnCrearLaboratorio);
-		
-		
+		add(new JLabel("Peligros permitidos"), "top");
+		add(scrollPane, "wrap,grow");
+		add(new JLabel("Capacidad personas"));
+		add(tfCapacidad, "wrap,grow");
+		add(btnCrearLaboratorio, "skip, right");
 		
 		btnCrearLaboratorio.addActionListener(e -> {
 			List<Integer> checkedPeligros = modelo.getDatos()

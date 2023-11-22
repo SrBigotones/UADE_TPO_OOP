@@ -1,12 +1,10 @@
 package lab.vista.tablas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import lab.vista.view.PerfilTecnicoView;
-import lab.vista.view.SedeView;
 
 public class ModeloPerfilTecnico extends AbstractTableModel{
 	private List<PerfilTecnicoView> datos;
