@@ -7,12 +7,12 @@ public class SedeView {
 
 	private int nroLabs;
 	private Provincia provincia;
-	private String administrativo;
+	private String administrativo = "";
 	
 	public SedeView(Sede sede) {
 		nroLabs = sede.getLaboratorios().size();
 		provincia = sede.getProvincia();
-		administrativo = sede.getGerente() != null ? sede.getGerente().getNombre() : " - ";
+//		administrativo = sede.getGerente() != null ? sede.getGerente().getNombre() : " - ";
 	}
 
 	public int getNroLabs() {

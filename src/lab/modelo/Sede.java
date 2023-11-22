@@ -16,7 +16,6 @@ import lab.util.Utilidades;
 
 public class Sede extends Entidad {
 	private static GeneradorID generadorID = new GeneradorID();
-	private EmpleadoGerente gerente;
 	private List<Laboratorio> laboratorios;
 	private Provincia provincia;
 
@@ -48,10 +47,6 @@ public class Sede extends Entidad {
 		return laboratorio.reservar(productoQuimico, cantidadAuxiliares, empleadoResponsable, fechaTurno);
 	}
 	
-
-	public void asignarEmpleadoGerente(EmpleadoGerente empleado) {
-		this.gerente = empleado;
-	}
 
 	public Laboratorio buscarLaboratorio(int id) throws LaboratorioNoEncontrado {
 		Laboratorio lab =Utilidades.buscarEnListaPorId(id, laboratorios);
@@ -88,13 +83,6 @@ public class Sede extends Entidad {
 		lab.registrarAyudanteAPrueba(empleado, idPrueba);
 	}
 	
-	public EmpleadoGerente getGerente() {
-		return gerente;
-	}
-
-	public void setGerente(EmpleadoGerente gerente) {
-		this.gerente = gerente;
-	}
 
 	public void establecerEstrategiaVencimiento(int idLaboratorio, int idPrueba, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado, LaboratorioNoEncontrado {
 		Laboratorio lab = this.buscarLaboratorio(idLaboratorio);

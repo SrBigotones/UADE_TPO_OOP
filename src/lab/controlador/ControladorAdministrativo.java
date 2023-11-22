@@ -11,6 +11,7 @@ import lab.excepciones.SedeNoEncontrada;
 import lab.vista.Menu;
 import lab.vista.paneles.BotoneraAdministrativo;
 import lab.vista.paneles.BotoneraSoporte;
+import lab.vista.paneles.CrearEmpleadoGerente;
 import lab.vista.paneles.CrearEmpleadoTecnico;
 import lab.vista.tablas.ModeloPerfilTecnico;
 import lab.vista.view.PerfilTecnicoView;
@@ -30,11 +31,11 @@ public class ControladorAdministrativo extends Controlador{
 	
 	
 	public void darAltaTecnico(String nombre, String username, int idPerfilTecnico) {
-		empresaInstance.crearEmpleadoTecnico(nombre, username, idPerfilTecnico);
+		empresaInstance.crearEmpleadoTecnico(nombre, username, idPerfilTecnico, usuario.getIdSedePertenece());
 		System.out.println(empresaInstance.getEmpleados());
 	}
 	public void darAltaGerente(String nombre, String username) {
-		empresaInstance.crearEmpleadoGerente(nombre, username);
+		empresaInstance.crearEmpleadoGerente(nombre, username, usuario.getIdSedePertenece());
 	}
 	
 	public void darAltaLaboratorio(int capacidadPersonas, int idSede, List<Integer> idPeligros) throws SedeNoEncontrada {
@@ -56,7 +57,9 @@ public class ControladorAdministrativo extends Controlador{
 	public void mostrarAltaTecnico() {
 		cambiarPanel(new CrearEmpleadoTecnico());
 	}
-	public void mostrarAltaGerente() {}
+	public void mostrarAltaGerente() {
+		cambiarPanel(new CrearEmpleadoGerente());
+	}
 	public void mostrarAltaLaboratorio() {}
 	public void mostrarAsignarPerfilTecnico() {}
 	

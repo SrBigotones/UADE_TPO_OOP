@@ -7,11 +7,13 @@ public abstract class Empleado extends Entidad {
 	private String username;
 	private String nombre;
 	private static GeneradorID generadorID = new GeneradorID();
+	private int idSedePertenece;
 	
-	public Empleado(String nombre, String username) {
+	public Empleado(String nombre, String username, int idSedePertenece) {
 		super(generadorID);
 		this.nombre = nombre;
 		this.username = username;
+		this.idSedePertenece = idSedePertenece;
 	}
 	
 	public String getNombre() {
@@ -36,5 +38,18 @@ public abstract class Empleado extends Entidad {
 	
 	public boolean soyGerente() {
 		return false;
+	}
+
+	public int getIdSedePertenece() {
+		return idSedePertenece;
+	}
+
+	public void setIdSedePertenece(int idSedePertenece) {
+		this.idSedePertenece = idSedePertenece;
+	}
+
+	@Override
+	public String toString() {
+		return "Empleado [username=" + username + ", nombre=" + nombre + ", idSedePertenece=" + idSedePertenece + "]";
 	}
 }
