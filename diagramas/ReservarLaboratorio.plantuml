@@ -1,0 +1,84 @@
+@startuml
+Actor Usuario
+Usuario -> ControladorTecnico:reservarPrueba(int idProdQuimico,int cantidadAuxiliares, FechaTurno fechaTurno, int idLaboratorio)
+Activate Usuario
+	Activate ControladorTecnico
+		ControladorTecnico -> Empresa: reservar(int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idLaboratorio) 
+		Activate ControladorTecnico
+		Activate Empresa
+			Empresa -> Empresa: buscarEmpleado(int idEmpleado)
+			Loop buscarEmpleado
+				Activate Empresa
+					Empresa -> Empleado: esPorId(int idEmpleado)
+					Activate Empleado
+						Empleado -> Empresa
+					Deactivate Empleado
+				Deactivate Empresa
+			end buscarEmpleado
+			
+			Empresa -> Empresa: buscarSede(int idSede)
+			Loop buscarSede
+				Activate Empresa
+					Empresa -> Sede: esPorId(int idSede)
+					Activate Sede
+						Sede -> Empresa
+					Deactivate Sede
+				Deactivate Empresa
+			end buscarSede
+			
+			Empresa -> Empresa: buscarProductoQuimico(int idProdQuimico)
+			Loop buscarProdQuimico
+				Activate Empresa
+					Empresa -> ProductoQuimico: esPorId(int idProdQuimico)
+					Activate ProductoQuimico
+						ProductoQuimico -> Empresa
+					Deactivate ProductoQuimico
+				Deactivate Empresa
+			end buscarProdQuimico
+			
+			
+			Empresa -> Empleado: soyTecnico()
+			Activate Empresa
+				Activate Empleado
+					Empleado -> Empresa
+				Deactivate Empleado
+			Deactivate Empresa
+			
+			Empresa -> Sede: reservarPrueba(int idLaboratorio, ProductoQuimico productoQuimico, int cantidadAuxiliares,EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno)
+			Activate Empresa
+			Activate Sede
+				Sede -> Sede : buscarLaboratorio(int idLaboratorio)
+				Activate Sede
+					Loop buscarLaboratorio
+						Sede -> Laboratorio: esPorId(int idLaboratorio)
+						Activate Laboratorio
+							Laboratorio -> Sede
+						Deactivate Laboratorio
+					end buscarLaboratorio
+				Deactivate Sede
+				
+				Sede -> Laboratorio: reservar(ProductoQuimico productoQuimico, int auxiliaresRequeridos, EmpleadoTecnico empleadoResponsable, FechaTurno fechaTurno)
+				Activate Sede
+					Activate Laboratorio
+					Laboratorio -> Laboratorio: disponible(ProductoQuimico productoQuimico, int auxiliaresRequeridos, FechaTurno fechaTurno)
+						Activate Laboratorio
+							Laboratorio -> PruebaLote **: PruebaLote(ProductoQuimico productoQuimico, EmpleadoTecnico responsable, int auxiliaresRequeridos)
+							Activate PruebaLote
+							PruebaLote -> Laboratorio
+							Deactivate PruebaLote
+						Deactivate Laboratorio
+						Laboratorio -> Laboratorio: agregar(PruebaLote)
+					Laboratorio -> Sede
+					Deactivate Laboratorio
+				Deactivate Sede
+				Sede -> Empresa
+			Deactivate Sede
+			
+			Deactivate Empresa
+			Empresa -> ControladorTecnico
+		Deactivate Empresa
+		Deactivate ControladorTecnico
+		ControladorTecnico -> Usuario
+	Deactivate ControladorTecnico	
+Deactivate Usuario
+@enduml
