@@ -73,13 +73,13 @@ public class CambiarCriterioVencimiento extends JPanel{
 		add(new JLabel(""));
 		add(btnCambiarCriterio);
 		
-		
+		//Tengo un bug aca, al cambiar seleccion de tabla cuando ya habias elegido en las otras tablas
 		tablaSedes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
+//					tablaSedes.clearSelection();
 					tablaLab.clearSelection();
-					modeloLab.setDatos(new ArrayList<>());
-					modeloLab.fireTableDataChanged();
+					tablaPrueba.clearSelection();
 					
 					int idSede = (int)tablaSedes.getValueAt(tablaSedes.getSelectedRow(), 0);
 					try {
