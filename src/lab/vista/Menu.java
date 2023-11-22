@@ -12,7 +12,7 @@ public class Menu extends JFrame {
 		this.panelDerecho = panelDer;
 		setSize(1000, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new MigLayout("debug", "10[20%!, fill]5[80%!, fill]10", "[grow]"));
+		setLayout(new MigLayout("", "10[20%!, fill]5[80%!, fill]10", "[grow]"));
 		add(panelIzq, "cell 0 0");
 		add(panelDer, "cell 1 0");
 		setVisible(true);
