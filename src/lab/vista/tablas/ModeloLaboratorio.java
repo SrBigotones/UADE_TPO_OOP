@@ -7,13 +7,20 @@ import javax.swing.table.AbstractTableModel;
 import lab.vista.view.LaboratorioView;
 
 public class ModeloLaboratorio extends AbstractTableModel{
-	List<LaboratorioView> datos;
+	private List<LaboratorioView> datos;
+	private String[] colNames = {"ID","Capacidad"};
 	
 	
 	public ModeloLaboratorio(List<LaboratorioView> datos) {
 		this.datos = datos;
 	}
 	
+	@Override
+	public String getColumnName(int column) {
+		// TODO Auto-generated method stub
+		return colNames[column];
+	}
+
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub

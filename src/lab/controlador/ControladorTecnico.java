@@ -43,7 +43,7 @@ public class ControladorTecnico extends Controlador{
 	}
 	
 	
-	public void reservarPrueba(int idProdQuimico,int cantidadAuxiliares,int idEmpleadoResponsable, FechaTurno fechaTurno, int idSede, int idLaboratorio) {
+	public void reservarPrueba(int idProdQuimico,int cantidadAuxiliares, FechaTurno fechaTurno, int idLaboratorio) {
 		
 	}
 	
