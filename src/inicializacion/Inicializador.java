@@ -11,6 +11,9 @@ import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.ProductoQuimicoNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
+import lab.modelo.CriterioMolecular;
+import lab.modelo.CriterioPeligrosidad;
+import lab.modelo.CriterioProducto;
 import lab.modelo.ElementoQuimico;
 import lab.modelo.Empresa;
 import lab.modelo.FechaTurno;
@@ -26,8 +29,10 @@ public class Inicializador {
 		inicializarLaboratorios(empresa);
 		inicializarPerfilesTecnicos(empresa);
 		inicializarEmpleados(empresa);
+		inicilizarCriterioVencimiento(empresa);
 		inicializarProductosQuimicos(empresa);
 		inicializarPrueba(empresa);
+		
 	}
 
 	private static void inicializarTiposPeligro(Empresa empresa) {
@@ -46,6 +51,9 @@ public class Inicializador {
 			empresa.crearLaboratorio(10, Arrays.asList(1, 2), 1);
 			empresa.crearLaboratorio(15, Arrays.asList(1), 1);
 			empresa.crearLaboratorio(8, Arrays.asList(3), 1);
+			
+			
+			empresa.crearLaboratorio(10, Arrays.asList(1, 2), 2);
 		} catch (SedeNoEncontrada e) {
 			e.printStackTrace();
 		}
@@ -63,6 +71,9 @@ public class Inicializador {
 		empresa.crearEmpleadoGerente("Agustin", "agustin",1);
 		empresa.crearEmpleadoSoporte("Nicolas", "nicorepo");
 		empresa.crearEmpleadoAdministrativo("Pepe", "pepinho",1);
+		
+		
+		empresa.crearEmpleadoTecnico("Augusto", "augusto2", 1,2);
 		
 	}
 
@@ -92,7 +103,17 @@ public class Inicializador {
 	}
 	
 	
+	private static void inicilizarCriterioVencimiento(Empresa empresa) {
+		CriterioMolecular critM = new CriterioMolecular("Criterio Molecular");
+		empresa.crearCriterioVencimiento(critM);
+		CriterioPeligrosidad critP = new CriterioPeligrosidad("Criterio Peligrosidad");
+		empresa.crearCriterioVencimiento(critP);
+		CriterioProducto critPr = new CriterioProducto("Criterio Producto");
+		empresa.crearCriterioVencimiento(critPr);
+	}
+	
 	private static void inicializarPrueba(Empresa empresa) throws LaboratorioNoEncontrado, LaboratorioNoDisponible, ProductoQuimicoNoEncontrado, EmpleadoNoEncontrado, EmpleadoIncompatible {
 		empresa.reservar(1, 5, 2, new FechaTurno(LocalDate.now(), Turno.MAÑANA), 1);
+		empresa.reservar(1, 5, 6, new FechaTurno(LocalDate.now(), Turno.MAÑANA), 4);
 	}
 }

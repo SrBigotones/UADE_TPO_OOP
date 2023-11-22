@@ -8,7 +8,7 @@ import lab.vista.view.PruebaLoteView;
 
 public class ModeloPruebaLote extends AbstractTableModel {
 	private List<PruebaLoteView> datos;
-	private String[] colNames = { "ID", "Nombre Prod", "Tipo", "Fecha Fab", "Empleado", "Estado", "Auxiliares", "Aux. requeridos"};
+	private String[] colNames = { "ID", "Nombre Prod", "Tipo", "Fecha Fab", "Empleado", "Estado", "Auxiliares", "Aux. requeridos", "Formula Generica"};
 
 	@Override
 	public String getColumnName(int column) {
@@ -49,6 +49,8 @@ public class ModeloPruebaLote extends AbstractTableModel {
 			return prueba.getAuxiliares().size();
 		case 7:
 			return prueba.getMaxAuxiliares();
+		case 8:
+			return prueba.getFormulaGenerica();
 		}
 		return null;
 	}

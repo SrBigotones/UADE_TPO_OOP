@@ -1,0 +1,433 @@
+@startuml
+
+abstract class Controlador {
+	#{static} usuario: Empleado
+	#{static} empresaInstance: Empresa
+	#{static} jfLogin: JFrame
+	#{static} jfMenu: Menu
+	+Controlador()
+	#cambiarPanel(JPanel): void
+	+{abstract} mostrarBienvenida(): void
+	#loginExitoso(Empleado): void
+}
+
+class ControladorAdministrativo {
+	-{static} instance: ControladorAdministrativo
+	-ControladorAdministrativo()
+	+{static} getInstance(): ControladorAdministrativo
+	+darAltaTecnico(String, String, int): void
+	+darAltaGerente(String, String): void
+	+darAltaLaboratorio(int, List<Integer>): void
+	+asginarPerfilTecnico(int, int): void
+	+mostrarBienvenida(): void
+	+mostrarAltaTecnico(): void
+	+mostrarAltaGerente(): void
+	+mostrarAltaLaboratorio(): void
+	+listarPerfilesTecnicos(): List<PerfilTecnicoView>
+	+listarSedes(): List<SedeView>
+	+listarPeligros(): List<PeligrosViewCheck>
+}
+
+class ControladorGerente {
+	-{static} instance: ControladorGerente
+	-ControladorGerente()
+	+{static} getInstance(): ControladorGerente
+	+visualizarPruebas(): void
+	+cambiarCriterioVencimiento(): void
+	+confimarPruebaParaVenta(): void
+	+mostrarBienvenida(): void
+}
+
+class ControladorLogin {
+	-{static} instance: ControladorLogin
+	~ControladorLogin()
+	+{static} getInstance(): ControladorLogin
+	+login(String): boolean
+	+inicializarLogin(): void
+	+mostrarBienvenida(): void
+}
+
+class ControladorSoporte {
+	-{static} instance: ControladorSoporte
+	~ControladorSoporte()
+	+{static} getInstance(): ControladorSoporte
+	+darAltaAdministrativo(): void
+	+listarSedes(): List<SedeView>
+	+crearSede(Provincia): String
+	+crearEmpleadoAdministrativo(String, String, int): String
+	+crearPerfilTecnico(String, double, int): void
+	+modificarPerfilTecnico(): void
+	+mostrarPantallaSedes(): void
+	+mostrarPantallaPerfilesTecnicos(): void
+	+mostrarPantallaAdministrativos(): void
+	+mostrarBienvenida(): void
+}
+
+class ControladorTecnico {
+	-{static} instance: ControladorTecnico
+	-ControladorTecnico()
+	+{static} getInstance(): ControladorTecnico
+	+reservarPrueba(int, int, FechaTurno, int): void
+	+incribirseAPrueba(int, int): void
+	+actualizarPrueba(int, int, EstadoLote, EstrategiaVencimiento): void
+	+crearProductoQuimico(Map<ElementoQuimico,Integer>, String, TipoProducto, List<Integer>): void
+	+listarPruebasEnLaboratorio(int): List<PruebaLoteView>
+	+listarLaboratorios(): List<LaboratorioView>
+	+mostrarBienvenida(): void
+	+mostrarReservarPrueba(): void
+	+mostrarInscribirseAPrueba(): void
+	+mostrarActualizarEstadoPrueba(): void
+	+mostrarPantallaProductosQuimicos(): void
+	+listarElementosQuimicos(): List<ElementoQuimico>
+	+listarProductosQuimicos(): List<ProductoQuimicoView>
+	+listarPeligros(): List<PeligrosViewCheck>
+}
+
+class Empresa {
+	-{static} CANT_SEDE_Provincia: int
+	-sedes: List<Sede>
+	-productosQuimicos: List<ProductoQuimico>
+	-empleados: List<Empleado>
+	-tiposPeligro: List<TipoPeligro>
+	-perfiles: List<PerfilTecnico>
+	-{static} empresa: Empresa
+	-Empresa()
+	+{static} getInstance(): Empresa
+	-buscarEmpleado(int): Empleado
+	-buscarSede(int): Sede
+	-buscarProductoQuimico(int): ProductoQuimico
+	-buscarPerfilTecnico(int): PerfilTecnico
+	-buscarTipoPeligro(int): TipoPeligro
+	-sedePorProvincia(Provincia): int
+	+asociarPerfilEmpleado(int, int): void
+	+crearEmpleadoTecnico(String, String, int, int): EmpleadoTecnico
+	+crearEmpleadoAdministrativo(String, String, int): EmpleadoAdministrativo
+	+crearEmpleadoSoporte(String, String): EmpleadoSoporte
+	+crearEmpleadoGerente(String, String, idSedePertence: int): EmpleadoGerente
+	+crearPerfil(String, double, int): PerfilTecnico
+	+modificarPerfil(int, double, int): PerfilTecnico
+	+crearTipoPeligro(String, double, int): TipoPeligro
+	+modificarTipoPeligro(int, double): TipoPeligro
+	+crearLaboratorio(int, List<Integer>, int): Laboratorio
+	+modificarLaboratorio(int, int, int, Set<TipoPeligro>): Laboratorio
+	+crearSede(Provincia): Sede
+	+reservar(int, int, int, FechaTurno, int): PruebaLote
+	+finalizarPrueba(int, int, int, EstadoLote, EstrategiaVencimiento): void
+	+crearProductoQuimico(Map<ElementoQuimico,Integer>, String, TipoProducto, List<Integer>): ProductoQuimico
+	+registrarEmpleadoPrueba(int, int, int): boolean
+	+establecerEstrategiaVencimiento(int, int, int, EstrategiaVencimiento): void
+	+laboratorioPuedeProbarProductoQuimico(int, int, int): boolean
+	+listarPruebas(): List<PruebaLote>
+	+listarPruebaPorEmpleadoResponsable(int): List<PruebaLote>
+	+listarPruebaPorSede(int): List<PruebaLote>
+	+listarPruebaPorLaboratorio(int, int): List<PruebaLote>
+	+listarLaboratoriosPorSede(int): List<Laboratorio>
+	+getSedes(): List<Sede>
+	+getProductosQuimicos(): List<ProductoQuimico>
+	+getEmpleados(): List<Empleado>
+	+getTiposPeligro(): List<TipoPeligro>
+	+getPerfiles(): List<PerfilTecnico>
+	-mapIdsToTipoPeligro(List<Integer>): Set<TipoPeligro>
+}
+
+abstract class Entidad {
+	-id: int
+	+Entidad(GeneradorID)
+	+getId(): int
+	+esPorId(int): boolean
+	+equals(Object): boolean
+}
+
+class Sede {
+	-{static} generadorID: GeneradorID
+	-laboratorios: List<Laboratorio>
+	-provincia: Provincia
+	+Sede(Provincia)
+	+agregarLaboratorio(int, Set<TipoPeligro>): Laboratorio
+	+reservarPrueba(int, ProductoQuimico, int, EmpleadoTecnico, FechaTurno): PruebaLote
+	+buscarLaboratorio(int): Laboratorio
+	+getLaboratorios(): List<Laboratorio>
+	+setLaboratorios(List<Laboratorio>): void
+	+getProvincia(): Provincia
+	+setProvincia(Provincia): void
+	+obtenerGerenteDeSede(): Empleado
+	+obtenerAdminDeSede(): Empleado
+	+laboratorioPuedeProbarProductoQuimico(int, ProductoQuimico): boolean
+	+registrarAyudanteAPrueba(EmpleadoTecnico, int, int): void
+	+establecerEstrategiaVencimiento(int, int, EstrategiaVencimiento): void
+	+finalizarPrueba(int, int, EstadoLote,  EstrategiaVencimiento): void
+	+obtenerPruebas(): List<PruebaLote>
+}
+
+
+class Laboratorio {
+	-{static} generadorID: GeneradorID
+	-pruebas: Map<FechaTurno,PruebaLote[]>
+	-capacidadPersonas: int
+	-peligrosPermitidos: Set<TipoPeligro>
+	+Laboratorio(int, Set<TipoPeligro>)
+	+disponible(ProductoQuimico, int, FechaTurno): boolean
+	+reservar(ProductoQuimico, int, EmpleadoTecnico, FechaTurno): PruebaLote
+	+calcularCostoPruebaTotal(int): double
+	+establecerPeligrosPermitidos(Set<TipoPeligro>): void
+	-buscarLote(int): PruebaLote
+	+registrarAyudanteAPrueba(EmpleadoTecnico, int): void
+	+puedeProbarProductoQuimico(ProductoQuimico): boolean
+	+getCapacidadPersonas(): int
+	+setCapacidadPersonas(int): void
+	+establecerEstrategiaVencimiento(int, EstrategiaVencimiento): void
+	+finalizarPrueba(int, EstadoLote, EstrategiaVencimiento): void
+	+obtenerPruebas(): List<PruebaLote>
+}
+
+class PruebaLote {
+	-{static} generadorID: GeneradorID
+	-productoQuimico: ProductoQuimico
+	-fechaFabricacion: LocalDate
+	-responsable: EmpleadoTecnico
+	-auxiliares: Set<EmpleadoTecnico>
+	-auxiliaresRequeridos: int
+	-estrategiaVencimiento: EstrategiaVencimiento
+	-estado: EstadoLote
+	+getResponsable(): EmpleadoTecnico
+	+PruebaLote(ProductoQuimico, EmpleadoTecnico, int)
+	+calcularFechaVencimiento(): LocalDate
+	+calcularCostoPrueba(): double
+	+registrarAyudante(EmpleadoTecnico): void
+	+establecerEstrategiaVencimiento(EstrategiaVencimiento): void
+	+finalizarPrueba(EstadoLote, EstrategiaVencimiento): void
+	+habilitar(): void
+	+getEstado(): EstadoLote
+	-setEstado(EstadoLote): void
+	+getProductoQuimico(): ProductoQuimico
+	+getAuxiliares(): Set<EmpleadoTecnico>
+	+setAuxiliares(Set<EmpleadoTecnico>): void
+	+getFechaFabricacion(): LocalDate
+	+getAuxiliaresRequeridos(): int
+	+setAuxiliaresRequeridos(int): void
+}
+
+class ProductoQuimico {
+	-{static} generadorID: GeneradorID
+	-formula: Map<ElementoQuimico,Integer>
+	-nombreComercial: String
+	-tipoProducto: TipoProducto
+	-peligros: Set<TipoPeligro>
+	+ProductoQuimico(Map<ElementoQuimico,Integer>, String, TipoProducto, Set<TipoPeligro>)
+	+esMismoTipo(ProductoQuimico): boolean
+	+getPeligros(): Set<TipoPeligro>
+	+getFormula(): Map<ElementoQuimico,Integer>
+	+getTipoProducto(): TipoProducto
+	+getNombreComercial(): String
+	+setNombreComercial(String): void
+}
+
+class TipoPeligro  {
+	-{static} generadorID: GeneradorID
+	-nombre: String
+	-costo: double
+	-diasVencimineto: long
+	+TipoPeligro(String, double, int)
+	+getNombre(): String
+	+getCosto(): double
+	+setNombre(String): void
+	+setCosto(double): void
+	+getDiasVencimineto(): long
+}
+
+class PerfilTecnico {
+	-{static} generadorID: GeneradorID
+	-nombre: String
+	-sueldo: double
+	-maxReservas: int
+	+PerfilTecnico(String, double, int)
+	+getSueldo(): double
+	+setSueldo(double): void
+	+getMaxReservas(): int
+	+setMaxReservas(int): void
+	+getNombre(): String
+}
+
+class FechaTurno {
+	-fecha: LocalDate
+	-turno: Turno
+	+FechaTurno(LocalDate, Turno)
+	+equals(Object): boolean
+}
+abstract class EstrategiaVencimiento {
+	-{static} generadorID: GeneradorID
+	-descripcion: String
+	+EstrategiaVencimiento(String)
+	+getDescripcion(): String
+	+{abstract} calcularVencimiento(PruebaLote): LocalDate
+}
+
+class CriterioMolecular{
+	+CriterioMolecular(String)
+	+calcularVencimiento(PruebaLote): LocalDate
+}
+
+class CriterioPeligrosidad  {
+	+CriterioPeligrosidad(String)
+	+calcularVencimiento(PruebaLote): LocalDate
+}
+
+class CriterioProducto{
+	+CriterioProducto(String)
+	+calcularVencimiento(PruebaLote): LocalDate
+}
+
+abstract class Empleado{
+	-username: String
+	-nombre: String
+	-{static} generadorID: GeneradorID
+	-idSedePertenece: int
+	+Empleado(String, String, int)
+	+getNombre(): String
+	+getUsername(): String
+	+soyTecnico(): boolean
+	+soyAdministrativo(): boolean
+	+soySoporte(): boolean
+	+soyGerente(): boolean
+	+getIdSedePertenece(): int
+	+setIdSedePertenece(int): void
+	+toString(): String
+}
+
+class EmpleadoAdministrativo {
+	+EmpleadoAdministrativo(String, String, int)
+	+soyAdministrativo(): boolean
+}
+
+class EmpleadoGerente {
+	+EmpleadoGerente(String, String, int)
+	+soyGerente(): boolean
+}
+
+class EmpleadoSoporte {
+	+EmpleadoSoporte( String, String)
+	+soySoporte(): boolean
+}
+
+class EmpleadoTecnico {
+	-perfil: PerfilTecnico
+	-contadorReservasMesActual: int
+	+EmpleadoTecnico(String, String, PerfilTecnico, int)
+	+diagnosticarPrueba(PruebaLote): void
+	+getContadorReservasMesActual(): int
+	+getSueldo(): double
+	+getPerfil(): PerfilTecnico
+	+setPerfil(PerfilTecnico): void
+	+soyTecnico(): boolean
+}
+
+class GeneradorID {
+	-id: int
+	+GeneradorID()
+	+nextId(): int
+}
+
+class Utilidades{
+	+{static} buscarEnListaPorId(int, List<T>): T
+}
+
+enum EstadoLote{
+	PENDIENTE
+	ACEPTADO
+	RECHAZADO
+	FINALIZADO
+}
+
+enum Provincia {
+	BUENOS_AIRES
+	CORDOBA
+	JUJUY
+	RIO_NEGRO
+	MISIONES
+	descripcion
+	~Provincia(String)
+	+getDescripcion(): String
+	+{static} crearListaProvincias(): Provincia[]
+}
+
+enum TipoProducto {
+	LIMPIEZA
+	PERFUMERIA
+	MEDICAMENTO
+	diasVencimiento
+	descripcion
+	~TipoProducto(int, String)
+	+getDiasVencimiento(): int
+	+getDescripcion(): String
+}
+
+enum Turno {
+	MADRUGADA
+	MAÑANA
+	TARDE
+}
+
+enum ElementoQuimico {
+	HIERRO
+	SODIO
+	CALCIO
+	AZUFRE
+	nroAtomico
+	simbolo
+	nombre
+	~ElementoQuimico(int, String, String)
+	+getNroAtomico(): int
+	+getSimbolo(): String
+	+getNombre(): String
+}
+Controlador <|-- ControladorTecnico
+Controlador <|-- ControladorSoporte
+Controlador <|-- ControladorLogin
+Controlador <|-- ControladorAdministrativo
+Controlador <|-- ControladorGerente
+
+Empleado <|-- EmpleadoTecnico
+Empleado <|-- EmpleadoSoporte
+Empleado <|-- EmpleadoGerente
+Empleado <|-- EmpleadoAdministrativo
+Entidad <|-- Empleado
+EstrategiaVencimiento <|-- CriterioProducto
+EstrategiaVencimiento <|-- CriterioPeligrosidad
+EstrategiaVencimiento <|-- CriterioMolecular
+Entidad <|-- EstrategiaVencimiento
+Entidad <|-- PerfilTecnico
+Entidad <|-- TipoPeligro
+Entidad <|-- ProductoQuimico
+Entidad <|-- PruebaLote
+Entidad <|-- Laboratorio
+Entidad <|-- Sede
+
+Empresa "1" *--	"∞" Sede
+Sede "1" *-- "∞" Laboratorio
+Sede --- Provincia
+Laboratorio "1" o-- "∞" TipoPeligro
+Empresa "1" *-- "∞" TipoPeligro
+Empresa "1" *-- "∞" TipoProducto
+ProductoQuimico "1" o-- "∞" TipoPeligro
+ProductoQuimico "1" --o "∞" PruebaLote
+PruebaLote --- EstadoLote
+Laboratorio "1" o-- "∞" FechaTurno
+FechaTurno --- Turno
+Laboratorio "1" *-- "∞" PruebaLote
+ProductoQuimico "1" o-- "∞" ElementoQuimico
+Empresa "1" *-- "∞" Empleado
+PruebaLote "1" o-- "1" EstrategiaVencimiento
+EmpleadoTecnico "1" o-- "1" PerfilTecnico
+Empresa "1" *-- "∞" PerfilTecnico
+Sede "1" o-- "1" EmpleadoAdministrativo
+PruebaLote "1" --o "∞" EmpleadoTecnico
+Empresa "1" *-- "∞" EstrategiaVencimiento
+PruebaLote "1" o-- "1" TipoProducto
+Entidad "1" o-- "∞" GeneradorID
+
+ControladorTecnico "1" *--"1" Empresa
+ControladorSoporte "1" *--"1" Empresa
+ControladorLogin "1" *--"1" Empresa
+ControladorAdministrativo "1" *--"1" Empresa
+ControladorGerente "1" *--"1" Empresa
+@enduml

@@ -46,4 +46,12 @@ public class ModeloLaboratorio extends AbstractTableModel {
 		return datos;
 	}
 
+	public List<LaboratorioView> getDatos() {
+		return datos;
+	}
+
+	public void setDatos(List<LaboratorioView> datos) {
+		this.datos = datos;
+	}
+	
 }

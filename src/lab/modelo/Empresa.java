@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lab.excepciones.AccesoRestringido;
 import lab.excepciones.EmpleadoIncompatible;
 import lab.excepciones.EmpleadoNoEncontrado;
 import lab.excepciones.LaboratorioNoDisponible;
@@ -34,6 +35,7 @@ public class Empresa {
 	private List<Empleado> empleados;
 	private List<TipoPeligro> tiposPeligro;
 	private List<PerfilTecnico> perfiles;
+	private List<EstrategiaVencimiento> estrategiasVencimiento;
 	private List<TipoProducto> tiposProducto;
 	
 	private static Empresa empresa;
@@ -44,6 +46,7 @@ public class Empresa {
 		empleados = new ArrayList<>();
 		tiposPeligro = new ArrayList<>();
 		perfiles = new ArrayList<>();
+		estrategiasVencimiento = new ArrayList<>();
 	}
 	
 	public static synchronized Empresa getInstance() {
@@ -71,6 +74,12 @@ public class Empresa {
 		}
 		
 		throw new EmpleadoNoEncontrado();
+	}
+	
+	private EstrategiaVencimiento buscarEstrategia(int idEstrategia) {
+		EstrategiaVencimiento estrategia = Utilidades.buscarEnListaPorId(idEstrategia, estrategiasVencimiento);
+		
+		return estrategia;
 	}
 	
 	private Sede buscarSede(int idSede) throws SedeNoEncontrada {
@@ -370,6 +379,16 @@ public class Empresa {
 		 Sede sede = this.buscarSede(idSede);
 		 sede.finalizarPrueba(idLaboratorio, idLote, estado, estrategiaVencimiento);
 	}
+	
+	public void finalizarPrueba(int idSede, int idEmpleado,int idLaboratorio,int idLote, int idEstrategia) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado, AccesoRestringido, EmpleadoNoEncontrado { //'idLote, aprobacion'/
+		 Sede sede = this.buscarSede(idSede);
+		 Empleado empleado = this.buscarEmpleado(idEmpleado);
+		 if(!sede.esPorId(empleado.getIdSedePertenece())) {
+			 throw new AccesoRestringido();
+		 }
+		 EstrategiaVencimiento e = this.buscarEstrategia(idEstrategia);
+		 sede.finalizarPrueba(idLaboratorio, idLote, EstadoLote.ACEPTADO, e);
+	}
 	 
 	/**
 	 * Crear nuevo producto quimico
@@ -523,5 +542,14 @@ public class Empresa {
 	private Set<TipoPeligro> mapIdsToTipoPeligro(List<Integer> ids) {
 		return tiposPeligro.stream().filter((tp) -> ids.contains(tp.getId()))
 				.collect(Collectors.toSet());
+	}
+	
+	public List<EstrategiaVencimiento> listarCriterioVencimiento(){
+		return estrategiasVencimiento;
+	}
+
+	public void crearCriterioVencimiento(EstrategiaVencimiento estategia) {
+		// TODO Auto-generated method stub
+		estrategiasVencimiento.add(estategia);
 	}
 }

@@ -20,6 +20,7 @@ import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.ProductoQuimicoNoEncontrado;
 import lab.excepciones.SedeNoEncontrada;
+import lab.modelo.ElementoQuimico;
 import lab.modelo.FechaTurno;
 import lab.modelo.enums.Turno;
 import lab.vista.tablas.ModeloLaboratorio;
@@ -80,7 +81,7 @@ public class ReservarLaboratorio extends JPanel{
 			} catch (LaboratorioNoEncontrado | LaboratorioNoDisponible | ProductoQuimicoNoEncontrado
 					| EmpleadoNoEncontrado | EmpleadoIncompatible e1) {
 				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(null, "Algo salio mal...");
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
 			}
 		});
