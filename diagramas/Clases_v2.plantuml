@@ -420,7 +420,7 @@ PruebaLote --- EstadoLote
 Laboratorio "1" o-- "∞" FechaTurno
 FechaTurno --- Turno
 Laboratorio "1" *-- "∞" PruebaLote
-ProductoQuimico "1" o-- "∞" ElementoQuimico
+ProductoQuimico -- ElementoQuimico
 Empresa "1" *-- "∞" Empleado
 PruebaLote "1" o-- "1" EstrategiaVencimiento
 EmpleadoTecnico "1" o-- "1" PerfilTecnico
@@ -428,7 +428,7 @@ Empresa "1" *-- "∞" PerfilTecnico
 Sede "1" o-- "1" EmpleadoAdministrativo
 PruebaLote "1" --o "∞" EmpleadoTecnico
 Empresa "1" *-- "∞" EstrategiaVencimiento
-PruebaLote "1" o-- "1" TipoProducto
+PruebaLote  --  TipoProducto
 Entidad "1" o-- "∞" GeneradorID
 
 ControladorTecnico "1" *--"1" Empresa
