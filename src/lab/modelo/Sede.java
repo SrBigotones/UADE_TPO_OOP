@@ -7,7 +7,7 @@ import java.util.Set;
 import lab.excepciones.LaboratorioNoDisponible;
 import lab.excepciones.LaboratorioNoEncontrado;
 import lab.excepciones.PruebaLoteNoEncontrado;
-import lab.modelo.empleado.EmpleadoAdministrativo;
+import lab.modelo.empleado.EmpleadoGerente;
 import lab.modelo.empleado.EmpleadoTecnico;
 import lab.modelo.enums.EstadoLote;
 import lab.modelo.enums.Provincia;
@@ -16,7 +16,7 @@ import lab.util.Utilidades;
 
 public class Sede extends Entidad {
 	private static GeneradorID generadorID = new GeneradorID();
-	private EmpleadoAdministrativo administrativo;
+	private EmpleadoGerente gerente;
 	private List<Laboratorio> laboratorios;
 	private Provincia provincia;
 
@@ -49,8 +49,8 @@ public class Sede extends Entidad {
 	}
 	
 
-	public void asignarEmpleadoAdministrativo(EmpleadoAdministrativo empleado) {
-		this.administrativo = empleado;
+	public void asignarEmpleadoGerente(EmpleadoGerente empleado) {
+		this.gerente = empleado;
 	}
 
 	public Laboratorio buscarLaboratorio(int id) throws LaboratorioNoEncontrado {
@@ -61,13 +61,6 @@ public class Sede extends Entidad {
 		throw new LaboratorioNoEncontrado();
 	}
 
-	public EmpleadoAdministrativo getAdministrativo() {
-		return administrativo;
-	}
-
-	public void setAdministrativo(EmpleadoAdministrativo administrativo) {
-		this.administrativo = administrativo;
-	}
 
 	public List<Laboratorio> getLaboratorios() {
 		return laboratorios;
@@ -96,6 +89,14 @@ public class Sede extends Entidad {
 		lab.registrarAyudanteAPrueba(empleado, idPrueba);
 	}
 	
+	public EmpleadoGerente getGerente() {
+		return gerente;
+	}
+
+	public void setGerente(EmpleadoGerente gerente) {
+		this.gerente = gerente;
+	}
+
 	public void establecerEstrategiaVencimiento(int idLaboratorio, int idPrueba, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado, LaboratorioNoEncontrado {
 		Laboratorio lab = this.buscarLaboratorio(idLaboratorio);
 		lab.establecerEstrategiaVencimiento(idPrueba, estrategiaVencimiento);

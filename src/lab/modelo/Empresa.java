@@ -298,8 +298,8 @@ public class Empresa {
 	public void asignarAdministrativoASede(int idSede, int idEmpleadoAdministrativo) throws EmpleadoNoEncontrado, SedeNoEncontrada, EmpleadoIncompatible {
 		Sede sede = buscarSede(idSede);
 		Empleado empleado = buscarEmpleado(idEmpleadoAdministrativo);
-		if(empleado.soyAdministrativo()) {
-			sede.asignarEmpleadoAdministrativo((EmpleadoAdministrativo)empleado);
+		if(empleado.soyGerente()) {
+			sede.asignarEmpleadoGerente((EmpleadoGerente)empleado);
 		}else {
 			throw new EmpleadoIncompatible(empleado);
 		}
@@ -420,11 +420,11 @@ public class Empresa {
 	 * @throws EmpleadoNoEncontrado 
 	 * @throws EmpleadoIncompatible 
 	 */
-	public void asignarEmpleadoAdministrivoASede(int idSede, int idEmpleado) throws SedeNoEncontrada, EmpleadoNoEncontrado, EmpleadoIncompatible{//'idSede, idEmpleado'/
+	public void asignarEmpleadoGerenteASede(int idSede, int idEmpleado) throws SedeNoEncontrada, EmpleadoNoEncontrado, EmpleadoIncompatible{//'idSede, idEmpleado'/
 		  Sede sede = this.buscarSede(idSede);
 		  Empleado empleado = this.buscarEmpleado(idEmpleado);
-		  if(empleado.soyAdministrativo())
-			  sede.asignarEmpleadoAdministrativo((EmpleadoAdministrativo)empleado);
+		  if(empleado.soyGerente())
+			  sede.asignarEmpleadoGerente((EmpleadoGerente)empleado);
 		  else
 			  throw new EmpleadoIncompatible(empleado);
 	}

@@ -12,7 +12,7 @@ public class SedeView {
 	public SedeView(Sede sede) {
 		nroLabs = sede.getLaboratorios().size();
 		provincia = sede.getProvincia();
-		administrativo = sede.getAdministrativo().getNombre();
+		administrativo = sede.getGerente().getNombre();
 	}
 
 	public int getNroLabs() {
