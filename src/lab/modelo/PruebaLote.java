@@ -47,7 +47,6 @@ public class PruebaLote extends Entidad {
 	 * @return
 	 */
 	public double calcularCostoPrueba() {
-		// TODO
 		
 		double costo = responsable.getSueldo() / 60;
 		

@@ -74,7 +74,6 @@ public class Sede extends Entidad {
 	}
 
 	public boolean laboratorioPuedeProbarProductoQuimico(int idLaboratorio, ProductoQuimico productoQuimico) throws LaboratorioNoEncontrado {
-		// TODO Auto-generated method stub
 		Laboratorio lab = this.buscarLaboratorio(idLaboratorio);
 		return lab.puedeProbarProductoQuimico(productoQuimico);
 	}

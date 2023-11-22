@@ -40,7 +40,7 @@ public class Laboratorio extends Entidad {
 		// TODO Verficar que el tipo de peligro del lote encaja con el laboratorio
 		this.puedeProbarProductoQuimico(productoQuimico);
 
-		// TODO Verificar la capacidad de personas del laboratorio con las pruebas y el lote
+		// Verificar la capacidad de personas del laboratorio con las pruebas y el lote
 		int cuentaAuxiliares = capacidadPersonas - auxiliaresRequeridos;
 		if(pruebasEnTurno != null && pruebasEnTurno[0]!= null) {
 			cuentaAuxiliares -= pruebasEnTurno[0].getAuxiliaresRequeridos();
@@ -48,7 +48,7 @@ public class Laboratorio extends Entidad {
 		if(cuentaAuxiliares < 0)
 			return false;
 
-		// TODO Verficar que los productos de la prueba ya existente en esa fecha turno, sean compatibles (si es que ya habia una prueba)
+		//  Verficar que los productos de la prueba ya existente en esa fecha turno, sean compatibles (si es que ya habia una prueba)
 		if(pruebasEnTurno != null && pruebasEnTurno[0] !=  null && !pruebasEnTurno[0].getProductoQuimico().esMismoTipo(productoQuimico)) {
 			return false;
 		}
@@ -79,7 +79,6 @@ public class Laboratorio extends Entidad {
 	}
 
 	public double calcularCostoPruebaTotal(int idLote) throws PruebaLoteNoEncontrado {
-		// TODO Falta definir el tipo de salida en el diagrama
 		PruebaLote pruebaLote = this.buscarLote(idLote);
 		
 		double costo = pruebaLote.calcularCostoPrueba();
@@ -129,14 +128,13 @@ public class Laboratorio extends Entidad {
 	}
 
 	public void establecerEstrategiaVencimiento(int idPrueba, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado {
-		// TODO Auto-generated method stub
+
 		PruebaLote pruebaLote = this.buscarLote(idPrueba);
 		pruebaLote.establecerEstrategiaVencimiento(estrategiaVencimiento);
 		
 	}
 
 	public void finalizarPrueba(int idLote, EstadoLote estadoLote, EstrategiaVencimiento estrategiaVencimiento) throws PruebaLoteNoEncontrado {
-		// TODO Auto-generated method stub
 		PruebaLote pruebaLote = this.buscarLote(idLote);
 		pruebaLote.finalizarPrueba(estadoLote, estrategiaVencimiento);
 	}
