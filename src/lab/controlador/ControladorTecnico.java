@@ -33,8 +33,8 @@ public class ControladorTecnico extends Controlador{
 		
 	}
 	
-	public void incribirseAPrueba(int idSede, int idLaboratorio, int idPrueba) throws SedeNoEncontrada, EmpleadoNoEncontrado, PruebaLoteNoEncontrado, EmpleadoIncompatible, LaboratorioNoEncontrado {
-		empresaInstance.registrarEmpleadoPrueba(usuario.getId(), idPrueba, idSede, idLaboratorio);
+	public void incribirseAPrueba(int idLaboratorio, int idPrueba) throws SedeNoEncontrada, EmpleadoNoEncontrado, PruebaLoteNoEncontrado, EmpleadoIncompatible, LaboratorioNoEncontrado {
+		empresaInstance.registrarEmpleadoPrueba(usuario.getId(), idPrueba, idLaboratorio);
 	}
 	
 	public void finalizarPrueba(int idSede, int idLaboratorio, int idLote, EstadoLote estado, EstrategiaVencimiento estrategia ) throws SedeNoEncontrada, PruebaLoteNoEncontrado, LaboratorioNoEncontrado {

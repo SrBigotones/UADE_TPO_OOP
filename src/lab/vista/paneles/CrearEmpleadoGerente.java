@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,27 +21,26 @@ public class CrearEmpleadoGerente extends JPanel{
 	
 	public CrearEmpleadoGerente() {
 		controlador = ControladorAdministrativo.getInstance();
-		GridLayout layout = new GridLayout();
+		GridLayout layout = new GridLayout(3,2);
 		setLayout(layout);
-		
-		List<SedeView> sedes = controlador.listarSedes();
 		
 		JTextField tfNombre = new JTextField();
 		JTextField tfUsername = new JTextField();
-		
-		
-		ModeloSedes modeloSedes = new ModeloSedes();
-		modeloSedes.setDatos(sedes);
-		JTable tablaSedes = new JTable(modeloSedes);
-		JScrollPane scrollPane = new JScrollPane(tablaSedes);
-		add(new JLabel("Asignar a sede:"));
-		add(scrollPane);
-		add(new JLabel("Nombre:"));
-		add(tfNombre);
-		add(new JLabel("Username:"));
-		add(tfUsername);
-		
+		JLabel lblNombre = new JLabel("Nombre:");
+		JLabel lblUsername = new JLabel("Username:");
 		JButton btnCrearGerente = new JButton("Crear Gerente");
+		
+		add(lblNombre);
+		add(tfNombre);
+		add(lblUsername);
+		add(tfUsername);
+		add(new JLabel());
 		add(btnCrearGerente);
+		
+		
+		btnCrearGerente.addActionListener(e -> {
+			controlador.darAltaGerente(tfNombre.getText(), tfUsername.getText());
+			JOptionPane.showMessageDialog(null, "Creado con exito!");
+		});
 	}
 }
