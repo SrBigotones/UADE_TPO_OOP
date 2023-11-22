@@ -3,6 +3,7 @@ package lab.vista;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
 
 import lab.controlador.ControladorLogin;
 import net.miginfocom.swing.MigLayout;
@@ -23,6 +24,9 @@ public class Menu extends JFrame {
 			dispose();
 		});
 		
+		panelCentral.setBorder(new EtchedBorder());
+		panelIzq.setBorder(new EtchedBorder());
+		
 		add(panelIzq, "cell 0 0, top");
 		add(panelCentral, "cell 1 0, grow, center");
 		add(btnLogout, "cell 2 0, top");
@@ -31,9 +35,10 @@ public class Menu extends JFrame {
 
 	public void updateView(JPanel panelNuevo) {
  		remove(panelCentral);
-		add(panelNuevo, "cell 1 0, grow, center");
-		this.panelCentral = panelNuevo;
-		revalidate();
+ 		this.panelCentral = panelNuevo;
+ 		add(panelCentral, "cell 1 0, grow, center");
+ 		panelCentral.setBorder(new EtchedBorder());
+ 		revalidate();
 		repaint();
 	}
 
