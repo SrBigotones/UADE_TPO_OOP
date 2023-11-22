@@ -32,8 +32,8 @@ public class CrearAdministradorPanel extends JFrame{
 	        splitPane.setMinimumSize(new Dimension(200, 0));
 	        
 	        
-	        JLabel nombre = new JLabel("Nombre:");
-	        JLabel sede = new JLabel("Sede:");
+	        JLabel nombre = new JLabel("Nombre");
+	        JLabel sede = new JLabel("Sede");
 	        JTextField nombreTextField = new JTextField(15); 
 	        JTextField sedeTextField = new JTextField(15);
 	        

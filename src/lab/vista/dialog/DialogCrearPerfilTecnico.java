@@ -29,11 +29,11 @@ public class DialogCrearPerfilTecnico extends JDialog {
 		JButton btnCrearPerfil = new JButton("Confirmar");
 		JButton btnCancelar = new JButton("Cancelar");
 
-		add(new JLabel("Nombre:"));
+		add(new JLabel("Nombre"));
 		add(tfNombre, "wrap");
-		add(new JLabel("Sueldo:"));
+		add(new JLabel("Sueldo"));
 		add(tfSueldo, "wrap");
-		add(new JLabel("Max Reservas:"));
+		add(new JLabel("Max Reservas"));
 		add(tfReservas, "wrap");
 		add(btnCrearPerfil, "wrap, span 2");
 		add(btnCancelar, "wrap, span 2");

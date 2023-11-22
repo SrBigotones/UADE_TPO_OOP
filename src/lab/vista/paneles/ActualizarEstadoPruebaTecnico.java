@@ -48,11 +48,11 @@ public class ActualizarEstadoPruebaTecnico extends JPanel {
 		JButton btnActualizarEstado = new JButton("Actualizar Estado Prueba");
 		btnActualizarEstado.setEnabled(false);
 
-		add(new JLabel("Laboratorios:"), "top");
+		add(new JLabel("Laboratorios"), "top");
 		add(scrollPaneLabs, "wrap, grow");
-		add(new JLabel("Pruebas:"), "top");
+		add(new JLabel("Pruebas"), "top");
 		add(scrollPane, "wrap, grow");
-		add(new JLabel("Estados:"));
+		add(new JLabel("Estados"));
 		add(comboEstados, "wrap, grow");
 		add(btnActualizarEstado, "skip, right");
 

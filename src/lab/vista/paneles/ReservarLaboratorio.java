@@ -52,15 +52,15 @@ public class ReservarLaboratorio extends JPanel{
 			comboProdQ.addItem(prod);
 		}
 		
-		add(new JLabel("Laboratorios:"), "top");
+		add(new JLabel("Laboratorios"), "top");
 		add(scrollPane, "wrap, grow");
-		add(new JLabel("Producto Quimico:"));
+		add(new JLabel("Producto Quimico"));
 		add(comboProdQ, "wrap, grow");
-		add(new JLabel("Turno:"));
+		add(new JLabel("Turno"));
 		add(comboTurno, "wrap, grow");
 		add(new JLabel("Fecha(DD/MM/YY)"));
 		add(tfDate, "wrap, grow");
-		add(new JLabel("N. Ayudantes:"));
+		add(new JLabel("N. Ayudantes"));
 		add(tfNAyudantes, "wrap, grow");
 		
 		
