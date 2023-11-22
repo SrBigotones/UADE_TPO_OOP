@@ -10,7 +10,7 @@ public class Menu extends JFrame {
 
 	public Menu(JPanel panelIzq, JPanel panelDer) {
 		this.panelDerecho = panelDer;
-		setSize(1000, 700);
+		setSize(1200, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new MigLayout("", "10[20%!, fill]5[80%!, fill]10", "[grow]"));
 		add(panelIzq, "cell 0 0");
@@ -20,7 +20,7 @@ public class Menu extends JFrame {
 	}
 
 	public void updateView(JPanel panelNuevo) {
-		remove(panelDerecho);
+ 		remove(panelDerecho);
 		add(panelNuevo, "cell 1 0");
 		this.panelDerecho = panelNuevo;
 		revalidate();

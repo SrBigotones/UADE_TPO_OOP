@@ -24,24 +24,23 @@ public class ListadoSedes extends JPanel {
 		controlador = ControladorSoporte.getInstance();
 		System.out.println("Listado de sedes");
 
-		setLayout(new MigLayout("debug", "[80%!]10[20%!]", "[]"));
+		setLayout(new MigLayout("debug", "20[80%]10[20%]20", "[]"));
 
 		ModeloSedes modelo = new ModeloSedes();
 		modelo.setDatos(sedes);
 		JTable tabla = new JTable(modelo);
 		JScrollPane scrollPane = new JScrollPane(tabla);
-		
 
 		JButton btnCrearSede = new JButton("Crear sede");
 		btnCrearSede.addActionListener((e) -> {
-			JDialog dialogCrearSede = new DialogCrearSede((JFrame) SwingUtilities.getWindowAncestor(this), controlador);
+			JDialog dialogCrearSede = new DialogCrearSede((JFrame) SwingUtilities.getWindowAncestor(this));
 			dialogCrearSede.setVisible(true);
 			controlador.mostrarPantallaSedes();
 		});
 
 		JPanel botonera = new JPanel(new MigLayout("", "[fill, grow]", ""));
 		botonera.add(btnCrearSede, "wrap");
-		
+
 		add(scrollPane, "cell 0 0, grow");
 		add(botonera, "cell 1 0");
 	}
