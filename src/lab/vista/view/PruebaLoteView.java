@@ -1,12 +1,9 @@
 package lab.vista.view;
 
 import java.time.LocalDate;
-<<<<<<< HEAD
 import java.util.List;
-import java.util.stream.Collectors;
-=======
 import java.util.Map;
->>>>>>> d68b2d8d0324f6375eb13f70f8c2cdc98a9d0e6b
+import java.util.stream.Collectors;
 
 import lab.modelo.ElementoQuimico;
 import lab.modelo.ProductoQuimico;

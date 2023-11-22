@@ -41,10 +41,6 @@ public class ModeloLaboratorio extends AbstractTableModel {
 		}
 		return null;
 	}
-	
-	public List<LaboratorioView> getDatos() {
-		return datos;
-	}
 
 	public List<LaboratorioView> getDatos() {
 		return datos;
