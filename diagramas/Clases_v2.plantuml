@@ -33,9 +33,15 @@ class ControladorGerente {
 	-ControladorGerente()
 	+{static} getInstance(): ControladorGerente
 	+visualizarPruebas(): void
-	+cambiarCriterioVencimiento(): void
+	+cambiarCriterioVencimiento(int, int, int, int): void
 	+confimarPruebaParaVenta(): void
 	+mostrarBienvenida(): void
+	+mostrarCambiarCriterioVencimiento(): void
+	+mostrarConfimarPruebaParaVenta(): void
+	+listarSedes(): List<SedeView>
+	+listarLaboratorios(int): List<LaboratorioView>
+	+listarPruebasEnLaboratorio(int, int): List<PruebaLoteView>
+	+listarCriterioVencimiento(): List<CriterioVencimientoView>
 }
 
 class ControladorLogin {
