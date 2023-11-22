@@ -1,18 +1,16 @@
 package lab.vista.paneles;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 public class CrearAdministradorPanel extends JFrame{
 

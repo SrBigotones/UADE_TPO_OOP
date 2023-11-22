@@ -1,7 +1,6 @@
 package lab.vista.paneles;
 
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,6 @@ import javax.swing.JTextField;
 import lab.controlador.ControladorAdministrativo;
 import lab.excepciones.SedeNoEncontrada;
 import lab.vista.tablas.ModeloPeligrosSeleccion;
-import lab.vista.view.PeligrosViewCheck;
 
 public class CrearLaboratorio extends JPanel{
 	private ControladorAdministrativo controlador;

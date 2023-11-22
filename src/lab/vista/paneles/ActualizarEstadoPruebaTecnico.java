@@ -1,9 +1,7 @@
 package lab.vista.paneles;
 
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;

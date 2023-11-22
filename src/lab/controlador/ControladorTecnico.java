@@ -17,8 +17,6 @@ import lab.modelo.ElementoQuimico;
 import lab.modelo.Empresa;
 import lab.modelo.EstrategiaVencimiento;
 import lab.modelo.FechaTurno;
-import lab.modelo.PruebaLote;
-import lab.modelo.TipoPeligro;
 import lab.modelo.enums.EstadoLote;
 import lab.modelo.enums.TipoProducto;
 import lab.vista.Menu;
@@ -89,7 +87,6 @@ public class ControladorTecnico extends Controlador{
 		return lista;
 	}
 	
-	
 	public List<LaboratorioView> listarLaboratorios() throws SedeNoEncontrada{
 		List<LaboratorioView> lab = empresaInstance.listarLaboratoriosPorSede(usuario.getIdSedePertenece())
 				.stream()
@@ -105,7 +102,6 @@ public class ControladorTecnico extends Controlador{
 		jfMenu = new Menu(new BotoneraTecnico(), new JPanel());
 		
 	}
-	
 	
 	public void mostrarReservarPrueba() throws SedeNoEncontrada {
 		cambiarPanel(new ReservarLaboratorio());

@@ -1,7 +1,5 @@
 package lab.vista.paneles;
 
-import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 

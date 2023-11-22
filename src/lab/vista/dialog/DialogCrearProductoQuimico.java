@@ -20,7 +20,6 @@ import lab.controlador.ControladorTecnico;
 import lab.modelo.ElementoQuimico;
 import lab.modelo.enums.TipoProducto;
 import lab.vista.tablas.ModeloPeligrosSeleccion;
-import lab.vista.view.PeligrosViewCheck;
 import net.miginfocom.swing.MigLayout;
 
 public class DialogCrearProductoQuimico extends JDialog {

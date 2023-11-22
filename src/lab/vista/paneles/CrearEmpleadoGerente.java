@@ -1,19 +1,14 @@
 package lab.vista.paneles;
 
 import java.awt.GridLayout;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import lab.controlador.ControladorAdministrativo;
-import lab.vista.tablas.ModeloSedes;
-import lab.vista.view.SedeView;
 
 public class CrearEmpleadoGerente extends JPanel{
 

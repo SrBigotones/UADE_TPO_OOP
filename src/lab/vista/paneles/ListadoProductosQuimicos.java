@@ -12,7 +12,6 @@ import javax.swing.SwingUtilities;
 
 import lab.controlador.ControladorTecnico;
 import lab.vista.dialog.DialogCrearProductoQuimico;
-import lab.vista.dialog.DialogCrearSede;
 import lab.vista.tablas.ModeloProductosQuimicos;
 import lab.vista.view.ProductoQuimicoView;
 import net.miginfocom.swing.MigLayout;

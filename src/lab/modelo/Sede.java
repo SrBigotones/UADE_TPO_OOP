@@ -2,7 +2,6 @@ package lab.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import lab.excepciones.LaboratorioNoDisponible;

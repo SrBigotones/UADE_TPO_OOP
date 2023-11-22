@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import lab.vista.view.EmpleadoView;
 import lab.vista.view.ProductoQuimicoView;
 
 public class ModeloProductosQuimicos extends AbstractTableModel {
